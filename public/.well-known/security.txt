@@ -1,4 +1,4 @@
 Contact: mailto:ptkvaibhav@gmail.com
-Expires: 2026-12-31T23:59:59Z
+Expires: 2027-01-01
 Preferred-Languages: en
-Canonical: https://ptkvaibhav.dev/.well-known/security.txt
+Policy: https://ptkvaibhav.dev/security

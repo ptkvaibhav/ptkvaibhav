@@ -47,12 +47,20 @@ export default function ResumePage() {
       </Reveal>
 
       <Reveal delay={0.06}>
-        <Card className="overflow-hidden p-2">
+        <Card className="space-y-4 overflow-hidden p-4">
           <iframe
-            title={`${siteConfig.name} resume`}
             src={resumePath}
-            className="h-[80vh] w-full rounded-[1.25rem] border-0 bg-white"
+            className="h-[90vh] w-full rounded-xl border border-white/10"
+            title="Resume"
           />
+          <div className="flex justify-end">
+            <Button asChild variant="secondary">
+              <Link href={resumePath} target="_blank" rel="noreferrer">
+                Download fallback
+                <Download className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </Card>
       </Reveal>
     </section>

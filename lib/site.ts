@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "Pratik Vaibhav",
   description:
-    "Cybersecurity Engineer specializing in Application Security and Offensive Security. I design and build systems that analyze software behavior, uncover vulnerabilities, and improve the security of modern applications.",
-  bio: "I am a Cybersecurity Engineer specializing in Application Security, Offensive Security, and security automation. My work focuses on understanding how modern software systems behave under adversarial conditions and building tools that help uncover vulnerabilities before attackers do.",
+    "Application Security engineer focused on offensive testing, security automation, and building systems that surface real software risk.",
+  bio: "I work at the intersection of application behavior, offensive security, and engineering systems. My focus is understanding how modern software fails under adversarial conditions and building tooling that helps teams detect and fix those failures earlier.",
   email: "ptkvaibhav@gmail.com",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   social: {
@@ -19,4 +19,3 @@ export const siteConfig = {
     { href: "/resume", label: "Resume" },
   ],
 } as const;
-

@@ -39,12 +39,17 @@ export function GitHubActivity({ activities }: GitHubActivityProps) {
   }
 
   return (
-    <Card className="p-6">
-      <CardHeader className="space-y-3">
-        <Badge variant="accent" className="w-fit">
+    <Card className="space-y-10 p-6 md:p-8">
+      <CardHeader className="space-y-4">
+        <Badge variant="accent" className="w-fit text-xs uppercase tracking-wider text-zinc-500">
           GitHub Feed
         </Badge>
-        <CardTitle className="text-3xl">Recent repository activity.</CardTitle>
+        <CardTitle className="text-3xl font-semibold tracking-tight md:text-4xl">
+          Recent repository activity.
+        </CardTitle>
+        <p className="max-w-2xl text-zinc-400">
+          Recent pushes, repo creation events, and releases pulled from my public GitHub work.
+        </p>
       </CardHeader>
       <CardContent className="space-y-4">
         {activities.map((activity) => (
@@ -53,7 +58,7 @@ export function GitHubActivity({ activities }: GitHubActivityProps) {
             href={activity.url}
             target="_blank"
             rel="noreferrer"
-            className="group flex items-start justify-between gap-4 rounded-2xl border border-white/10 bg-black/20 p-4 transition hover:border-emerald-400/30 hover:bg-black/30"
+            className="group flex items-start justify-between gap-4 rounded-xl border border-white/10 bg-black/20 p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
           >
             <div className="flex gap-3">
               <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-emerald-300">

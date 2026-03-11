@@ -31,8 +31,13 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
     Boolean(formattedLastUpdated);
 
   return (
-    <Card className="surface-grid h-full p-6">
-      <CardHeader className="space-y-4">
+    <Card className="surface-grid relative h-full p-6">
+      <Link
+        href={`/projects/${project.slug}`}
+        aria-label={`View ${project.title} project details`}
+        className="absolute inset-0 z-0 rounded-xl"
+      />
+      <CardHeader className="relative z-10 space-y-4">
         <div className="flex flex-wrap items-center gap-3">
           <Badge variant="accent">{project.status}</Badge>
           {project.language ? <Badge>{project.language}</Badge> : null}
@@ -47,19 +52,24 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
           </CardDescription>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4 pt-2">
+      <CardContent className="relative z-10 space-y-4 pt-2">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <p className="text-sm text-zinc-500">{project.excerpt}</p>
           <div className="flex flex-wrap gap-2">
             {project.readmeUrl ? (
-              <Button asChild variant="ghost" size="sm">
+              <Button asChild variant="secondary" size="sm" className="mt-4 bg-white/[0.05] hover:bg-white/[0.08]">
                 <Link href={project.readmeUrl} target="_blank" rel="noreferrer">
                   View README
                   <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </Button>
             ) : null}
-            <Button asChild variant="ghost" size="sm">
+            <Button
+              asChild
+              variant="secondary"
+              size="sm"
+              className="mt-4 bg-white/[0.05] hover:bg-white/[0.08]"
+            >
               <Link href={project.github} target="_blank" rel="noreferrer">
                 View repo
                 <ArrowUpRight className="h-4 w-4" />

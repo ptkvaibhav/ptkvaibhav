@@ -26,7 +26,7 @@ export default async function HomePage() {
 
   return (
     <div className="pb-16">
-      <section className="relative container py-24">
+      <section className="relative container py-24 md:py-32">
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.15),transparent_60%)]" />
         <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:40px_40px]" />
         <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.03] mix-blend-overlay bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')]" />
@@ -139,26 +139,30 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="container py-10">
+      <section className="container py-24 md:py-32">
         <Reveal>
           <GitHubStats />
         </Reveal>
       </section>
 
       {activity.length ? (
-        <section className="container py-10">
+        <section className="container py-24 md:py-32">
           <Reveal>
             <GitHubActivity activities={activity} />
           </Reveal>
         </section>
       ) : null}
 
-      <section className="container py-10">
-        <Reveal className="mb-8 space-y-3">
-          <p className="text-xs uppercase tracking-[0.3em] text-emerald-300">Expertise</p>
-          <h2 className="font-serif text-3xl tracking-tight text-white md:text-4xl">
-            Security work across product, platform, and tooling.
+      <section className="container py-24 md:py-32">
+        <Reveal className="mb-10 space-y-4">
+          <p className="text-xs uppercase tracking-wider text-zinc-500">Expertise</p>
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+            Security skills and engineering experience.
           </h2>
+          <p className="max-w-2xl text-zinc-400">
+            Application security depth across assessment, offensive validation, and the tooling
+            systems that help teams reduce real software risk.
+          </p>
         </Reveal>
         <div className="grid gap-5 md:grid-cols-3">
           {expertiseAreas.map((area, index) => (
@@ -185,15 +189,17 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="container py-10">
-        <Reveal className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.3em] text-emerald-300">
-              Featured Projects
-            </p>
-            <h2 className="font-serif text-3xl tracking-tight text-white md:text-4xl">
+      <section className="container py-24 md:py-32">
+        <Reveal className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="space-y-4">
+            <p className="text-xs uppercase tracking-wider text-zinc-500">Featured Projects</p>
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
               Selected builds and research-driven systems.
             </h2>
+            <p className="max-w-2xl text-zinc-400">
+              Projects shaped by offensive testing, application behavior analysis, and workflow
+              tooling that helps engineers move from signal to action faster.
+            </p>
           </div>
           <Button asChild variant="ghost">
             <Link href="/projects">All projects</Link>
@@ -208,15 +214,17 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="container py-10">
-        <Reveal className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.3em] text-emerald-300">
-              Research Preview
-            </p>
-            <h2 className="font-serif text-3xl tracking-tight text-white md:text-4xl">
+      <section className="container py-24 md:py-32">
+        <Reveal className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="space-y-4">
+            <p className="text-xs uppercase tracking-wider text-zinc-500">Research</p>
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
               Notes on software behavior, security tooling, and offensive automation.
             </h2>
+            <p className="max-w-2xl text-zinc-400">
+              Writing informed by application security work, research-led experimentation, and
+              the systems thinking required to build security tools people actually use.
+            </p>
           </div>
           <Button asChild variant="ghost">
             <Link href="/research">Research &amp; blog</Link>
@@ -231,20 +239,26 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="container py-10">
-        <Reveal className="mb-8 space-y-3">
-          <p className="text-xs uppercase tracking-[0.3em] text-emerald-300">Collaboration</p>
-          <h2 className="font-serif text-3xl tracking-tight text-white md:text-4xl">
+      <section className="container py-24 md:py-32">
+        <Reveal className="mb-10 space-y-4">
+          <p className="text-xs uppercase tracking-wider text-zinc-500">Collaboration</p>
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
             Best fits for collaboration and security work.
           </h2>
+          <p className="max-w-2xl text-zinc-400">
+            The work I am best suited for sits where product security, offensive depth, and
+            security engineering systems need to come together.
+          </p>
         </Reveal>
         <div className="grid gap-4 md:grid-cols-2">
           {collaborationAreas.map((item, index) => (
             <Reveal key={item} delay={index * 0.05}>
               <Card className="p-5">
-                <CardContent className="flex items-start gap-4">
-                  <div className="mt-1 h-2.5 w-2.5 rounded-full bg-emerald-400" />
-                  <p className="text-base leading-7 text-zinc-300">{item}</p>
+                <CardContent>
+                  <div className="flex items-start gap-3">
+                    <span className="mt-2 h-2 w-2 rounded-full bg-emerald-400"></span>
+                    <p className="text-base leading-7 text-zinc-300">{item}</p>
+                  </div>
                 </CardContent>
               </Card>
             </Reveal>
@@ -252,18 +266,18 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="container py-10">
+      <section className="container py-24 md:py-32">
         <Reveal>
           <Card className="surface-grid overflow-hidden p-8 md:p-10">
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div className="max-w-2xl space-y-4">
-                <p className="text-xs uppercase tracking-[0.3em] text-emerald-300">
+                <p className="text-xs uppercase tracking-wider text-zinc-500">
                   Contact CTA
                 </p>
-                <h2 className="font-serif text-3xl tracking-tight text-white md:text-5xl">
-                  Looking for application security depth with a builder mindset?
+                <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+                  Interested in application security, offensive research, or security tooling?
                 </h2>
-                <p className="text-lg leading-8 text-zinc-400">
+                <p className="max-w-2xl text-zinc-400">
                   If you are hiring, collaborating, or exploring research-led security tooling,
                   I am open to the conversation.
                 </p>

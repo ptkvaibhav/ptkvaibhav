@@ -3,6 +3,15 @@ export interface Project {
   title: string;
   excerpt: string;
   description: string;
+  problem: string;
+  architecture: {
+    inputs: string[];
+    processing: string[];
+    outputs: string[];
+  };
+  components: string[];
+  securityImpact: string[];
+  futureWork: string[];
   tags: string[];
   github: string;
   featured: boolean;

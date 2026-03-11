@@ -30,7 +30,7 @@ export const researchPosts: ResearchPost[] = [
     slug: "adversarial-behavior-in-modern-applications",
     title: "Adversarial behavior in modern applications",
     excerpt:
-      "A practical way to think about how web applications reveal their weak points once you observe them under pressure.",
+      "A practical framework for analyzing how modern web systems expose weak assumptions under adversarial pressure. The article explores patterns observed while building automated vulnerability discovery tooling.",
     publishedAt: "2026-02-14",
     readTime: "6 min read",
     tags: ["Application Security", "Research"],
@@ -44,7 +44,7 @@ export const researchPosts: ResearchPost[] = [
     slug: "designing-security-tooling-that-developers-will-actually-use",
     title: "Designing security tooling that developers will actually use",
     excerpt:
-      "Security tooling only matters if it survives the reality of engineering teams, deadlines, and noisy pipelines.",
+      "Security tooling often fails because it ignores developer workflows. This piece explores lessons learned while building automation systems for vulnerability triage and signal reduction.",
     publishedAt: "2026-01-09",
     readTime: "5 min read",
     tags: ["Security Engineering", "DevSecOps"],
@@ -58,7 +58,7 @@ export const researchPosts: ResearchPost[] = [
     slug: "toward-more-reliable-offensive-automation",
     title: "Toward more reliable offensive automation",
     excerpt:
-      "Automation in offensive security gets interesting when the goal shifts from volume to better judgment.",
+      "A closer look at what makes offensive automation trustworthy: preserving context, surfacing evidence, and deciding when an automated workflow should go deeper versus when it should stop.",
     publishedAt: "2025-12-01",
     readTime: "7 min read",
     tags: ["Offensive Security", "Automation"],

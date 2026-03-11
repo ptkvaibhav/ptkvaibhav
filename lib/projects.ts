@@ -13,6 +13,42 @@ const staticProjects: Project[] = [
       "An autonomous penetration testing platform exploring agent loops, tool orchestration, and evidence-driven reporting.",
     description:
       "Clinkz is a multi-stage offensive security project built around autonomous recon, crawl, exploit validation, and reporting workflows. It is where I experiment with agentic pentesting systems, Dockerized toolchains, and evidence-first offensive automation.",
+    problem:
+      "Modern penetration testing workflows are fragmented across scanners, crawlers, note taking, and manual exploit validation. That fragmentation makes it hard to preserve context, correlate evidence, and turn raw tooling output into operator-grade findings.",
+    architecture: {
+      inputs: [
+        "Seed URLs, application scope definitions, and operator-provided testing constraints",
+        "HTTP responses, discovered routes, crawler telemetry, and tool output artifacts",
+        "Authentication context and target-specific configuration for controlled testing",
+      ],
+      processing: [
+        "Recon and crawl orchestration that expands the attack surface while preserving scope",
+        "Agent loops that coordinate enumeration, validation, and evidence collection steps",
+        "Normalization pipelines that correlate scanner output, HTTP traces, and exploit proof",
+      ],
+      outputs: [
+        "Structured findings with evidence trails and reproducible validation artifacts",
+        "Operator-readable reports summarizing attack paths, assumptions, and impact",
+        "Testing state that can be resumed and extended instead of restarted from scratch",
+      ],
+    },
+    components: [
+      "Scope ingestion and target modeling",
+      "Crawler and endpoint classification engine",
+      "Tool orchestration and agent loop control",
+      "Evidence normalization and finding correlation pipeline",
+      "Reporting layer for operator-facing output",
+    ],
+    securityImpact: [
+      "Improves depth of application testing by preserving context across recon, validation, and reporting stages.",
+      "Reduces false confidence by attaching concrete evidence to findings instead of relying on raw scanner output alone.",
+      "Supports more explainable offensive automation, making it easier for security teams to trust and action the results.",
+    ],
+    futureWork: [
+      "Stateful authentication flows for more reliable testing of modern session-heavy applications.",
+      "Deeper exploit verification logic to distinguish theoretical findings from reproducible weaknesses.",
+      "Better evidence graphs and replayable workflows for collaborative security reviews.",
+    ],
     tags: ["Python", "LLM systems", "Security automation", "Docker"],
     github: "https://github.com/ptkvaibhav/clinkz",
     featured: true,
@@ -25,6 +61,42 @@ const staticProjects: Project[] = [
       "A bridge between Burp findings and Fortify-aligned review workflows for cleaner vulnerability intake.",
     description:
       "Burp to Fortify Parser converts Burp output into a structure that fits Fortify-oriented review pipelines, reducing manual re-entry and improving the handoff between testing output and remediation workflows.",
+    problem:
+      "Dynamic testing results often arrive in formats that do not align with enterprise remediation tooling. That creates manual translation work, inconsistent severity mapping, and loss of evidence between the tester and the engineering workflow.",
+    architecture: {
+      inputs: [
+        "Burp Suite exports containing issue data, request-response pairs, and target metadata",
+        "Fortify-aligned field mappings and severity/category normalization rules",
+        "Parser configuration for project-specific workflows and downstream output expectations",
+      ],
+      processing: [
+        "Parsing of Burp findings into structured records with stable issue identifiers",
+        "Normalization of issue classes, evidence snippets, and metadata to match Fortify-style intake",
+        "Deduplication and transformation logic that prepares data for downstream review pipelines",
+      ],
+      outputs: [
+        "Transformed findings formatted for Fortify-oriented ingestion and review",
+        "Cleaner vulnerability records with preserved technical evidence",
+        "Reduced analyst overhead during triage, assignment, and remediation tracking",
+      ],
+    },
+    components: [
+      "Burp export parser",
+      "Issue normalization and taxonomy mapping engine",
+      "Evidence extraction and formatting logic",
+      "Deduplication and record transformation pipeline",
+      "Output adapters for Fortify-style workflows",
+    ],
+    securityImpact: [
+      "Preserves fidelity of DAST findings so engineering teams see the evidence that matters.",
+      "Reduces manual handling errors that happen when vulnerabilities are re-entered into separate systems.",
+      "Improves signal quality in AppSec workflows by standardizing issue metadata before triage.",
+    ],
+    futureWork: [
+      "Expanded support for additional export formats and scanner sources.",
+      "Project-specific mapping rules for richer metadata and severity translation.",
+      "Automated validation tests against representative finding corpora to reduce parser regressions.",
+    ],
     tags: ["Burp Suite", "Fortify", "Parsing", "Workflow tooling"],
     github: "https://github.com/ptkvaibhav/Burp_to_Fortify_Parser",
     featured: true,
@@ -37,6 +109,42 @@ const staticProjects: Project[] = [
       "An AI-assisted vulnerability scanning project focused on better signal discovery and triage quality.",
     description:
       "Invoker is an exploratory security project around AI-assisted vulnerability analysis and scanning workflows. It reflects my interest in using automation to increase analyst depth without amplifying noise.",
+    problem:
+      "Scanner-heavy vulnerability programs tend to suffer from poor prioritization and noisy results. Analysts spend time revalidating weak signals instead of focusing on findings that actually change risk posture.",
+    architecture: {
+      inputs: [
+        "Target definitions, scan configurations, and raw vulnerability scanner output",
+        "HTTP traces, response metadata, and contextual evidence captured during analysis",
+        "Heuristics or model-assisted enrichment signals used to rank and classify findings",
+      ],
+      processing: [
+        "Signal aggregation that combines scanner output with contextual application behavior",
+        "Model-assisted or heuristic scoring used to prioritize deeper investigation paths",
+        "Correlation logic that groups related findings and reduces duplicate analyst effort",
+      ],
+      outputs: [
+        "Prioritized vulnerability candidates with clearer evidence and rationale",
+        "Triage-friendly summaries that highlight what deserves manual analyst attention",
+        "A more structured view of scanner signal quality across targets and runs",
+      ],
+    },
+    components: [
+      "Scanner orchestration and result ingestion",
+      "Signal enrichment and ranking logic",
+      "Correlation and deduplication pipeline",
+      "Model-assisted triage layer",
+      "Analyst-facing output summaries",
+    ],
+    securityImpact: [
+      "Helps analysts focus on findings with stronger evidence and better exploitability signals.",
+      "Reduces noise in scanning workflows by combining automated detection with contextual reasoning.",
+      "Explores how AI-assisted security workflows can improve judgment rather than just increase output volume.",
+    ],
+    futureWork: [
+      "Richer exploitability features derived from application behavior and replayable traces.",
+      "Evaluation loops for measuring ranking quality against analyst decisions.",
+      "Safer integration patterns for model-assisted reasoning inside real security workflows.",
+    ],
     tags: ["AI security", "Vulnerability scanning", "Python"],
     github: "https://github.com/ptkvaibhav/invoker",
     featured: true,
@@ -56,6 +164,23 @@ function mergeProjectWithFallback(project: Project): Project {
     ...project,
     excerpt: project.excerpt || fallback.excerpt,
     description: project.description || fallback.description,
+    problem: project.problem || fallback.problem,
+    architecture: {
+      inputs: project.architecture?.inputs?.length
+        ? project.architecture.inputs
+        : fallback.architecture.inputs,
+      processing: project.architecture?.processing?.length
+        ? project.architecture.processing
+        : fallback.architecture.processing,
+      outputs: project.architecture?.outputs?.length
+        ? project.architecture.outputs
+        : fallback.architecture.outputs,
+    },
+    components: project.components.length ? project.components : fallback.components,
+    securityImpact: project.securityImpact.length
+      ? project.securityImpact
+      : fallback.securityImpact,
+    futureWork: project.futureWork.length ? project.futureWork : fallback.futureWork,
     tags: project.tags.length ? project.tags : fallback.tags,
     status: project.status || fallback.status,
   };
@@ -103,4 +228,9 @@ export const getProjects = cache(async (): Promise<Project[]> => {
 export async function getFeaturedProjects() {
   const projects = await getProjects();
   return projects.filter((project) => project.featured).slice(0, 3);
+}
+
+export async function getProjectBySlug(slug: string) {
+  const projects = await getProjects();
+  return projects.find((project) => project.slug === slug);
 }

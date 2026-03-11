@@ -26,7 +26,9 @@ export function ResearchCard({ post }: ResearchCardProps) {
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
-        <p className="max-w-[34rem] text-base leading-7 text-zinc-400">{post.excerpt}</p>
+        <p className="max-w-[34rem] overflow-hidden text-base leading-7 text-zinc-400 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3]">
+          {post.excerpt}
+        </p>
         <Link
           href={`/research/${post.slug}`}
           className="inline-flex items-center gap-2 text-sm font-medium text-white transition hover:text-emerald-300"

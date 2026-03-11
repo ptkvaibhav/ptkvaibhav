@@ -6,9 +6,9 @@ import { getAllResearchPosts, getResearchPostBySlug } from "@/lib/research";
 import { siteConfig } from "@/lib/site";
 
 type ResearchPostPageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 function formatDate(date: string) {
@@ -25,8 +25,9 @@ export function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }: ResearchPostPageProps): Metadata {
-  const post = getResearchPostBySlug(params.slug);
+export async function generateMetadata({ params }: ResearchPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getResearchPostBySlug(slug);
 
   if (!post) {
     return {
@@ -47,8 +48,9 @@ export function generateMetadata({ params }: ResearchPostPageProps): Metadata {
   };
 }
 
-export default function ResearchPostPage({ params }: ResearchPostPageProps) {
-  const post = getResearchPostBySlug(params.slug);
+export default async function ResearchPostPage({ params }: ResearchPostPageProps) {
+  const { slug } = await params;
+  const post = getResearchPostBySlug(slug);
 
   if (!post) {
     notFound();

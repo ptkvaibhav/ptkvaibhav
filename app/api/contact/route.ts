@@ -37,15 +37,20 @@ function readCompanyHoneypot(payload: unknown) {
 }
 
 export async function POST(request: NextRequest) {
-  const limit = Number(process.env.CONTACT_RATE_LIMIT_MAX_REQUESTS || 5);
-  const windowMs = Number(process.env.CONTACT_RATE_LIMIT_WINDOW_MS || 600_000);
   const identifier = getClientIdentifier(request);
-  const rateLimitResult = rateLimit(identifier, limit, windowMs);
+  const rateLimitResult = await rateLimit(identifier);
   const headers = buildHeaders(
     rateLimitResult.limit,
     rateLimitResult.remaining,
     rateLimitResult.resetAt
   );
+
+  if (!rateLimitResult.configured) {
+    return NextResponse.json(
+      { error: "Contact abuse protection is not configured yet." },
+      { status: 503, headers }
+    );
+  }
 
   if (!rateLimitResult.success) {
     return NextResponse.json(

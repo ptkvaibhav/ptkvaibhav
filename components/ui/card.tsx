@@ -9,7 +9,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "surface rounded-3xl border border-white/10 bg-white/[0.03] shadow-glow",
+        "surface rounded-xl border border-white/10 bg-white/[0.02] shadow-glow transition hover:border-white/20 hover:bg-white/[0.05]",
         className
       )}
       {...props}
@@ -46,4 +46,3 @@ export function CardContent({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return <div className={cn("space-y-4", className)} {...props} />;
 }
-
