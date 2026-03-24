@@ -8,7 +8,7 @@ export function SiteFooter() {
       <div className="container flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div className="max-w-xl space-y-3">
           <p className="text-xs uppercase tracking-[0.3em] text-emerald-300">Pratik Vaibhav</p>
-          <p className="text-sm text-zinc-400">{siteConfig.description}</p>
+          <p className="text-sm text-stone-300/85">{siteConfig.bio}</p>
         </div>
 
         <div className="flex flex-wrap gap-4 text-sm text-stone-300/85">

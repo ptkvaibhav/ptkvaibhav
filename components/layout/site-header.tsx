@@ -2,17 +2,28 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Github, Linkedin, Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
   const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
 
   function closeMenu() {
     setIsMenuOpen(false);
+  }
+
+  function isActiveRoute(href: string) {
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
   }
 
   return (
@@ -42,7 +53,12 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-full px-3 py-2 transition hover:bg-white/5 hover:text-white"
+              className={cn(
+                "rounded-full px-3 py-2 transition hover:text-white",
+                isActiveRoute(item.href)
+                  ? "text-emerald-300 underline decoration-emerald-300 underline-offset-8"
+                  : "text-zinc-400"
+              )}
             >
               {item.label}
             </Link>
@@ -91,7 +107,10 @@ export function SiteHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="rounded-xl px-3 py-2 transition hover:bg-white/5 hover:text-white"
+                  className={cn(
+                    "rounded-xl px-3 py-2 transition hover:bg-white/5 hover:text-white",
+                    isActiveRoute(item.href) ? "text-emerald-300" : "text-zinc-300"
+                  )}
                   onClick={closeMenu}
                 >
                   {item.label}

@@ -1,8 +1,7 @@
 export const siteConfig = {
   name: "Pratik Vaibhav",
-  description:
-    "I build and break applications to understand how they fail, then design systems that catch those failures early.",
-  bio: "I work across application security, offensive testing, and engineering systems. Most of my time goes into validating real software risk, building better security workflows, and helping teams fix the issues that matter sooner.",
+  description: "Application Security Engineer",
+  bio: "6+ years securing enterprise and government systems across application, infrastructure, and DevSecOps environments.",
   email: "ptkvaibhav@gmail.com",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   social: {

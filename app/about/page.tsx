@@ -18,24 +18,28 @@ export default function AboutPage() {
     <section className={`container ${spacing.section}`}>
       <Reveal className="max-w-3xl space-y-6">
         <Badge className="w-fit">About</Badge>
-        <h1 className={typography.pageTitle}>Security engineering driven by curiosity and evidence.</h1>
-        <p className={typography.pageDescription}>{siteConfig.bio}</p>
+        <h1 className={typography.pageTitle}>How I got here, and how I approach security work.</h1>
+        <p className={typography.pageDescription}>
+          I work in application security because I care about how systems actually fail, not just
+          how they look on paper.
+        </p>
         <div className="space-y-6 text-base leading-8 text-stone-300/85">
           <p>
-            My path into security has always been anchored in how software behaves under pressure.
-            I care less about memorizing vulnerability names and more about understanding the weak
-            assumptions that let risk surface in real systems.
+            My path into security started with testing real systems and seeing how often risk gets
+            hidden behind process, tooling noise, or assumptions that nobody has challenged yet.
+            That shaped the kind of work I enjoy most: understanding application behavior under
+            pressure and turning that understanding into something teams can act on.
           </p>
           <p>
-            That is why my work naturally sits between application security, offensive testing, and
-            engineering systems. I enjoy going deep on product behavior, validating what matters,
-            and building tools or workflows that help teams move from noisy findings to clear
-            action.
+            Over time that pulled me into application security, secure SDLC work, offensive
+            validation, and internal tooling. I am most useful when I can help distinguish real
+            issues from weak signals, improve the quality of vulnerability triage, and give
+            engineering teams clearer evidence for what needs to be fixed first.
           </p>
           <p>
-            My philosophy is straightforward: security should improve judgment, not add ceremony.
-            The best work combines technical depth, usable processes, and enough curiosity to keep
-            asking how a system fails before an attacker answers that question first.
+            My approach is straightforward: security should improve decisions. That means going
+            beyond generic findings, validating risk in context, and building programs or workflows
+            that reduce false positives instead of creating more review overhead.
           </p>
         </div>
       </Reveal>

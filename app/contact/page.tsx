@@ -51,15 +51,9 @@ export default function ContactPage() {
       </Reveal>
 
       <Reveal>
-        <Card className="p-8 md:p-10">
+        <Card className="p-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div className="max-w-2xl space-y-3">
-              <p className={typography.sectionLabel}>Resume</p>
-              <h2 className={typography.sectionTitle}>Download a concise view of my background.</h2>
-              <p className={typography.sectionDescription}>
-                Open the latest resume in a new tab or download it directly for review and sharing.
-              </p>
-            </div>
+            <h2 className={typography.sectionTitle}>Resume</h2>
             <Button asChild size="lg">
               <Link href={resumePath} target="_blank" rel="noreferrer">
                 Download resume

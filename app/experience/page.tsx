@@ -18,8 +18,8 @@ export default function ExperiencePage() {
         <Badge className="w-fit">Experience</Badge>
         <h1 className={typography.pageTitle}>Professional experience.</h1>
         <p className={typography.pageDescription}>
-          A focused timeline of Deloitte roles covering application security leadership, secure
-          SDLC work, penetration testing, DevSecOps delivery, and measurable security outcomes.
+          Deloitte roles across application security leadership, secure SDLC, penetration testing,
+          DevSecOps delivery, and measurable security outcomes.
         </p>
       </Reveal>
 
