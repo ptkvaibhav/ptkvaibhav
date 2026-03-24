@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { getAllResearchPosts, getResearchPostBySlug } from "@/lib/research";
 import { siteConfig } from "@/lib/site";
+import { spacing, typography } from "@/styles/design-system";
 
 type ResearchPostPageProps = {
   params: Promise<{
@@ -57,7 +58,7 @@ export default async function ResearchPostPage({ params }: ResearchPostPageProps
   }
 
   return (
-    <article className="container py-20 md:py-24">
+    <article className={`container ${spacing.section}`}>
       <div className="mx-auto max-w-3xl space-y-10">
         <header className="space-y-6">
           <div className="flex flex-wrap gap-2">
@@ -66,13 +67,11 @@ export default async function ResearchPostPage({ params }: ResearchPostPageProps
             ))}
           </div>
           <div className="space-y-4">
-            <p className="text-sm uppercase tracking-[0.2em] text-zinc-500">
+            <p className={typography.sectionLabel}>
               {formatDate(post.publishedAt)} {" / "} {post.readTime}
             </p>
-            <h1 className="font-serif text-5xl tracking-tight text-white md:text-6xl">
-              {post.title}
-            </h1>
-            <p className="text-lg leading-8 text-zinc-400">{post.excerpt}</p>
+            <h1 className={typography.pageTitle}>{post.title}</h1>
+            <p className={typography.pageDescription}>{post.excerpt}</p>
           </div>
         </header>
 

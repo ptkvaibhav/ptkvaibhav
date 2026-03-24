@@ -1,29 +1,67 @@
 import type { ResearchPost } from "@/types/research";
 
-export const expertiseAreas = [
-  {
-    title: "Application Security",
-    description:
-      "Threat modeling, secure SDLC, SAST, DAST, API security, code review, and offensive validation focused on product behavior.",
-  },
-  {
-    title: "Offensive Security",
-    description:
-      "Manual testing, attack-surface exploration, exploit validation, and adversarial thinking applied to modern web applications.",
-  },
-  {
-    title: "Security Engineering",
-    description:
-      "Automation, parsers, pipelines, extensions, and internal tooling that reduce noise and improve operational security outcomes.",
-  },
-];
-
-export const collaborationAreas = [
-  "Product security program design for engineering teams",
-  "Application security reviews and offensive validation",
-  "Security automation and internal tooling for AppSec workflows",
-  "Research-driven experiments around agentic pentesting systems",
-];
+export const professionalExperience = {
+  company: "Deloitte & Touche AERS India Private Limited",
+  brand: "Deloitte",
+  location: "Bangalore, Karnataka",
+  logo: "/logos/deloitte.svg",
+  summary:
+    "Lead Solution Advisor with 6+ years of expertise in application security, DevSecOps, and penetration testing, leading product security work for Deloitte's Health Interactive Product serving US State Government clients.",
+  roles: [
+    {
+      title: "Lead Solution Advisor",
+      period: "Jun 2025 - Present",
+      metrics: [
+        "33% posture improvement",
+        "23 critical flaws identified",
+        "40% faster review cycles",
+        "14-member team led",
+      ],
+      focus: [
+        "Lead the Product Security Team for Deloitte's Health Interactive Product serving US State Government clients across application, database, container, and infrastructure layers.",
+        "Engineered shift-left application security programs that improved overall security posture by 33%.",
+        "Developed an AI-driven Burp Suite extension using Deloitte Sidekick and Burp Montoya APIs that identified 23 critical flaws.",
+        "Direct a 14-member team across six US-based client systems and improved security review cycles by 40%.",
+        "Own technical hiring for Application Security and Advisor roles, including interviews and candidate evaluation.",
+      ],
+    },
+    {
+      title: "Advisory Solution Advisor",
+      period: "Jul 2023 - Jun 2025",
+      metrics: [
+        "15% billing reduction",
+        "$1M resource savings",
+        "40% faster reviews",
+        "65% fewer false positives",
+      ],
+      focus: [
+        "Implemented a streamlined SAST process by deploying Fortify SSC with development-environment integration.",
+        "Reduced resource billing by 15 percent, review time by 40 percent, and false positives by 65 percent.",
+        "Created Application Security Standards and a Secure Development checklist used across the Cyber Security practice.",
+        "Investigated a security breach in a high-risk US Government application and remediated a Sensitive Information Disclosure issue.",
+      ],
+    },
+    {
+      title: "Advisory Associate Solution Advisor",
+      period: "Jul 2021 - Jun 2023",
+      metrics: ["5 critical vulnerabilities uncovered"],
+      focus: [
+        "Performed manual penetration testing on US State Government applications and uncovered five critical vulnerabilities.",
+        "Validated high-impact findings including SOQL Injection, Cross-Site Scripting, and Session Hijacking.",
+        "Synthesized security strategies for healthcare, engineering, and government departments during RFP planning.",
+      ],
+    },
+    {
+      title: "Advisory Analyst",
+      period: "Jun 2019 - Jun 2021",
+      metrics: ["Automated testing for critical Deloitte applications"],
+      focus: [
+        "Conducted automated application security testing for critical Deloitte applications including deloitte.com.",
+        "Worked with Fortify WebInspect and Static Code Analyzer to surface and triage application risk.",
+      ],
+    },
+  ],
+} as const;
 
 export const researchPosts: ResearchPost[] = [
   {

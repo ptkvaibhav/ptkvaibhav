@@ -4,12 +4,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium tracking-wide",
+  "inline-flex items-center rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-[0.7rem] font-medium uppercase tracking-wide text-emerald-400",
   {
     variants: {
       variant: {
-        default: "border-white/10 bg-white/5 text-zinc-200",
-        accent: "border-emerald-400/20 bg-emerald-400/10 text-emerald-200",
+        default: "",
+        accent: "",
       },
     },
     defaultVariants: {
@@ -25,4 +25,3 @@ export interface BadgeProps
 export function Badge({ className, variant, ...props }: BadgeProps) {
   return <div className={cn(badgeVariants({ variant }), className)} {...props} />;
 }
-

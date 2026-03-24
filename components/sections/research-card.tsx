@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { typography } from "@/styles/design-system";
 import type { ResearchPost } from "@/types/research";
 
 type ResearchCardProps = {
@@ -22,7 +23,7 @@ export function ResearchCard({ post }: ResearchCardProps) {
           <p className="text-sm text-zinc-500">
             {post.publishedAt} {" / "} {post.readTime}
           </p>
-          <CardTitle className="text-2xl">{post.title}</CardTitle>
+          <CardTitle className={typography.cardTitle}>{post.title}</CardTitle>
         </div>
       </CardHeader>
       <CardContent className="space-y-6">

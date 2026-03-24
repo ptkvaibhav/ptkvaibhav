@@ -1,11 +1,12 @@
 import "server-only";
 
-import type { GithubActivity } from "@/types/github";
+import type { GithubActivity, GithubProfileStats } from "@/types/github";
 import type { Project } from "@/types/project";
 
 const GITHUB_USERNAME = "ptkvaibhav";
 const TARGET_REPOS = ["clinkz", "burp-to-fortify-parser", "invoker"] as const;
 const TARGET_REPO_SET = new Set<string>(TARGET_REPOS);
+const REVALIDATE_SECONDS = 3600;
 
 type GitHubRepo = {
   name: string;
@@ -19,12 +20,21 @@ type GitHubRepo = {
   pushed_at: string;
   homepage: string | null;
   archived: boolean;
+  fork: boolean;
 };
 
 type GitHubReadme = {
   html_url: string | null;
   content?: string;
   encoding?: string;
+};
+
+type GitHubUser = {
+  public_repos: number;
+};
+
+type GitHubSearchResult = {
+  total_count: number;
 };
 
 type GitHubEvent = {
@@ -48,6 +58,23 @@ function getGithubHeaders(): HeadersInit {
   }
 
   return headers;
+}
+
+async function fetchGithub(url: string) {
+  return fetch(url, {
+    headers: getGithubHeaders(),
+    next: { revalidate: REVALIDATE_SECONDS },
+  });
+}
+
+async function fetchGithubJson<T>(url: string) {
+  const response = await fetchGithub(url);
+
+  if (!response.ok) {
+    throw new Error(`GitHub request failed with status ${response.status}.`);
+  }
+
+  return (await response.json()) as T;
 }
 
 function normalizeRepoName(name: string) {
@@ -75,6 +102,61 @@ function getLatestActivity(updatedAt: string, pushedAt: string) {
   }
 
   return pushedTime > updatedTime ? pushedAt : updatedAt;
+}
+
+function parseLastPage(linkHeader: string | null) {
+  if (!linkHeader) {
+    return null;
+  }
+
+  const match = linkHeader.match(/[?&]page=(\d+)>;\s*rel="last"/);
+  if (!match) {
+    return null;
+  }
+
+  const page = Number(match[1]);
+  return Number.isNaN(page) ? null : page;
+}
+
+function getDateKey(dateString: string) {
+  const date = new Date(dateString);
+
+  if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+
+  return date.toISOString().slice(0, 10);
+}
+
+function getContributionStreakFromEvents(events: GitHubEvent[]) {
+  const activityDays = [
+    ...new Set(
+      events
+        .map((event) => getDateKey(event.created_at))
+        .filter((value): value is string => Boolean(value))
+    ),
+  ].sort((left, right) => new Date(right).getTime() - new Date(left).getTime());
+
+  if (!activityDays.length) {
+    return 0;
+  }
+
+  let streak = 1;
+
+  for (let index = 1; index < activityDays.length; index += 1) {
+    const previous = new Date(activityDays[index - 1]);
+    const current = new Date(activityDays[index]);
+    const difference = previous.getTime() - current.getTime();
+
+    if (difference === 86_400_000) {
+      streak += 1;
+      continue;
+    }
+
+    break;
+  }
+
+  return streak;
 }
 
 function mapGithubEventToActivity(event: GitHubEvent): GithubActivity | null {
@@ -120,10 +202,7 @@ function mapGithubEventToActivity(event: GitHubEvent): GithubActivity | null {
 
 export async function getRepoReadme(owner: string, repo: string) {
   try {
-    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
-      headers: getGithubHeaders(),
-      next: { revalidate: 3600 },
-    });
+    const response = await fetchGithub(`https://api.github.com/repos/${owner}/${repo}/readme`);
 
     if (!response.ok) {
       throw new Error(`GitHub README request failed with status ${response.status}.`);
@@ -171,21 +250,34 @@ async function mapRepoToProject(repo: GitHubRepo): Promise<Project> {
   };
 }
 
+async function getGithubRepositories() {
+  return fetchGithubJson<GitHubRepo[]>(
+    `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`
+  );
+}
+
+async function getRepoCommitCount(repoName: string) {
+  const response = await fetchGithub(
+    `https://api.github.com/repos/${GITHUB_USERNAME}/${repoName}/commits?author=${GITHUB_USERNAME}&per_page=1`
+  );
+
+  if (!response.ok) {
+    return 0;
+  }
+
+  const lastPage = parseLastPage(response.headers.get("link"));
+
+  if (lastPage) {
+    return lastPage;
+  }
+
+  const commits = (await response.json()) as unknown[];
+  return Array.isArray(commits) ? commits.length : 0;
+}
+
 export async function getGithubProjects(): Promise<Project[]> {
   try {
-    const response = await fetch(
-      `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`,
-      {
-        headers: getGithubHeaders(),
-        next: { revalidate: 3600 },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`GitHub API request failed with status ${response.status}.`);
-    }
-
-    const repositories = (await response.json()) as GitHubRepo[];
+    const repositories = await getGithubRepositories();
     const matchedRepos = repositories.filter((repo) =>
       TARGET_REPO_SET.has(normalizeRepoName(repo.name))
     );
@@ -216,19 +308,9 @@ export async function getGithubProjects(): Promise<Project[]> {
 
 export async function getGithubActivity(): Promise<GithubActivity[]> {
   try {
-    const response = await fetch(
-      `https://api.github.com/users/${GITHUB_USERNAME}/events/public`,
-      {
-        headers: getGithubHeaders(),
-        next: { revalidate: 3600 },
-      }
+    const events = await fetchGithubJson<GitHubEvent[]>(
+      `https://api.github.com/users/${GITHUB_USERNAME}/events/public`
     );
-
-    if (!response.ok) {
-      throw new Error(`GitHub activity request failed with status ${response.status}.`);
-    }
-
-    const events = (await response.json()) as GitHubEvent[];
 
     return events
       .filter((event) =>
@@ -241,5 +323,40 @@ export async function getGithubActivity(): Promise<GithubActivity[]> {
       .slice(0, 5);
   } catch {
     return [];
+  }
+}
+
+export async function getGithubProfileStats(): Promise<GithubProfileStats | null> {
+  try {
+    const [user, repositories, pullRequests, events] = await Promise.all([
+      fetchGithubJson<GitHubUser>(`https://api.github.com/users/${GITHUB_USERNAME}`),
+      getGithubRepositories(),
+      fetchGithubJson<GitHubSearchResult>(
+        `https://api.github.com/search/issues?q=author:${GITHUB_USERNAME}+type:pr&per_page=1`
+      ),
+      fetchGithubJson<GitHubEvent[]>(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`),
+    ]);
+
+    const commitCounts = await Promise.allSettled(
+      repositories.map((repo) => getRepoCommitCount(repo.name))
+    );
+
+    const totalCommits = commitCounts.reduce((total, result) => {
+      if (result.status !== "fulfilled") {
+        return total;
+      }
+
+      return total + result.value;
+    }, 0);
+
+    return {
+      totalCommits,
+      totalRepositories: user.public_repos || repositories.length,
+      stars: repositories.reduce((total, repo) => total + repo.stargazers_count, 0),
+      pullRequests: pullRequests.total_count,
+      contributionStreak: getContributionStreakFromEvents(events),
+    };
+  } catch {
+    return null;
   }
 }

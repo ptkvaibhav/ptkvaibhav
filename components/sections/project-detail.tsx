@@ -5,6 +5,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { spacing, typography } from "@/styles/design-system";
 import type { Project } from "@/types/project";
 
 type ProjectDetailProps = {
@@ -19,7 +20,7 @@ const architectureColumns = [
 
 export function ProjectDetail({ project }: ProjectDetailProps) {
   return (
-    <article className="container py-20 md:py-24">
+    <article className={`container ${spacing.section}`}>
       <div className="mx-auto max-w-6xl space-y-16">
         <Reveal className="space-y-8">
           <div className="flex flex-wrap gap-2">
@@ -30,10 +31,8 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
             ))}
           </div>
           <div className="max-w-4xl space-y-4">
-            <h1 className="font-serif text-5xl tracking-tight text-white md:text-6xl">
-              {project.title}
-            </h1>
-            <p className="text-lg leading-8 text-zinc-400">{project.description}</p>
+            <h1 className={typography.pageTitle}>{project.title}</h1>
+            <p className={typography.pageDescription}>{project.description}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button asChild>
@@ -56,8 +55,8 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
         <Reveal className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <Card className="p-8">
             <CardHeader className="space-y-3">
-              <p className="text-xs uppercase tracking-wider text-zinc-500">Project summary</p>
-              <CardTitle>What this build is about</CardTitle>
+              <p className={typography.sectionLabel}>Project summary</p>
+              <CardTitle className={typography.cardTitle}>What this build is about</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-base leading-8 text-zinc-300">{project.excerpt}</p>
@@ -65,8 +64,8 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
           </Card>
           <Card className="p-8">
             <CardHeader className="space-y-3">
-              <p className="text-xs uppercase tracking-wider text-zinc-500">Problem</p>
-              <CardTitle>The problem it solves</CardTitle>
+              <p className={typography.sectionLabel}>Problem</p>
+              <CardTitle className={typography.cardTitle}>The problem it solves</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-base leading-8 text-zinc-300">{project.problem}</p>
@@ -76,16 +75,16 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
 
         <Reveal className="space-y-6">
           <div className="space-y-3">
-            <p className="text-xs uppercase tracking-wider text-zinc-500">Architecture</p>
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+            <p className={typography.sectionLabel}>Architecture</p>
+            <h2 className={typography.sectionTitle}>
               System architecture overview
             </h2>
           </div>
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
             {architectureColumns.map((column) => (
               <Card key={column.key} className="p-6">
                 <CardHeader className="space-y-3">
-                  <CardTitle className="text-xl">{column.label}</CardTitle>
+                  <CardTitle className={typography.cardTitle}>{column.label}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {project.architecture[column.key].map((item) => (
@@ -105,8 +104,8 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
         <Reveal className="grid gap-6 lg:grid-cols-2">
           <Card className="p-8">
             <CardHeader className="space-y-3">
-              <p className="text-xs uppercase tracking-wider text-zinc-500">Key components</p>
-              <CardTitle>Important parts of the system</CardTitle>
+              <p className={typography.sectionLabel}>Key components</p>
+              <CardTitle className={typography.cardTitle}>Important parts of the system</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {project.components.map((component) => (
@@ -122,8 +121,8 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
 
           <Card className="p-8">
             <CardHeader className="space-y-3">
-              <p className="text-xs uppercase tracking-wider text-zinc-500">Security implications</p>
-              <CardTitle>How it improves security posture</CardTitle>
+              <p className={typography.sectionLabel}>Security implications</p>
+              <CardTitle className={typography.cardTitle}>How it improves security posture</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {project.securityImpact.map((impact) => (
@@ -140,12 +139,12 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
 
         <Reveal className="space-y-6">
           <div className="space-y-3">
-            <p className="text-xs uppercase tracking-wider text-zinc-500">Future work</p>
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+            <p className={typography.sectionLabel}>Future work</p>
+            <h2 className={typography.sectionTitle}>
               Experimental directions and next steps
             </h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {project.futureWork.map((item) => (
               <Card key={item} className="p-6">
                 <CardContent>

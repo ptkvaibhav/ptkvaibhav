@@ -4,37 +4,31 @@ import { Reveal } from "@/components/motion/reveal";
 import { ResearchCard } from "@/components/sections/research-card";
 import { Badge } from "@/components/ui/badge";
 import { getAllResearchPosts } from "@/lib/research";
+import { spacing, typography } from "@/styles/design-system";
 
 export const metadata: Metadata = {
   title: "Research",
-  description: "Research notes on application security, offensive security, and security automation.",
+  description: "A small set of research notes on application security, tooling, and offensive automation.",
 };
 
 export const dynamic = "force-static";
 export const revalidate = 3600;
 
 export default function ResearchPage() {
-  const posts = getAllResearchPosts();
+  const posts = getAllResearchPosts().slice(0, 2);
 
   return (
-    <section className="container py-20 md:py-24">
-      <Reveal className="mb-10 space-y-6">
-        <Badge variant="accent" className="w-fit">
-          Research / Blog
-        </Badge>
-        <div className="max-w-3xl space-y-4">
-          <h1 className="font-serif text-5xl tracking-tight text-white md:text-6xl">
-            Writing on adversarial behavior, security engineering, and offensive automation.
-          </h1>
-          <p className="text-lg leading-8 text-zinc-400">
-            A running body of work on how modern applications behave under pressure, how
-            security tooling should fit into real engineering environments, and where agentic
-            systems can improve offensive workflows.
-          </p>
-        </div>
+    <section className={`container ${spacing.section}`}>
+      <Reveal className={spacing.sectionHeader}>
+        <Badge className="w-fit">Research</Badge>
+        <h1 className={typography.pageTitle}>A small set of working notes.</h1>
+        <p className={typography.pageDescription}>
+          Short writing on application behavior, offensive automation, and the practical design of
+          security tooling.
+        </p>
       </Reveal>
 
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {posts.map((post, index) => (
           <Reveal key={post.slug} delay={index * 0.05}>
             <ResearchCard post={post} />

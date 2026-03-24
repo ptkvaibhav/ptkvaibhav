@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import { Reveal } from "@/components/motion/reveal";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { siteConfig } from "@/lib/site";
+import { spacing, typography } from "@/styles/design-system";
 
 export const metadata: Metadata = {
   title: "About",
@@ -12,55 +12,32 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-static";
 
-const principles = [
-  "Understand application behavior before assuming the vulnerability class.",
-  "Build workflows that engineers can actually live with.",
-  "Treat automation as a way to improve judgment, not replace it.",
-  "Keep one foot in real delivery environments and one in experimentation.",
-];
-
 export default function AboutPage() {
   return (
-    <section className="container py-20 md:py-24">
-      <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-        <Reveal className="space-y-6">
-          <Badge variant="accent" className="w-fit">
-            About
-          </Badge>
-          <div className="space-y-5">
-            <h1 className="font-serif text-5xl tracking-tight text-white md:text-6xl">
-              Security engineering driven by curiosity and evidence.
-            </h1>
-            <p className="max-w-xl text-lg leading-8 text-zinc-400">{siteConfig.bio}</p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.06}>
-          <Card className="p-8">
-            <CardHeader className="space-y-4">
-              <CardTitle>How I approach the work</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <p className="text-base leading-8 text-zinc-400">
-                I am most engaged when security work demands both technical depth and systems
-                thinking. That usually means understanding how software behaves under pressure,
-                validating what matters, and designing better paths for teams to act on that
-                information.
-              </p>
-              <div className="grid gap-4">
-                {principles.map((principle) => (
-                  <div
-                    key={principle}
-                    className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-base leading-7 text-zinc-300"
-                  >
-                    {principle}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </Reveal>
-      </div>
+    <section className={`container ${spacing.section}`}>
+      <Reveal className="max-w-3xl space-y-6">
+        <Badge className="w-fit">About</Badge>
+        <h1 className={typography.pageTitle}>Security engineering driven by curiosity and evidence.</h1>
+        <p className={typography.pageDescription}>{siteConfig.bio}</p>
+        <div className="space-y-6 text-base leading-8 text-zinc-300">
+          <p>
+            My path into security has always been anchored in how software behaves under pressure.
+            I care less about memorizing vulnerability names and more about understanding the weak
+            assumptions that let risk surface in real systems.
+          </p>
+          <p>
+            That is why my work naturally sits between application security, offensive testing, and
+            engineering systems. I enjoy going deep on product behavior, validating what matters,
+            and building tools or workflows that help teams move from noisy findings to clear
+            action.
+          </p>
+          <p>
+            My philosophy is straightforward: security should improve judgment, not add ceremony.
+            The best work combines technical depth, usable processes, and enough curiosity to keep
+            asking how a system fails before an attacker answers that question first.
+          </p>
+        </div>
+      </Reveal>
     </section>
   );
 }

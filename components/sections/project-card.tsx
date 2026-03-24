@@ -4,6 +4,7 @@ import { ArrowUpRight, Clock3, GitFork, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { typography } from "@/styles/design-system";
 import type { Project } from "@/types/project";
 
 type ProjectCardProps = {
@@ -29,35 +30,44 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
     typeof project.stars === "number" ||
     typeof project.forks === "number" ||
     Boolean(formattedLastUpdated);
+  const description = compact ? project.excerpt : project.description;
 
   return (
-    <Card className="surface-grid relative h-full p-6">
+    <Card className="surface-grid relative flex h-full flex-col p-6">
       <Link
         href={`/projects/${project.slug}`}
         aria-label={`View ${project.title} project details`}
         className="absolute inset-0 z-0 rounded-xl"
       />
       <CardHeader className="relative z-10 space-y-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <Badge variant="accent">{project.status}</Badge>
-          {project.language ? <Badge>{project.language}</Badge> : null}
-          {project.tags.slice(0, compact ? 2 : 4).map((tag) => (
-            <Badge key={tag}>{tag}</Badge>
-          ))}
+        <div className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="accent">{project.status}</Badge>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {project.language ? <Badge>{project.language}</Badge> : null}
+            {project.tags.slice(0, compact ? 2 : 3).map((tag) => (
+              <Badge key={tag}>{tag}</Badge>
+            ))}
+          </div>
         </div>
         <div className="space-y-2">
-          <CardTitle>{project.title}</CardTitle>
-          <CardDescription className="text-base leading-7 text-zinc-400">
-            {compact ? project.excerpt : project.description}
+          <CardTitle className={typography.cardTitle}>{project.title}</CardTitle>
+          <CardDescription className="line-clamp-2 text-base leading-7 text-zinc-400">
+            {description}
           </CardDescription>
         </div>
       </CardHeader>
-      <CardContent className="relative z-10 space-y-4 pt-2">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <p className="text-sm text-zinc-500">{project.excerpt}</p>
+      <CardContent className="relative z-10 mt-auto space-y-5 pt-4">
+        <div className="flex flex-wrap items-center justify-end gap-2">
           <div className="flex flex-wrap gap-2">
             {project.readmeUrl ? (
-              <Button asChild variant="secondary" size="sm" className="mt-4 bg-white/[0.05] hover:bg-white/[0.08]">
+              <Button
+                asChild
+                variant="secondary"
+                size="sm"
+                className="bg-white/[0.05] hover:bg-white/[0.08]"
+              >
                 <Link href={project.readmeUrl} target="_blank" rel="noreferrer">
                   View README
                   <ArrowUpRight className="h-4 w-4" />
@@ -68,7 +78,7 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
               asChild
               variant="secondary"
               size="sm"
-              className="mt-4 bg-white/[0.05] hover:bg-white/[0.08]"
+              className="bg-white/[0.05] hover:bg-white/[0.08]"
             >
               <Link href={project.github} target="_blank" rel="noreferrer">
                 View repo

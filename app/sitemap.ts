@@ -4,7 +4,7 @@ import { researchPosts } from "@/lib/content";
 import { siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/about", "/projects", "/research", "/labs", "/contact", "/resume"];
+  const routes = ["", "/about", "/experience", "/projects", "/research", "/contact"];
 
   return [
     ...routes.map((route) => ({

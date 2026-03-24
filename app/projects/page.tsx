@@ -4,6 +4,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { ProjectCard } from "@/components/sections/project-card";
 import { Badge } from "@/components/ui/badge";
 import { getProjects } from "@/lib/projects";
+import { spacing, typography } from "@/styles/design-system";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -17,24 +18,19 @@ export default async function ProjectsPage() {
   const projects = await getProjects();
 
   return (
-    <section className="container py-20 md:py-24">
-      <Reveal className="mb-10 space-y-6">
-        <Badge variant="accent" className="w-fit">
-          Projects
-        </Badge>
+    <section className={`container ${spacing.section}`}>
+      <Reveal className={spacing.sectionHeader}>
+        <Badge className="w-fit">Projects</Badge>
         <div className="max-w-3xl space-y-4">
-          <h1 className="font-serif text-5xl tracking-tight text-white md:text-6xl">
-            Projects exploring application behavior, offensive automation, and security tooling.
-          </h1>
-          <p className="text-lg leading-8 text-zinc-400">
-            These builds sync from GitHub on a one-hour interval with a static fallback in place,
-            reflecting how I think about security analysis, workflow improvement, and
-            research-driven engineering.
+          <h1 className={typography.pageTitle}>Projects and technical case studies.</h1>
+          <p className={typography.pageDescription}>
+            A focused set of tools and experiments spanning application security analysis,
+            offensive validation, and workflow automation.
           </p>
         </div>
       </Reveal>
 
-      <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {projects.map((project, index) => (
           <Reveal key={project.slug} delay={index * 0.05}>
             <ProjectCard project={project} />
