@@ -69,8 +69,6 @@ export default function RootLayout({
         )}
       >
         <div className="relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 bg-hero-grid bg-[size:36px_36px] opacity-[0.18]" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-emerald-500/10 to-transparent blur-3xl" />
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />

@@ -4,7 +4,6 @@ import { Download, Github, Linkedin, Mail } from "lucide-react";
 
 import { ContactForm } from "@/components/forms/contact-form";
 import { Reveal } from "@/components/motion/reveal";
-import { ResumePreview } from "@/components/sections/resume-preview";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,7 +12,7 @@ import { spacing, typography } from "@/styles/design-system";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: `Contact ${siteConfig.name}, view the resume, and get in touch for application security or offensive security work.`,
+  description: `Contact ${siteConfig.name}, download the resume, and get in touch for application security or offensive security work.`,
 };
 
 const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
@@ -46,15 +45,49 @@ export default function ContactPage() {
         <Badge className="w-fit">Contact</Badge>
         <h1 className={typography.pageTitle}>Contact, resume, and direct links.</h1>
         <p className={typography.pageDescription}>
-          Everything is in one place here: direct contact channels, the resume preview, and the
-          form for starting a conversation.
+          Everything is in one place here: resume access, the contact form, and direct links to
+          reach out.
         </p>
       </Reveal>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.82fr_1.18fr]">
-        <div className="space-y-8">
-          <Reveal className="space-y-4">
-            <div className="grid gap-4">
+      <Reveal>
+        <Card className="p-8 md:p-10">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl space-y-3">
+              <p className={typography.sectionLabel}>Resume</p>
+              <h2 className={typography.sectionTitle}>Download a concise view of my background.</h2>
+              <p className={typography.sectionDescription}>
+                Open the latest resume in a new tab or download it directly for review and sharing.
+              </p>
+            </div>
+            <Button asChild size="lg">
+              <Link href={resumePath} target="_blank" rel="noreferrer">
+                Download resume
+                <Download className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </Card>
+      </Reveal>
+
+      <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <Reveal delay={0.04}>
+          <Card className="p-8">
+            <CardHeader className="space-y-3">
+              <CardTitle className={typography.cardTitle}>Send a message</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ContactForm />
+            </CardContent>
+          </Card>
+        </Reveal>
+
+        <Reveal delay={0.06}>
+          <Card className="p-8">
+            <CardHeader className="space-y-3">
+              <CardTitle className={typography.cardTitle}>Direct links</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
               {channels.map((channel) => {
                 const Icon = channel.icon;
 
@@ -64,7 +97,7 @@ export default function ContactPage() {
                     href={channel.href}
                     target={channel.href.startsWith("mailto:") ? undefined : "_blank"}
                     rel={channel.href.startsWith("mailto:") ? undefined : "noreferrer"}
-                    className="group rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition hover:border-emerald-400/30 hover:bg-white/[0.05]"
+                    className="group block rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition hover:border-emerald-400/30 hover:bg-white/[0.03]"
                   >
                     <div className="flex items-center gap-4">
                       <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-background text-emerald-300">
@@ -72,7 +105,7 @@ export default function ContactPage() {
                       </div>
                       <div className="space-y-1">
                         <p className="text-sm text-zinc-500">{channel.label}</p>
-                        <p className="text-base text-zinc-200 transition group-hover:text-white">
+                        <p className="text-base text-zinc-100 transition group-hover:text-white">
                           {channel.value}
                         </p>
                       </div>
@@ -80,36 +113,6 @@ export default function ContactPage() {
                   </Link>
                 );
               })}
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.04}>
-            <Card className="surface-grid p-6 md:p-8">
-              <CardHeader className="space-y-3">
-                <CardTitle className={typography.cardTitle}>Resume</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-5">
-                <ResumePreview src={resumePath} />
-                <div className="flex justify-end">
-                  <Button asChild variant="secondary">
-                    <Link href={resumePath} target="_blank" rel="noreferrer">
-                      Download resume
-                      <Download className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.06}>
-          <Card className="surface-grid p-8">
-            <CardHeader className="space-y-3">
-              <CardTitle className={typography.cardTitle}>Send a message</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ContactForm />
             </CardContent>
           </Card>
         </Reveal>

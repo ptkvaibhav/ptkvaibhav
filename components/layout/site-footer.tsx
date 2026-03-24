@@ -11,15 +11,12 @@ export function SiteFooter() {
           <p className="text-sm text-zinc-400">{siteConfig.description}</p>
         </div>
 
-        <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
+        <div className="flex flex-wrap gap-4 text-sm text-stone-300/85">
           <Link href={siteConfig.social.github} target="_blank" rel="noreferrer">
             GitHub
           </Link>
           <Link href={siteConfig.social.linkedin} target="_blank" rel="noreferrer">
             LinkedIn
-          </Link>
-          <Link href={siteConfig.social.x} target="_blank" rel="noreferrer">
-            X
           </Link>
           <Link href={`mailto:${siteConfig.email}`}>{siteConfig.email}</Link>
         </div>
@@ -27,4 +24,3 @@ export function SiteFooter() {
     </footer>
   );
 }
-

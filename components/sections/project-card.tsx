@@ -30,10 +30,14 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
     typeof project.stars === "number" ||
     typeof project.forks === "number" ||
     Boolean(formattedLastUpdated);
-  const description = compact ? project.excerpt : project.description;
+  const visibleTags = project.tags
+    .filter((tag) => tag.toLowerCase() !== project.language?.toLowerCase())
+    .slice(0, compact ? 2 : 3);
+  const summary = project.excerpt?.trim() || project.title;
+  const shouldRenderSummary = summary.toLowerCase() !== project.title.trim().toLowerCase();
 
   return (
-    <Card className="surface-grid relative flex h-full flex-col p-6">
+    <Card className="relative flex h-full flex-col p-6">
       <Link
         href={`/projects/${project.slug}`}
         aria-label={`View ${project.title} project details`}
@@ -46,16 +50,18 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
           </div>
           <div className="flex flex-wrap gap-2">
             {project.language ? <Badge>{project.language}</Badge> : null}
-            {project.tags.slice(0, compact ? 2 : 3).map((tag) => (
+            {visibleTags.map((tag) => (
               <Badge key={tag}>{tag}</Badge>
             ))}
           </div>
         </div>
         <div className="space-y-2">
           <CardTitle className={typography.cardTitle}>{project.title}</CardTitle>
-          <CardDescription className="line-clamp-2 text-base leading-7 text-zinc-400">
-            {description}
-          </CardDescription>
+          {shouldRenderSummary ? (
+            <CardDescription className="line-clamp-2 text-base leading-7 text-stone-300/85">
+              {summary}
+            </CardDescription>
+          ) : null}
         </div>
       </CardHeader>
       <CardContent className="relative z-10 mt-auto space-y-5 pt-4">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { Reveal } from "@/components/motion/reveal";
+import { AwardsSection } from "@/components/sections/awards";
 import { Badge } from "@/components/ui/badge";
 import { siteConfig } from "@/lib/site";
 import { spacing, typography } from "@/styles/design-system";
@@ -19,7 +20,7 @@ export default function AboutPage() {
         <Badge className="w-fit">About</Badge>
         <h1 className={typography.pageTitle}>Security engineering driven by curiosity and evidence.</h1>
         <p className={typography.pageDescription}>{siteConfig.bio}</p>
-        <div className="space-y-6 text-base leading-8 text-zinc-300">
+        <div className="space-y-6 text-base leading-8 text-stone-300/85">
           <p>
             My path into security has always been anchored in how software behaves under pressure.
             I care less about memorizing vulnerability names and more about understanding the weak
@@ -37,6 +38,10 @@ export default function AboutPage() {
             asking how a system fails before an attacker answers that question first.
           </p>
         </div>
+      </Reveal>
+
+      <Reveal delay={0.08} className="mt-16">
+        <AwardsSection />
       </Reveal>
     </section>
   );

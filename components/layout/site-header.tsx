@@ -2,20 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Github, Linkedin, Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site";
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
 
   function closeMenu() {
     setIsMenuOpen(false);
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/5 bg-background/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-background/95">
       <div className="container flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center justify-between gap-4">
           <Link
@@ -49,12 +50,32 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden md:flex items-center gap-2">
-          <Button asChild size="sm" variant="ghost">
-            <Link href={siteConfig.social.github} target="_blank" rel="noreferrer">
-              GitHub
+          <Button asChild size="sm" variant="secondary">
+            <Link href={resumePath} target="_blank" rel="noreferrer">
+              Resume
             </Link>
           </Button>
-          <Button asChild size="sm" variant="secondary">
+          <Button asChild size="sm" variant="ghost" className="h-9 w-9 px-0">
+            <Link
+              href={siteConfig.social.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn profile"
+            >
+              <Linkedin className="h-4 w-4" />
+            </Link>
+          </Button>
+          <Button asChild size="sm" variant="ghost" className="h-9 w-9 px-0">
+            <Link
+              href={siteConfig.social.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub profile"
+            >
+              <Github className="h-4 w-4" />
+            </Link>
+          </Button>
+          <Button asChild size="sm">
             <Link href="/contact">Let&apos;s talk</Link>
           </Button>
         </div>
@@ -64,7 +85,7 @@ export function SiteHeader() {
             isMenuOpen ? "max-h-[24rem] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-glow">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
             <nav className="flex flex-col gap-2 text-sm text-zinc-300">
               {siteConfig.nav.map((item) => (
                 <Link
@@ -77,18 +98,37 @@ export function SiteHeader() {
                 </Link>
               ))}
             </nav>
-            <div className="mt-4 flex flex-col gap-2">
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              <Button asChild size="sm" variant="secondary" className="col-span-2">
+                <Link href={resumePath} target="_blank" rel="noreferrer" onClick={closeMenu}>
+                  Resume
+                </Link>
+              </Button>
+              <Button asChild size="sm" variant="ghost">
+                <Link
+                  href={siteConfig.social.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn profile"
+                  onClick={closeMenu}
+                >
+                  <Linkedin className="h-4 w-4" />
+                  LinkedIn
+                </Link>
+              </Button>
               <Button asChild size="sm" variant="ghost">
                 <Link
                   href={siteConfig.social.github}
                   target="_blank"
                   rel="noreferrer"
+                  aria-label="GitHub profile"
                   onClick={closeMenu}
                 >
+                  <Github className="h-4 w-4" />
                   GitHub
                 </Link>
               </Button>
-              <Button asChild size="sm" variant="secondary">
+              <Button asChild size="sm" className="col-span-2">
                 <Link href="/contact" onClick={closeMenu}>
                   Let&apos;s talk
                 </Link>

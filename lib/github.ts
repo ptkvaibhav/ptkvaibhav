@@ -219,15 +219,15 @@ export async function getRepoReadme(owner: string, repo: string) {
 
 async function mapRepoToProject(repo: GitHubRepo): Promise<Project> {
   const normalizedName = normalizeRepoName(repo.name);
-  const description = repo.description?.trim() || "Repository synced from GitHub.";
+  const summary = repo.description?.trim() || repo.name;
   const readmeUrl = await getRepoReadme(GITHUB_USERNAME, repo.name);
   const topics = Array.isArray(repo.topics) ? repo.topics.map(formatTopic) : [];
 
   return {
     slug: normalizedName,
     title: repo.name,
-    excerpt: description,
-    description,
+    excerpt: summary,
+    description: "",
     problem: "",
     architecture: {
       inputs: [],

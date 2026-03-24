@@ -31,7 +31,7 @@ export function ResearchCard({ post }: ResearchCardProps) {
           {post.excerpt}
         </p>
         <Link
-          href={`/research/${post.slug}`}
+          href={`/archive/research/${post.slug}`}
           className="inline-flex items-center gap-2 text-sm font-medium text-white transition hover:text-emerald-300"
         >
           Read article

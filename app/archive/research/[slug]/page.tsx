@@ -12,15 +12,10 @@ type ResearchPostPageProps = {
   }>;
 };
 
-function formatDate(date: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(date));
-}
+export const dynamic = "force-static";
+export const revalidate = 3600;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return getAllResearchPosts().map((post) => ({
     slug: post.slug,
   }));
@@ -32,7 +27,7 @@ export async function generateMetadata({ params }: ResearchPostPageProps): Promi
 
   if (!post) {
     return {
-      title: "Research",
+      title: "Archived Research",
     };
   }
 
@@ -40,11 +35,11 @@ export async function generateMetadata({ params }: ResearchPostPageProps): Promi
     title: post.title,
     description: post.excerpt,
     openGraph: {
-      title: `${post.title} | ${siteConfig.name}`,
+      title: post.title,
       description: post.excerpt,
       type: "article",
       publishedTime: post.publishedAt,
-      url: `${siteConfig.url}/research/${post.slug}`,
+      url: `${siteConfig.url}/archive/research/${post.slug}`,
     },
   };
 }
@@ -60,22 +55,22 @@ export default async function ResearchPostPage({ params }: ResearchPostPageProps
   return (
     <article className={`container ${spacing.section}`}>
       <div className="mx-auto max-w-3xl space-y-10">
-        <header className="space-y-6">
+        <header className="space-y-5">
+          <Badge className="w-fit">Archived Research</Badge>
+          <h1 className={typography.pageTitle}>{post.title}</h1>
+          <div className="flex flex-wrap gap-3 text-sm text-zinc-500">
+            <span>{post.publishedAt}</span>
+            <span>{post.readTime}</span>
+          </div>
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <Badge key={tag}>{tag}</Badge>
             ))}
           </div>
-          <div className="space-y-4">
-            <p className={typography.sectionLabel}>
-              {formatDate(post.publishedAt)} {" / "} {post.readTime}
-            </p>
-            <h1 className={typography.pageTitle}>{post.title}</h1>
-            <p className={typography.pageDescription}>{post.excerpt}</p>
-          </div>
+          <p className={typography.pageDescription}>{post.excerpt}</p>
         </header>
 
-        <div className="space-y-6 text-lg leading-9 text-zinc-300">
+        <div className="space-y-6 text-base leading-8 text-stone-300/85">
           {post.content.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}

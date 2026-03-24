@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "Pratik Vaibhav",
   description:
-    "Application Security engineer focused on offensive testing, security automation, and building systems that surface real software risk.",
-  bio: "I work at the intersection of application behavior, offensive security, and engineering systems. My focus is understanding how modern software fails under adversarial conditions and building tooling that helps teams detect and fix those failures earlier.",
+    "I build and break applications to understand how they fail, then design systems that catch those failures early.",
+  bio: "I work across application security, offensive testing, and engineering systems. Most of my time goes into validating real software risk, building better security workflows, and helping teams fix the issues that matter sooner.",
   email: "ptkvaibhav@gmail.com",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   social: {
@@ -15,7 +15,6 @@ export const siteConfig = {
     { href: "/about", label: "About" },
     { href: "/experience", label: "Experience" },
     { href: "/projects", label: "Projects" },
-    { href: "/research", label: "Research" },
     { href: "/contact", label: "Contact" },
   ],
 } as const;

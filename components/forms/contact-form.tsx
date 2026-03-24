@@ -125,7 +125,7 @@ export function ContactForm() {
         <Textarea
           id="message"
           maxLength={2000}
-          placeholder="Tell me what you are building, researching, or hiring for."
+          placeholder="Tell me what you are building, testing, or hiring for."
           {...form.register("message")}
         />
         {form.formState.errors.message ? (

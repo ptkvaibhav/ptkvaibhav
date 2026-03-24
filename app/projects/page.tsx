@@ -8,7 +8,7 @@ import { spacing, typography } from "@/styles/design-system";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Selected security engineering, automation, and research projects by Pratik Vaibhav.",
+  description: "Selected security engineering, automation, and application security projects by Pratik Vaibhav.",
 };
 
 export const dynamic = "force-static";

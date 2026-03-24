@@ -162,8 +162,9 @@ function mergeProjectWithFallback(project: Project): Project {
   return {
     ...fallback,
     ...project,
+    title: fallback.title,
     excerpt: project.excerpt || fallback.excerpt,
-    description: project.description || fallback.description,
+    description: fallback.description,
     problem: project.problem || fallback.problem,
     architecture: {
       inputs: project.architecture?.inputs?.length
@@ -182,7 +183,7 @@ function mergeProjectWithFallback(project: Project): Project {
       : fallback.securityImpact,
     futureWork: project.futureWork.length ? project.futureWork : fallback.futureWork,
     tags: project.tags.length ? project.tags : fallback.tags,
-    status: project.status || fallback.status,
+    status: fallback.status || project.status,
   };
 }
 

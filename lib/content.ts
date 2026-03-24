@@ -63,6 +63,27 @@ export const professionalExperience = {
   ],
 } as const;
 
+export const awards = [
+  {
+    title: "Outstanding Performance Award",
+    highlight: "Top 1%",
+    description:
+      "Recognized within Deloitte's top one percent for sustained delivery impact and leadership in application security work.",
+  },
+  {
+    title: "Deloitte awards",
+    highlight: "9 awards",
+    description:
+      "Received nine Deloitte awards across delivery quality, ownership, security execution, and team contribution.",
+  },
+  {
+    title: "NULLCON speaker",
+    highlight: "Speaker",
+    description:
+      "Presented applied security ideas and practitioner experience in a public conference setting.",
+  },
+] as const;
+
 export const researchPosts: ResearchPost[] = [
   {
     slug: "adversarial-behavior-in-modern-applications",
