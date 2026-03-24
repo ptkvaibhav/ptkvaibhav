@@ -52,8 +52,8 @@ export function ExperienceSection() {
   }, []);
 
   return (
-    <div ref={containerRef} className="grid gap-10 md:grid-cols-[120px_1fr] md:gap-12">
-      <div className="flex items-start">
+    <div className="grid gap-10 md:grid-cols-[140px_minmax(0,1fr)] md:gap-12 lg:gap-14" ref={containerRef}>
+      <div className="flex md:items-center md:justify-center">
         <div className="rounded-2xl border border-slate-200 bg-white p-4">
           <Image
             src={professionalExperience.logo}
@@ -65,16 +65,16 @@ export function ExperienceSection() {
         </div>
       </div>
 
-      <div className="border-l-2 border-slate-200 pl-6">
+      <div className="border-l-2 border-slate-200 pl-6 md:pl-8">
         {professionalExperience.roles.map((role) => (
           <article
             key={`${role.title}-${role.period}`}
             data-experience-role
-            className="relative mb-8 last:mb-0"
+            className="relative mb-10 last:mb-0"
           >
-            <span className="absolute -left-[33px] top-[6px] h-2 w-2 rounded-full bg-violet-600" />
+            <span className="absolute -left-[33px] top-[7px] h-2.5 w-2.5 rounded-full bg-violet-600" />
 
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div className="space-y-2">
                 <h3 className="text-2xl font-semibold tracking-tight text-slate-900">
                   {role.title}

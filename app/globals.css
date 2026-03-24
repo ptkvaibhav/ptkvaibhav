@@ -30,7 +30,7 @@
   html {
     color-scheme: light;
     scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    scroll-padding-top: 100px;
   }
 
   body {
@@ -78,5 +78,46 @@
 
   .surface {
     @apply rounded-2xl border border-slate-200 bg-white;
+  }
+
+  .ambient-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 12% 12%, rgba(124, 58, 237, 0.05), transparent 30%),
+      radial-gradient(circle at 88% 18%, rgba(124, 58, 237, 0.04), transparent 26%);
+    animation: ambient-drift 18s ease-in-out infinite;
+  }
+
+  .text-link {
+    @apply relative inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900;
+  }
+
+  .text-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: #7c3aed;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  .text-link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ambient-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -1.5%, 0);
   }
 }

@@ -1,8 +1,8 @@
 export const typography = {
   sectionLabel: "text-xs font-semibold uppercase tracking-[0.22em] text-violet-700",
-  sectionTitle: "text-4xl font-semibold tracking-tight text-slate-900 md:text-5xl",
+  sectionTitle: "text-[2.75rem] font-bold leading-[1.08] tracking-tight text-slate-900 md:text-[3.5rem]",
   sectionDescription: "text-base leading-8 text-slate-600",
-  pageTitle: "text-5xl font-bold tracking-tight text-slate-900 md:text-6xl",
+  pageTitle: "text-[3.5rem] font-bold leading-[1.02] tracking-tight text-slate-900 md:text-[4.75rem]",
   pageDescription: "text-lg leading-8 text-slate-700",
   cardTitle: "text-xl font-semibold tracking-tight text-slate-900",
   cardText: "text-sm leading-7 text-slate-600",

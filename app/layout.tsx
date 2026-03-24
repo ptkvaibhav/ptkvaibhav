@@ -69,6 +69,7 @@ export default function RootLayout({
         )}
       >
         <div className="relative overflow-hidden">
+          <div aria-hidden className="ambient-layer" />
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />

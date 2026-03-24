@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { Github, Linkedin } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site";
+
+const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
 
 export function SiteFooter() {
   return (
@@ -11,14 +15,33 @@ export function SiteFooter() {
           <p className="text-sm text-slate-600">{siteConfig.bio}</p>
         </div>
 
-        <div className="flex flex-wrap gap-4 text-sm text-slate-600">
-          <Link href={siteConfig.social.github} target="_blank" rel="noreferrer">
+        <div className="flex flex-wrap items-center gap-4">
+          <Button asChild size="sm" variant="secondary">
+            <Link href={resumePath} target="_blank" rel="noreferrer">
+              Resume
+            </Link>
+          </Button>
+          <Link
+            href={siteConfig.social.github}
+            target="_blank"
+            rel="noreferrer"
+            className="text-link"
+          >
+            <Github className="h-4 w-4" />
             GitHub
           </Link>
-          <Link href={siteConfig.social.linkedin} target="_blank" rel="noreferrer">
+          <Link
+            href={siteConfig.social.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            className="text-link"
+          >
+            <Linkedin className="h-4 w-4" />
             LinkedIn
           </Link>
-          <Link href={`mailto:${siteConfig.email}`}>{siteConfig.email}</Link>
+          <Button asChild size="sm">
+            <Link href="#contact">Let&apos;s talk</Link>
+          </Button>
         </div>
       </div>
     </footer>

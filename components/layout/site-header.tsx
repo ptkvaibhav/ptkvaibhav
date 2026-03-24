@@ -154,17 +154,7 @@ export function SiteHeader() {
               Resume
             </Link>
           </Button>
-          <Button asChild size="sm" variant="ghost" className="h-9 w-9 px-0">
-            <Link
-              href={siteConfig.social.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn profile"
-            >
-              <Linkedin className="h-4 w-4" />
-            </Link>
-          </Button>
-          <Button asChild size="sm" variant="ghost" className="h-9 w-9 px-0">
+          <Button asChild size="sm" variant="ghost">
             <Link
               href={siteConfig.social.github}
               target="_blank"
@@ -172,6 +162,18 @@ export function SiteHeader() {
               aria-label="GitHub profile"
             >
               <Github className="h-4 w-4" />
+              GitHub
+            </Link>
+          </Button>
+          <Button asChild size="sm" variant="ghost">
+            <Link
+              href={siteConfig.social.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn profile"
+            >
+              <Linkedin className="h-4 w-4" />
+              LinkedIn
             </Link>
           </Button>
           <Button asChild size="sm">
@@ -209,18 +211,6 @@ export function SiteHeader() {
               </Button>
               <Button asChild size="sm" variant="ghost">
                 <Link
-                  href={siteConfig.social.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn profile"
-                  onClick={closeMenu}
-                >
-                  <Linkedin className="h-4 w-4" />
-                  LinkedIn
-                </Link>
-              </Button>
-              <Button asChild size="sm" variant="ghost">
-                <Link
                   href={siteConfig.social.github}
                   target="_blank"
                   rel="noreferrer"
@@ -229,6 +219,18 @@ export function SiteHeader() {
                 >
                   <Github className="h-4 w-4" />
                   GitHub
+                </Link>
+              </Button>
+              <Button asChild size="sm" variant="ghost">
+                <Link
+                  href={siteConfig.social.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn profile"
+                  onClick={closeMenu}
+                >
+                  <Linkedin className="h-4 w-4" />
+                  LinkedIn
                 </Link>
               </Button>
               <Button asChild size="sm" className="col-span-2">

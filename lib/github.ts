@@ -200,6 +200,72 @@ function mapGithubEventToActivity(event: GitHubEvent): GithubActivity | null {
   return null;
 }
 
+function decodeReadmeContent(content?: string, encoding?: string) {
+  if (!content || encoding !== "base64") {
+    return undefined;
+  }
+
+  try {
+    return Buffer.from(content, "base64").toString("utf8");
+  } catch {
+    return undefined;
+  }
+}
+
+function stripMarkdown(markdown: string) {
+  return markdown
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, "")
+    .trim();
+}
+
+function extractReadmeSummary(markdown?: string) {
+  if (!markdown) {
+    return undefined;
+  }
+
+  const withoutCodeBlocks = markdown.replace(/```[\s\S]*?```/g, "");
+  const lines = withoutCodeBlocks
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .filter((line) => !line.startsWith("#"))
+    .filter((line) => !line.startsWith("!"))
+    .filter((line) => !line.startsWith("[!["));
+
+  const paragraphs: string[] = [];
+  let currentParagraph: string[] = [];
+
+  for (const line of withoutCodeBlocks.split("\n")) {
+    const trimmedLine = line.trim();
+
+    if (!trimmedLine) {
+      if (currentParagraph.length) {
+        paragraphs.push(stripMarkdown(currentParagraph.join(" ")));
+        currentParagraph = [];
+      }
+      continue;
+    }
+
+    if (
+      trimmedLine.startsWith("#") ||
+      trimmedLine.startsWith("!") ||
+      trimmedLine.startsWith("[![")
+    ) {
+      continue;
+    }
+
+    currentParagraph.push(trimmedLine);
+  }
+
+  if (currentParagraph.length) {
+    paragraphs.push(stripMarkdown(currentParagraph.join(" ")));
+  }
+
+  return paragraphs.find((paragraph) => paragraph.length > 60) || lines[0];
+}
+
 export async function getRepoReadme(owner: string, repo: string) {
   try {
     const response = await fetchGithub(`https://api.github.com/repos/${owner}/${repo}/readme`);
@@ -209,7 +275,10 @@ export async function getRepoReadme(owner: string, repo: string) {
     }
 
     const readme = (await response.json()) as GitHubReadme;
-    return readme.html_url || undefined;
+    return {
+      htmlUrl: readme.html_url || undefined,
+      content: decodeReadmeContent(readme.content, readme.encoding),
+    };
   } catch (error) {
     throw new Error(
       error instanceof Error ? error.message : `Unable to fetch README for ${owner}/${repo}.`
@@ -219,8 +288,12 @@ export async function getRepoReadme(owner: string, repo: string) {
 
 async function mapRepoToProject(repo: GitHubRepo): Promise<Project> {
   const normalizedName = normalizeRepoName(repo.name);
-  const summary = repo.description?.trim() || repo.name;
-  const readmeUrl = await getRepoReadme(GITHUB_USERNAME, repo.name);
+  const readme = await getRepoReadme(GITHUB_USERNAME, repo.name);
+  const readmeSummary = extractReadmeSummary(readme.content);
+  const summary =
+    normalizedName === "clinkz"
+      ? readmeSummary || repo.description?.trim() || repo.name
+      : repo.description?.trim() || repo.name;
   const topics = Array.isArray(repo.topics) ? repo.topics.map(formatTopic) : [];
 
   return {
@@ -243,7 +316,7 @@ async function mapRepoToProject(repo: GitHubRepo): Promise<Project> {
     featured: true,
     status: repo.archived ? "Archived" : "Synced from GitHub",
     language: repo.language || undefined,
-    readmeUrl,
+    readmeUrl: readme.htmlUrl,
     stars: repo.stargazers_count,
     forks: repo.forks_count,
     lastUpdated: getLatestActivity(repo.updated_at, repo.pushed_at),

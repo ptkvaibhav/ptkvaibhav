@@ -4,12 +4,14 @@ import { ArrowUpRight, Clock3, GitFork, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { typography } from "@/styles/design-system";
 import type { Project } from "@/types/project";
 
 type ProjectCardProps = {
   project: Project;
   compact?: boolean;
+  featured?: boolean;
 };
 
 function formatLastUpdated(lastUpdated?: string) {
@@ -24,7 +26,7 @@ function formatLastUpdated(lastUpdated?: string) {
   }).format(new Date(lastUpdated));
 }
 
-export function ProjectCard({ project, compact = false }: ProjectCardProps) {
+export function ProjectCard({ project, compact = false, featured = false }: ProjectCardProps) {
   const formattedLastUpdated = formatLastUpdated(project.lastUpdated);
   const hasProjectMetadata =
     typeof project.stars === "number" ||
@@ -32,12 +34,17 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
     Boolean(formattedLastUpdated);
   const visibleTags = project.tags
     .filter((tag) => tag.toLowerCase() !== project.language?.toLowerCase())
-    .slice(0, compact ? 2 : 3);
+    .slice(0, featured ? 4 : compact ? 2 : 3);
   const summary = project.excerpt?.trim() || project.title;
   const shouldRenderSummary = summary.toLowerCase() !== project.title.trim().toLowerCase();
 
   return (
-    <Card className="flex h-full min-h-[320px] flex-col p-6 transition-shadow duration-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
+    <Card
+      className={cn(
+        "flex h-full flex-col transition duration-200 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)]",
+        featured ? "min-h-[360px] p-8" : "min-h-[320px] p-6"
+      )}
+    >
       <CardHeader className="space-y-4">
         <div className="flex flex-wrap gap-2">
           <Badge variant="accent">{project.status}</Badge>
@@ -48,9 +55,16 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
         </div>
 
         <div className="space-y-2">
-          <CardTitle className={typography.cardTitle}>{project.title}</CardTitle>
+          <CardTitle className={cn(typography.cardTitle, featured && "text-2xl md:text-3xl")}>
+            {project.title}
+          </CardTitle>
           {shouldRenderSummary ? (
-            <CardDescription className="line-clamp-2 text-base leading-7 text-slate-600">
+            <CardDescription
+              className={cn(
+                "text-base leading-7 text-slate-600",
+                featured ? "line-clamp-3 max-w-3xl" : "line-clamp-2"
+              )}
+            >
               {summary}
             </CardDescription>
           ) : null}
