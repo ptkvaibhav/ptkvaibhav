@@ -37,13 +37,8 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
   const shouldRenderSummary = summary.toLowerCase() !== project.title.trim().toLowerCase();
 
   return (
-    <Card className="relative flex h-full flex-col p-6">
-      <Link
-        href={`/projects/${project.slug}`}
-        aria-label={`View ${project.title} project details`}
-        className="absolute inset-0 z-0 rounded-xl"
-      />
-      <CardHeader className="relative z-10 space-y-4">
+    <Card className="flex h-full flex-col p-6">
+      <CardHeader className="space-y-4">
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
             <Badge variant="accent">{project.status}</Badge>
@@ -58,13 +53,13 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
         <div className="space-y-2">
           <CardTitle className={typography.cardTitle}>{project.title}</CardTitle>
           {shouldRenderSummary ? (
-            <CardDescription className="line-clamp-2 text-base leading-7 text-stone-300/85">
+            <CardDescription className="line-clamp-2 text-base leading-7 text-stone-300/90">
               {summary}
             </CardDescription>
           ) : null}
         </div>
       </CardHeader>
-      <CardContent className="relative z-10 mt-auto space-y-5 pt-4">
+      <CardContent className="mt-auto space-y-5 pt-4">
         <div className="flex flex-wrap items-center justify-end gap-2">
           <div className="flex flex-wrap gap-2">
             {project.readmeUrl ? (

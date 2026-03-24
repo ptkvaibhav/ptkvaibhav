@@ -1,38 +1,81 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Github, Linkedin, Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState("about");
   const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
+  const sectionIds = useMemo(
+    () => siteConfig.nav.map((item) => item.href.replace("#", "")),
+    []
+  );
+
+  useEffect(() => {
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    if (!sections.length) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((left, right) => right.intersectionRatio - left.intersectionRatio);
+
+        if (visibleEntries[0]) {
+          setActiveSection(visibleEntries[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-25% 0px -50% 0px",
+        threshold: [0.15, 0.35, 0.6],
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    const syncActiveSection = () => {
+      const hash = window.location.hash.replace("#", "");
+
+      if (hash && sectionIds.includes(hash)) {
+        setActiveSection(hash);
+      }
+    };
+
+    syncActiveSection();
+    window.addEventListener("hashchange", syncActiveSection);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("hashchange", syncActiveSection);
+    };
+  }, [sectionIds]);
 
   function closeMenu() {
     setIsMenuOpen(false);
   }
 
   function isActiveRoute(href: string) {
-    if (href === "/") {
-      return pathname === "/";
-    }
-
-    return pathname === href || pathname.startsWith(`${href}/`);
+    return href === `#${activeSection}`;
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-background/95">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-background/95">
       <div className="container flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center justify-between gap-4">
           <Link
-            href="/"
-            className="font-serif text-2xl tracking-tight text-white"
+            href="#about"
+            className="text-2xl font-semibold tracking-tight text-white"
             onClick={closeMenu}
           >
             {siteConfig.name}
@@ -48,11 +91,12 @@ export function SiteHeader() {
           </button>
         </div>
 
-        <nav className="hidden md:flex flex-wrap items-center gap-2 text-sm text-zinc-400">
+        <nav className="hidden flex-wrap items-center gap-2 text-sm text-zinc-400 md:flex">
           {siteConfig.nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
+              aria-current={isActiveRoute(item.href) ? "page" : undefined}
               className={cn(
                 "rounded-full px-3 py-2 transition hover:text-white",
                 isActiveRoute(item.href)
@@ -65,7 +109,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden items-center gap-2 md:flex">
           <Button asChild size="sm" variant="secondary">
             <Link href={resumePath} target="_blank" rel="noreferrer">
               Resume
@@ -92,7 +136,7 @@ export function SiteHeader() {
             </Link>
           </Button>
           <Button asChild size="sm">
-            <Link href="/contact">Let&apos;s talk</Link>
+            <Link href="#contact">Let&apos;s talk</Link>
           </Button>
         </div>
 
@@ -107,6 +151,7 @@ export function SiteHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={isActiveRoute(item.href) ? "page" : undefined}
                   className={cn(
                     "rounded-xl px-3 py-2 transition hover:bg-white/5 hover:text-white",
                     isActiveRoute(item.href) ? "text-emerald-300" : "text-zinc-300"
@@ -148,7 +193,7 @@ export function SiteHeader() {
                 </Link>
               </Button>
               <Button asChild size="sm" className="col-span-2">
-                <Link href="/contact" onClick={closeMenu}>
+                <Link href="#contact" onClick={closeMenu}>
                   Let&apos;s talk
                 </Link>
               </Button>

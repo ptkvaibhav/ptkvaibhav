@@ -7,13 +7,7 @@ export function Card({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      className={cn(
-        "surface rounded-xl border border-white/10 bg-white/[0.02] transition-colors hover:border-emerald-400/20 hover:bg-white/[0.03]",
-        className
-      )}
-      {...props}
-    />
+    <div className={cn("surface rounded-xl border border-white/10 bg-white/[0.02]", className)} {...props} />
   );
 }
 
@@ -28,9 +22,7 @@ export function CardTitle({
   className,
   ...props
 }: React.HTMLAttributes<HTMLHeadingElement>) {
-  return (
-    <h3 className={cn("font-serif text-2xl tracking-tight text-white", className)} {...props} />
-  );
+  return <h3 className={cn("text-xl font-semibold tracking-tight text-white", className)} {...props} />;
 }
 
 export function CardDescription({

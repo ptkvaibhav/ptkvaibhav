@@ -34,7 +34,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    background-image: radial-gradient(circle at top, rgba(6, 182, 145, 0.06), transparent 30%);
+    background-image: linear-gradient(to bottom, rgba(6, 182, 145, 0.035), transparent 22%);
   }
 
   ::selection {
@@ -44,8 +44,23 @@
 }
 
 @layer components {
+  .section {
+    padding-top: 96px;
+    padding-bottom: 96px;
+    scroll-margin-top: 96px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
   .surface {
-    @apply rounded-3xl border border-white/10 bg-white/[0.02];
+    @apply rounded-3xl border border-white/10 bg-white/[0.015];
   }
 
   .surface-grid {
@@ -53,5 +68,15 @@
     background-image:
       linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  }
+}
+
+@media (min-width: 768px) {
+  @layer components {
+    .section {
+      padding-top: 120px;
+      padding-bottom: 120px;
+      scroll-margin-top: 120px;
+    }
   }
 }
