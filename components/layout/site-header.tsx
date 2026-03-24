@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Github, Linkedin, Menu, X } from "lucide-react";
+import gsap from "gsap";
 
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site";
@@ -11,6 +12,9 @@ import { cn } from "@/lib/utils";
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
+  const navRef = useRef<HTMLDivElement>(null);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
   const sectionIds = useMemo(
     () => siteConfig.nav.map((item) => item.href.replace("#", "")),
@@ -61,6 +65,36 @@ export function SiteHeader() {
     };
   }, [sectionIds]);
 
+  useEffect(() => {
+    const updateIndicator = () => {
+      const nav = navRef.current;
+      const indicator = indicatorRef.current;
+      const activeLink = linkRefs.current[`#${activeSection}`];
+
+      if (!nav || !indicator || !activeLink) {
+        return;
+      }
+
+      const navBounds = nav.getBoundingClientRect();
+      const linkBounds = activeLink.getBoundingClientRect();
+
+      gsap.to(indicator, {
+        x: linkBounds.left - navBounds.left,
+        width: linkBounds.width,
+        autoAlpha: 1,
+        duration: 0.28,
+        ease: "power2.out",
+      });
+    };
+
+    updateIndicator();
+    window.addEventListener("resize", updateIndicator);
+
+    return () => {
+      window.removeEventListener("resize", updateIndicator);
+    };
+  }, [activeSection]);
+
   function closeMenu() {
     setIsMenuOpen(false);
   }
@@ -91,17 +125,22 @@ export function SiteHeader() {
           </button>
         </div>
 
-        <nav className="hidden flex-wrap items-center gap-6 text-sm md:flex">
+        <nav ref={navRef} className="relative hidden flex-wrap items-center gap-6 text-sm md:flex">
+          <span
+            ref={indicatorRef}
+            className="pointer-events-none absolute bottom-0 left-0 h-px w-0 bg-violet-600 opacity-0"
+          />
           {siteConfig.nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
+              ref={(element) => {
+                linkRefs.current[item.href] = element;
+              }}
               aria-current={isActiveRoute(item.href) ? "page" : undefined}
               className={cn(
-                "relative py-2 text-sm font-medium transition hover:text-slate-900 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:bg-violet-600 after:transition-transform",
-                isActiveRoute(item.href)
-                  ? "text-violet-700 after:scale-x-100"
-                  : "text-slate-500 after:scale-x-0"
+                "relative py-2 text-sm font-medium transition-colors hover:text-slate-900",
+                isActiveRoute(item.href) ? "text-violet-700" : "text-slate-500"
               )}
             >
               {item.label}

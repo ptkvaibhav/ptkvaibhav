@@ -37,7 +37,7 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
   const shouldRenderSummary = summary.toLowerCase() !== project.title.trim().toLowerCase();
 
   return (
-    <Card className="flex h-full min-h-[320px] flex-col p-6">
+    <Card className="flex h-full min-h-[320px] flex-col p-6 transition-shadow duration-200 hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
       <CardHeader className="space-y-4">
         <div className="flex flex-wrap gap-2">
           <Badge variant="accent">{project.status}</Badge>

@@ -30,6 +30,7 @@
   html {
     color-scheme: light;
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
   }
 
   body {
@@ -47,13 +48,13 @@
 @layer components {
   .section {
     padding: 100px 0;
-    scroll-margin-top: 96px;
+    scroll-margin-top: 100px;
   }
 
   .section-alt {
     background: #f8f7ff;
     padding: 100px 0;
-    scroll-margin-top: 96px;
+    scroll-margin-top: 100px;
   }
 
   .container {
