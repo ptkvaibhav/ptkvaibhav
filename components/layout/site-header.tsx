@@ -70,12 +70,12 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-background/95">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
       <div className="container flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center justify-between gap-4">
           <Link
             href="#about"
-            className="text-2xl font-semibold tracking-tight text-white"
+            className="text-2xl font-semibold tracking-tight text-slate-900"
             onClick={closeMenu}
           >
             {siteConfig.name}
@@ -84,7 +84,7 @@ export function SiteHeader() {
             type="button"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-200 transition hover:bg-white/[0.08] md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 md:hidden"
             onClick={() => setIsMenuOpen((current) => !current)}
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -98,10 +98,10 @@ export function SiteHeader() {
               href={item.href}
               aria-current={isActiveRoute(item.href) ? "page" : undefined}
               className={cn(
-                "relative py-2 text-sm font-medium transition hover:text-white after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:bg-emerald-300 after:transition-transform",
+                "relative py-2 text-sm font-medium transition hover:text-slate-900 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:bg-violet-600 after:transition-transform",
                 isActiveRoute(item.href)
-                  ? "text-white after:scale-x-100"
-                  : "text-zinc-400 after:scale-x-0"
+                  ? "text-violet-700 after:scale-x-100"
+                  : "text-slate-500 after:scale-x-0"
               )}
             >
               {item.label}
@@ -145,16 +145,16 @@ export function SiteHeader() {
             isMenuOpen ? "max-h-[24rem] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="rounded-2xl border border-white/10 bg-background p-4">
-            <nav className="flex flex-col gap-2 text-sm text-zinc-300">
+          <div className="rounded-2xl border border-slate-200 bg-white p-4">
+            <nav className="flex flex-col gap-2 text-sm text-slate-700">
               {siteConfig.nav.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   aria-current={isActiveRoute(item.href) ? "page" : undefined}
                   className={cn(
-                    "rounded-xl px-3 py-2 transition hover:bg-white/5 hover:text-white",
-                    isActiveRoute(item.href) ? "bg-white/5 text-white" : "text-zinc-300"
+                    "rounded-xl px-3 py-2 transition hover:bg-slate-50 hover:text-slate-900",
+                    isActiveRoute(item.href) ? "bg-violet-50 text-violet-700" : "text-slate-700"
                   )}
                   onClick={closeMenu}
                 >

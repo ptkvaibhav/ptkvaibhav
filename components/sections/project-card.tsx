@@ -50,7 +50,7 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
         <div className="space-y-2">
           <CardTitle className={typography.cardTitle}>{project.title}</CardTitle>
           {shouldRenderSummary ? (
-            <CardDescription className="line-clamp-2 text-base leading-7 text-stone-300/90">
+            <CardDescription className="line-clamp-2 text-base leading-7 text-slate-600">
               {summary}
             </CardDescription>
           ) : null}
@@ -59,7 +59,7 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
 
       <CardContent className="mt-auto space-y-5 pt-4">
         {hasProjectMetadata ? (
-          <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-500">
+          <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500">
             {typeof project.stars === "number" ? (
               <div className="inline-flex items-center gap-1.5">
                 <Star className="h-3.5 w-3.5" />
@@ -83,24 +83,14 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
 
         <div className="flex flex-wrap items-center gap-2">
           {project.readmeUrl ? (
-            <Button
-              asChild
-              variant="secondary"
-              size="sm"
-              className="bg-white/[0.06] hover:bg-white/[0.1]"
-            >
+            <Button asChild variant="secondary" size="sm">
               <Link href={project.readmeUrl} target="_blank" rel="noreferrer">
                 View README
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </Button>
           ) : null}
-          <Button
-            asChild
-            variant="secondary"
-            size="sm"
-            className="bg-white/[0.06] hover:bg-white/[0.1]"
-          >
+          <Button asChild variant="secondary" size="sm">
             <Link href={project.github} target="_blank" rel="noreferrer">
               View repo
               <ArrowUpRight className="h-4 w-4" />

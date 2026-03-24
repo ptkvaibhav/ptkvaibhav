@@ -64,17 +64,17 @@ export function ContactForm() {
     <form onSubmit={onSubmit} className="space-y-5">
       <div className="grid gap-5 md:grid-cols-2">
         <div className="space-y-2">
-          <label htmlFor="name" className="text-sm font-medium text-zinc-200">
+          <label htmlFor="name" className="text-sm font-medium text-slate-700">
             Name
           </label>
           <Input id="name" placeholder="Pratik Vaibhav" {...form.register("name")} />
           {form.formState.errors.name ? (
-            <p className="text-sm text-red-300">{form.formState.errors.name.message}</p>
+            <p className="text-sm text-red-600">{form.formState.errors.name.message}</p>
           ) : null}
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="email" className="text-sm font-medium text-zinc-200">
+          <label htmlFor="email" className="text-sm font-medium text-slate-700">
             Email
           </label>
           <Input
@@ -84,26 +84,26 @@ export function ContactForm() {
             {...form.register("email")}
           />
           {form.formState.errors.email ? (
-            <p className="text-sm text-red-300">{form.formState.errors.email.message}</p>
+            <p className="text-sm text-red-600">{form.formState.errors.email.message}</p>
           ) : null}
         </div>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2">
         <div className="space-y-2">
-          <label htmlFor="organization" className="text-sm font-medium text-zinc-200">
+          <label htmlFor="organization" className="text-sm font-medium text-slate-700">
             Organization
           </label>
           <Input id="organization" placeholder="Optional" {...form.register("organization")} />
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="subject" className="text-sm font-medium text-zinc-200">
+          <label htmlFor="subject" className="text-sm font-medium text-slate-700">
             Subject
           </label>
           <Input id="subject" placeholder="How can we work together?" {...form.register("subject")} />
           {form.formState.errors.subject ? (
-            <p className="text-sm text-red-300">{form.formState.errors.subject.message}</p>
+            <p className="text-sm text-red-600">{form.formState.errors.subject.message}</p>
           ) : null}
         </div>
       </div>
@@ -119,7 +119,7 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="message" className="text-sm font-medium text-zinc-200">
+        <label htmlFor="message" className="text-sm font-medium text-slate-700">
           Message
         </label>
         <Textarea
@@ -129,7 +129,7 @@ export function ContactForm() {
           {...form.register("message")}
         />
         {form.formState.errors.message ? (
-          <p className="text-sm text-red-300">{form.formState.errors.message.message}</p>
+          <p className="text-sm text-red-600">{form.formState.errors.message.message}</p>
         ) : null}
       </div>
 
@@ -152,8 +152,8 @@ export function ContactForm() {
           <p
             className={
               formState.status === "success"
-                ? "text-sm text-emerald-300"
-                : "text-sm text-red-300"
+                ? "text-sm text-violet-700"
+                : "text-sm text-red-600"
             }
           >
             {formState.message}

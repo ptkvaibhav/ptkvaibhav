@@ -19,13 +19,13 @@ export function AwardsSection() {
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {awards.map((award) => (
-          <div key={award.title} className="flex h-full flex-col rounded-2xl border border-white/10 p-6">
+          <div key={award.title} className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6">
             <div className="flex items-center gap-3">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              <p className="text-xs uppercase tracking-wide text-emerald-400">{award.highlight}</p>
+              <span className="h-2 w-2 rounded-full bg-violet-600" />
+              <p className="text-xs uppercase tracking-wide text-violet-700">{award.highlight}</p>
             </div>
-            <h3 className="mt-4 text-lg font-semibold text-zinc-100">{award.title}</h3>
-            <p className="mt-4 text-sm leading-7 text-stone-300/90">{award.description}</p>
+            <h3 className="mt-4 text-lg font-semibold text-slate-900">{award.title}</h3>
+            <p className="mt-4 text-sm leading-7 text-slate-600">{award.description}</p>
           </div>
         ))}
       </div>
@@ -34,7 +34,7 @@ export function AwardsSection() {
         href={siteConfig.social.linkedin}
         target="_blank"
         rel="noreferrer"
-        className="inline-flex items-center gap-2 text-sm font-medium text-white transition hover:text-emerald-300"
+        className="inline-flex items-center gap-2 text-sm font-medium text-slate-900 transition hover:text-violet-700"
       >
         View more
         <ArrowUpRight className="h-4 w-4" />

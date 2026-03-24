@@ -51,7 +51,7 @@ export default async function HomePage() {
               6+ years securing enterprise and government systems across application,
               infrastructure, and DevSecOps environments.
             </p>
-            <div className="text-container text-base text-stone-300/90">
+            <div className="text-container text-base text-slate-600">
               <p>
                 Most of my work involves testing production systems, identifying weaknesses that
                 matter, and helping teams fix them in a way that scales.
@@ -65,7 +65,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="experience" className="section">
+      <section id="experience" className="section section-alt">
         <div className="container">
           <Reveal className="text-container space-y-4">
             <Badge className="w-fit">Experience</Badge>
@@ -76,7 +76,7 @@ export default async function HomePage() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.05} className="mt-16 max-w-4xl">
+          <Reveal delay={0.05} className="mt-14 max-w-4xl">
             <ExperienceSection />
           </Reveal>
         </div>
@@ -93,7 +93,7 @@ export default async function HomePage() {
             </p>
           </Reveal>
 
-          <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {projects.slice(0, 3).map((project, index) => (
               <Reveal key={project.slug} delay={index * 0.06}>
                 <ProjectCard project={project} compact />
@@ -103,7 +103,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="awards" className="section">
+      <section id="awards" className="section section-alt">
         <div className="container">
           <Reveal>
             <AwardsSection />
@@ -122,7 +122,7 @@ export default async function HomePage() {
             </p>
           </Reveal>
 
-          <div className="mt-16 text-container space-y-16">
+          <div className="mt-14 text-container space-y-14">
             <Reveal className="space-y-4">
               <p className={typography.panelLabel}>Resume download</p>
               <p className={typography.cardText}>
@@ -149,7 +149,7 @@ export default async function HomePage() {
 
             <Reveal delay={0.08} className="space-y-4">
               <p className={typography.panelLabel}>Links</p>
-              <div className="divide-y divide-white/10 border-y border-white/10">
+              <div className="divide-y divide-slate-200 border-y border-slate-200">
                 {contactLinks.map((channel) => {
                   const Icon = channel.icon;
 
@@ -162,10 +162,10 @@ export default async function HomePage() {
                       className="flex items-center justify-between gap-4 py-4"
                     >
                       <div className="space-y-1">
-                        <p className="text-sm text-zinc-500">{channel.label}</p>
-                        <p className="text-base text-zinc-100">{channel.value}</p>
+                        <p className="text-sm text-slate-500">{channel.label}</p>
+                        <p className="text-base text-slate-900">{channel.value}</p>
                       </div>
-                      <Icon className="h-5 w-5 text-emerald-300" />
+                      <Icon className="h-5 w-5 text-violet-600" />
                     </Link>
                   );
                 })}

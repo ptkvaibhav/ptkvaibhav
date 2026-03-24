@@ -1,14 +1,14 @@
 export const typography = {
-  sectionLabel: "text-xs font-medium uppercase tracking-[0.2em] text-emerald-400",
-  sectionTitle: "text-3xl font-semibold tracking-tight text-white md:text-4xl",
-  sectionDescription: "text-base leading-8 text-stone-300/90",
-  pageTitle: "text-4xl font-bold tracking-tight text-white md:text-5xl",
-  pageDescription: "text-lg leading-8 text-stone-300/90",
-  cardTitle: "text-xl font-semibold tracking-tight text-white",
-  cardText: "text-sm leading-7 text-stone-300/90",
-  panelLabel: "text-sm uppercase tracking-[0.16em] text-zinc-500",
-  statValue: "text-2xl font-semibold tracking-tight text-white md:text-3xl",
-  statLabel: "text-xs uppercase tracking-wide text-zinc-500",
+  sectionLabel: "text-xs font-semibold uppercase tracking-[0.22em] text-violet-700",
+  sectionTitle: "text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl",
+  sectionDescription: "text-base leading-8 text-slate-600",
+  pageTitle: "text-4xl font-bold tracking-tight text-slate-900 md:text-5xl",
+  pageDescription: "text-lg leading-8 text-slate-700",
+  cardTitle: "text-xl font-semibold tracking-tight text-slate-900",
+  cardText: "text-sm leading-7 text-slate-600",
+  panelLabel: "text-sm uppercase tracking-[0.16em] text-slate-500",
+  statValue: "text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl",
+  statLabel: "text-xs uppercase tracking-wide text-slate-500",
 } as const;
 
 export const spacing = {
