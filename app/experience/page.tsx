@@ -16,10 +16,10 @@ export default function ExperiencePage() {
     <section className={`container ${spacing.section}`}>
       <Reveal className={spacing.sectionHeader}>
         <Badge className="w-fit">Experience</Badge>
-        <h1 className={typography.pageTitle}>Professional experience.</h1>
+        <h1 className={typography.pageTitle}>Professional experience</h1>
         <p className={typography.pageDescription}>
-          Deloitte roles across application security leadership, secure SDLC, penetration testing,
-          DevSecOps delivery, and measurable security outcomes.
+          A focused timeline of roles covering application security, DevSecOps, penetration
+          testing, and security program delivery.
         </p>
       </Reveal>
 

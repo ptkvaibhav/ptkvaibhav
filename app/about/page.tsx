@@ -18,29 +18,35 @@ export default function AboutPage() {
     <section className={`container ${spacing.section}`}>
       <Reveal className="max-w-3xl space-y-6">
         <Badge className="w-fit">About</Badge>
-        <h1 className={typography.pageTitle}>How I got here, and how I approach security work.</h1>
+        <h1 className={typography.pageTitle}>Security engineering focused on real systems.</h1>
         <p className={typography.pageDescription}>
-          I work in application security because I care about how systems actually fail, not just
-          how they look on paper.
+          I work in application security with a focus on how systems behave under real conditions.
         </p>
         <div className="space-y-6 text-base leading-8 text-stone-300/85">
           <p>
-            My path into security started with testing real systems and seeing how often risk gets
-            hidden behind process, tooling noise, or assumptions that nobody has challenged yet.
-            That shaped the kind of work I enjoy most: understanding application behavior under
-            pressure and turning that understanding into something teams can act on.
+            Over the past 6+ years, I&apos;ve worked across application security, DevSecOps, and
+            penetration testing in environments where security decisions have real impact —
+            particularly in US government-facing systems.
           </p>
           <p>
-            Over time that pulled me into application security, secure SDLC work, offensive
-            validation, and internal tooling. I am most useful when I can help distinguish real
-            issues from weak signals, improve the quality of vulnerability triage, and give
-            engineering teams clearer evidence for what needs to be fixed first.
+            My work is less about identifying issues and more about validating risk. I focus on
+            understanding how a system can fail, whether a vulnerability is actually exploitable,
+            and how teams can fix issues without slowing down development.
           </p>
           <p>
-            My approach is straightforward: security should improve decisions. That means going
-            beyond generic findings, validating risk in context, and building programs or workflows
-            that reduce false positives instead of creating more review overhead.
+            I&apos;ve led security efforts across large applications, built internal tooling to
+            reduce false positives, and helped teams move from reactive testing to structured
+            security programs.
           </p>
+          <div className="space-y-3">
+            <p>I&apos;m particularly interested in:</p>
+            <ul className="space-y-2">
+              <li>- Application behavior under attack</li>
+              <li>- Reducing noise in vulnerability management</li>
+              <li>- Building systems that improve security decision-making</li>
+            </ul>
+          </div>
+          <p>Security, to me, is about clarity — understanding what matters, and acting on it.</p>
         </div>
       </Reveal>
 

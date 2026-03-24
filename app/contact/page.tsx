@@ -43,9 +43,9 @@ export default function ContactPage() {
     <section className={`container ${spacing.section}`}>
       <Reveal className={spacing.sectionHeader}>
         <Badge className="w-fit">Contact</Badge>
-        <h1 className={typography.pageTitle}>Contact, resume, and direct links.</h1>
+        <h1 className={typography.pageTitle}>Contact and resume</h1>
         <p className={typography.pageDescription}>
-          Everything is in one place here: resume access, the contact form, and direct links to
+          If you&apos;re hiring, collaborating, or want to discuss security problems, feel free to
           reach out.
         </p>
       </Reveal>
@@ -53,7 +53,12 @@ export default function ContactPage() {
       <Reveal>
         <Card className="p-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <h2 className={typography.sectionTitle}>Resume</h2>
+            <div className="space-y-3">
+              <h2 className={typography.sectionTitle}>Resume</h2>
+              <p className={typography.sectionDescription}>
+                Download my resume for a concise overview of experience, projects, and impact.
+              </p>
+            </div>
             <Button asChild size="lg">
               <Link href={resumePath} target="_blank" rel="noreferrer">
                 Download resume

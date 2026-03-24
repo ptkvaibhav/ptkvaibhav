@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Reveal } from "@/components/motion/reveal";
-import { professionalExperience } from "@/lib/content";
 import { ProjectCard } from "@/components/sections/project-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -28,20 +27,25 @@ export default async function HomePage() {
             </p>
           </div>
           <div className="max-w-4xl space-y-5 text-base leading-8 text-stone-300/85">
+            <p>I work in application security with a focus on real-world risk.</p>
             <p>
-              I focus on validating real-world risk by testing how applications behave under attack
-              and by separating actionable findings from scanner noise.
+              Most of my work involves testing production systems, identifying weaknesses that
+              matter, and helping teams fix them in a way that scales.
             </p>
             <p>
-              My work spans secure SDLC reviews, product security initiatives, vulnerability
-              triage, and internal tooling that improves signal quality while reducing false
-              positives.
+              I don&apos;t rely on scanner output alone. I look at how applications behave, how
+              attackers think, and whether a finding actually changes risk for the business.
             </p>
             <p>
-              I lead security work with a bias toward evidence, clear remediation paths, and
-              programs that help engineering teams move faster without lowering the quality of
-              security decisions.
+              My experience spans secure SDLC, penetration testing, and security program design
+              across large systems.
             </p>
+            <p>
+              I&apos;ve led product security efforts for US government-facing applications, built
+              internal tooling to improve signal quality, and helped engineering teams move from
+              noise to actionable security decisions.
+            </p>
+            <p>Security should improve how teams build — not slow them down.</p>
           </div>
         </Reveal>
       </section>
@@ -50,23 +54,29 @@ export default async function HomePage() {
         <Reveal className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <div className="space-y-4">
             <p className={typography.sectionLabel}>Experience</p>
-            <h2 className={typography.sectionTitle}>Deloitte - Lead Solution Advisor</h2>
+            <h2 className={typography.sectionTitle}>Deloitte — Lead Solution Advisor</h2>
+            <p className={typography.sectionDescription}>
+              Security leadership across large-scale government systems, focused on application
+              security, DevSecOps, and delivery workflows.
+            </p>
           </div>
           <div className="space-y-5">
             <div className="flex items-start gap-3">
               <span className="mt-2 h-2 w-2 rounded-full bg-emerald-400" />
-              <p className={typography.cardText}>Lead product security for US government systems.</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="mt-2 h-2 w-2 rounded-full bg-emerald-400" />
               <p className={typography.cardText}>
-                Improved security posture by 33% through AppSec programs.
+                Led product security for US government-facing applications
               </p>
             </div>
             <div className="flex items-start gap-3">
               <span className="mt-2 h-2 w-2 rounded-full bg-emerald-400" />
               <p className={typography.cardText}>
-                Built internal tooling to improve vulnerability signal and triage.
+                Improved security posture by 33% through structured AppSec programs
+              </p>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="mt-2 h-2 w-2 rounded-full bg-emerald-400" />
+              <p className={typography.cardText}>
+                Built internal tooling to improve vulnerability signal and triage
               </p>
             </div>
             <Button asChild variant="secondary" size="sm">
@@ -83,10 +93,10 @@ export default async function HomePage() {
         <Reveal className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="space-y-4">
             <p className={typography.sectionLabel}>Projects</p>
-            <h2 className={typography.sectionTitle}>Selected work.</h2>
+            <h2 className={typography.sectionTitle}>Selected work</h2>
             <p className={typography.sectionDescription}>
-              Security tooling and internal systems built around offensive testing, signal quality,
-              and application analysis.
+              A small set of projects focused on improving how security testing is performed,
+              validated, and operationalized.
             </p>
           </div>
           <Button asChild variant="secondary" size="sm">
@@ -109,15 +119,18 @@ export default async function HomePage() {
               <div className="max-w-2xl space-y-4">
                 <p className={typography.sectionLabel}>Contact</p>
                 <h2 className={typography.sectionTitle}>
-                  Need application security depth with engineering judgment?
+                  Interested in working together or discussing security problems?
                 </h2>
                 <p className={typography.sectionDescription}>
-                  If you&apos;re hiring, collaborating, or need help with AppSec, offensive
-                  testing, or security tooling, the contact page is the best place to start.
+                  I&apos;m always open to conversations around application security, offensive
+                  testing, and security engineering.
                 </p>
               </div>
               <Button asChild size="lg">
-                <Link href="/contact">Let&apos;s talk</Link>
+                <Link href="/contact">
+                  Let&apos;s talk
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </Button>
             </div>
           </Card>

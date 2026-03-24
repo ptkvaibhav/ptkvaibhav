@@ -39,6 +39,7 @@ export function ExperienceSection() {
               <p className={typography.panelLabel}>{role.period}</p>
               <h3 className="text-xl font-semibold tracking-tight text-white">{role.title}</h3>
             </div>
+            <p className={typography.cardText}>{role.company}</p>
             <div className="flex flex-wrap gap-2">
               {role.metrics.map((metric) => (
                 <span

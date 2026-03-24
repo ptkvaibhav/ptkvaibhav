@@ -8,7 +8,8 @@ import { spacing, typography } from "@/styles/design-system";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Selected security engineering, automation, and application security projects by Pratik Vaibhav.",
+  description:
+    "A collection of tools and experiments focused on improving application security workflows, testing approaches, and signal quality.",
 };
 
 export const dynamic = "force-static";
@@ -22,10 +23,10 @@ export default async function ProjectsPage() {
       <Reveal className={spacing.sectionHeader}>
         <Badge className="w-fit">Projects</Badge>
         <div className="max-w-3xl space-y-4">
-          <h1 className={typography.pageTitle}>Projects and technical case studies.</h1>
+          <h1 className={typography.pageTitle}>Projects and tooling</h1>
           <p className={typography.pageDescription}>
-            A focused set of tools and experiments spanning application security analysis,
-            offensive validation, and workflow automation.
+            A collection of tools and experiments focused on improving application security
+            workflows, testing approaches, and signal quality.
           </p>
         </div>
       </Reveal>
