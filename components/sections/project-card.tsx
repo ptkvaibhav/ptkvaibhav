@@ -37,19 +37,16 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
   const shouldRenderSummary = summary.toLowerCase() !== project.title.trim().toLowerCase();
 
   return (
-    <Card className="flex h-full flex-col p-6">
+    <Card className="flex h-full min-h-[320px] flex-col p-6">
       <CardHeader className="space-y-4">
-        <div className="space-y-3">
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="accent">{project.status}</Badge>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {project.language ? <Badge>{project.language}</Badge> : null}
-            {visibleTags.map((tag) => (
-              <Badge key={tag}>{tag}</Badge>
-            ))}
-          </div>
+        <div className="flex flex-wrap gap-2">
+          <Badge variant="accent">{project.status}</Badge>
+          {project.language ? <Badge>{project.language}</Badge> : null}
+          {visibleTags.map((tag) => (
+            <Badge key={tag}>{tag}</Badge>
+          ))}
         </div>
+
         <div className="space-y-2">
           <CardTitle className={typography.cardTitle}>{project.title}</CardTitle>
           {shouldRenderSummary ? (
@@ -59,35 +56,8 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
           ) : null}
         </div>
       </CardHeader>
+
       <CardContent className="mt-auto space-y-5 pt-4">
-        <div className="flex flex-wrap items-center justify-end gap-2">
-          <div className="flex flex-wrap gap-2">
-            {project.readmeUrl ? (
-              <Button
-                asChild
-                variant="secondary"
-                size="sm"
-                className="bg-white/[0.05] hover:bg-white/[0.08]"
-              >
-                <Link href={project.readmeUrl} target="_blank" rel="noreferrer">
-                  View README
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            ) : null}
-            <Button
-              asChild
-              variant="secondary"
-              size="sm"
-              className="bg-white/[0.05] hover:bg-white/[0.08]"
-            >
-              <Link href={project.github} target="_blank" rel="noreferrer">
-                View repo
-                <ArrowUpRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
         {hasProjectMetadata ? (
           <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-500">
             {typeof project.stars === "number" ? (
@@ -110,6 +80,33 @@ export function ProjectCard({ project, compact = false }: ProjectCardProps) {
             ) : null}
           </div>
         ) : null}
+
+        <div className="flex flex-wrap items-center gap-2">
+          {project.readmeUrl ? (
+            <Button
+              asChild
+              variant="secondary"
+              size="sm"
+              className="bg-white/[0.06] hover:bg-white/[0.1]"
+            >
+              <Link href={project.readmeUrl} target="_blank" rel="noreferrer">
+                View README
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          ) : null}
+          <Button
+            asChild
+            variant="secondary"
+            size="sm"
+            className="bg-white/[0.06] hover:bg-white/[0.1]"
+          >
+            <Link href={project.github} target="_blank" rel="noreferrer">
+              View repo
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );

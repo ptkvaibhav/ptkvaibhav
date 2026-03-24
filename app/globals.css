@@ -34,7 +34,6 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    background-image: linear-gradient(to bottom, rgba(6, 182, 145, 0.035), transparent 22%);
   }
 
   ::selection {
@@ -45,22 +44,33 @@
 
 @layer components {
   .section {
-    padding-top: 96px;
-    padding-bottom: 96px;
-    scroll-margin-top: 96px;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    scroll-margin-top: 120px;
   }
 
   .container {
-    width: 100%;
     max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding: 0 24px;
+  }
+
+  .text-container {
+    max-width: 720px;
+  }
+
+  .text-container p {
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  .text-container p:last-child {
+    margin-bottom: 0;
   }
 
   .surface {
-    @apply rounded-3xl border border-white/10 bg-white/[0.015];
+    @apply rounded-2xl border border-white/10 bg-transparent;
   }
 
   .surface-grid {
@@ -68,15 +78,5 @@
     background-image:
       linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  }
-}
-
-@media (min-width: 768px) {
-  @layer components {
-    .section {
-      padding-top: 120px;
-      padding-bottom: 120px;
-      scroll-margin-top: 120px;
-    }
   }
 }

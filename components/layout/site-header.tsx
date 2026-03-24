@@ -91,17 +91,17 @@ export function SiteHeader() {
           </button>
         </div>
 
-        <nav className="hidden flex-wrap items-center gap-2 text-sm text-zinc-400 md:flex">
+        <nav className="hidden flex-wrap items-center gap-6 text-sm md:flex">
           {siteConfig.nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               aria-current={isActiveRoute(item.href) ? "page" : undefined}
               className={cn(
-                "rounded-full px-3 py-2 transition hover:text-white",
+                "relative py-2 text-sm font-medium transition hover:text-white after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:bg-emerald-300 after:transition-transform",
                 isActiveRoute(item.href)
-                  ? "text-emerald-300 underline decoration-emerald-300 underline-offset-8"
-                  : "text-zinc-400"
+                  ? "text-white after:scale-x-100"
+                  : "text-zinc-400 after:scale-x-0"
               )}
             >
               {item.label}
@@ -145,7 +145,7 @@ export function SiteHeader() {
             isMenuOpen ? "max-h-[24rem] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+          <div className="rounded-2xl border border-white/10 bg-background p-4">
             <nav className="flex flex-col gap-2 text-sm text-zinc-300">
               {siteConfig.nav.map((item) => (
                 <Link
@@ -154,7 +154,7 @@ export function SiteHeader() {
                   aria-current={isActiveRoute(item.href) ? "page" : undefined}
                   className={cn(
                     "rounded-xl px-3 py-2 transition hover:bg-white/5 hover:text-white",
-                    isActiveRoute(item.href) ? "text-emerald-300" : "text-zinc-300"
+                    isActiveRoute(item.href) ? "bg-white/5 text-white" : "text-zinc-300"
                   )}
                   onClick={closeMenu}
                 >
