@@ -2,38 +2,25 @@ import { typography } from "@/styles/design-system";
 
 export function AwardsSection() {
   return (
-    <div className="mx-auto max-w-3xl space-y-12 text-center">
+    <div className="grid gap-10 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-14">
       <div className="space-y-4">
         <h2 className={typography.sectionTitle}>Awards</h2>
       </div>
 
       <div className="space-y-10">
         <div className="space-y-5">
-          <p className={typography.panelLabel}>Deloitte Awards</p>
-          <div className="mx-auto max-w-2xl space-y-3 text-left">
-            <div className="flex items-start gap-3">
-              <span className="mt-2 h-2 w-2 rounded-full bg-violet-600" />
-              <p className={typography.cardText}>Outstanding Performance Award (Top 1%)</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="mt-2 h-2 w-2 rounded-full bg-violet-600" />
-              <p className={typography.cardText}>
-                Additional internal awards (total: 9 across delivery and performance)
-              </p>
-            </div>
-          </div>
+          <p className={typography.panelLabel}>Deloitte</p>
+          <ul className="space-y-2 pl-5 text-sm leading-7 text-slate-600 marker:text-violet-600">
+            <li>Outstanding Performance Award (Top 1%)</li>
+            <li>Additional internal awards (total: 9 across delivery and performance)</li>
+          </ul>
         </div>
 
         <div className="space-y-5">
-          <p className={typography.panelLabel}>Industry Contribution</p>
-          <div className="mx-auto max-w-2xl space-y-3 text-left">
-            <div className="flex items-start gap-3">
-              <span className="mt-2 h-2 w-2 rounded-full bg-violet-600" />
-              <p className={typography.cardText}>
-                NULLCON Speaker - presented applied security concepts
-              </p>
-            </div>
-          </div>
+          <p className={typography.panelLabel}>Community</p>
+          <ul className="space-y-2 pl-5 text-sm leading-7 text-slate-600 marker:text-violet-600">
+            <li>NULLCON Speaker - presented applied security concepts</li>
+          </ul>
         </div>
       </div>
     </div>

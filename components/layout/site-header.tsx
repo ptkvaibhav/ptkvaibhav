@@ -105,7 +105,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
-      <div className="container flex items-center justify-between gap-6 py-4">
+      <div className="container relative flex items-center justify-between gap-6 py-4">
         <div className="flex items-center gap-8">
           <Link
             href="#about"
@@ -114,27 +114,30 @@ export function SiteHeader() {
           >
             Pratik
           </Link>
-          <nav ref={navRef} className="relative hidden flex-wrap items-center gap-6 text-sm md:flex">
-          <span
-            ref={indicatorRef}
-            className="pointer-events-none absolute bottom-0 left-0 h-px w-0 bg-violet-600 opacity-0"
-          />
-          {siteConfig.nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              ref={(element) => {
-                linkRefs.current[item.href] = element;
-              }}
-              aria-current={isActiveRoute(item.href) ? "page" : undefined}
-              className={cn(
-                "relative whitespace-nowrap py-2 text-sm font-medium transition-colors hover:text-slate-900",
-                isActiveRoute(item.href) ? "text-violet-700" : "text-slate-500"
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+          <nav
+            ref={navRef}
+            className="relative hidden flex-wrap items-center gap-6 text-sm md:flex"
+          >
+            <span
+              ref={indicatorRef}
+              className="pointer-events-none absolute bottom-0 left-0 h-px w-0 bg-violet-600 opacity-0"
+            />
+            {siteConfig.nav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                ref={(element) => {
+                  linkRefs.current[item.href] = element;
+                }}
+                aria-current={isActiveRoute(item.href) ? "page" : undefined}
+                className={cn(
+                  "relative whitespace-nowrap py-2 text-sm font-medium transition-colors hover:text-slate-900",
+                  isActiveRoute(item.href) ? "text-violet-700" : "text-slate-500"
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
         </div>
 

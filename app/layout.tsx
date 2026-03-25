@@ -67,9 +67,10 @@ export default function RootLayout({
           GeistMono.variable,
           "min-h-screen bg-background text-foreground"
         )}
-      >
+        >
         <div className="relative overflow-hidden">
           <div aria-hidden className="ambient-layer" />
+          <div aria-hidden className="ambient-noise" />
           <SiteHeader />
           <main>{children}</main>
           <SiteFooter />
