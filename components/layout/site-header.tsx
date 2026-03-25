@@ -105,27 +105,16 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
-      <div className="container flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-center justify-between gap-4">
+      <div className="container flex items-center justify-between gap-6 py-4">
+        <div className="flex items-center gap-8">
           <Link
             href="#about"
-            className="text-2xl font-semibold tracking-tight text-slate-900"
+            className="text-xl font-semibold tracking-tight text-slate-900 md:hidden"
             onClick={closeMenu}
           >
-            {siteConfig.name}
+            Pratik
           </Link>
-          <button
-            type="button"
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isMenuOpen}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 md:hidden"
-            onClick={() => setIsMenuOpen((current) => !current)}
-          >
-            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
-
-        <nav ref={navRef} className="relative hidden flex-wrap items-center gap-6 text-sm md:flex">
+          <nav ref={navRef} className="relative hidden flex-wrap items-center gap-6 text-sm md:flex">
           <span
             ref={indicatorRef}
             className="pointer-events-none absolute bottom-0 left-0 h-px w-0 bg-violet-600 opacity-0"
@@ -139,14 +128,15 @@ export function SiteHeader() {
               }}
               aria-current={isActiveRoute(item.href) ? "page" : undefined}
               className={cn(
-                "relative py-2 text-sm font-medium transition-colors hover:text-slate-900",
+                "relative whitespace-nowrap py-2 text-sm font-medium transition-colors hover:text-slate-900",
                 isActiveRoute(item.href) ? "text-violet-700" : "text-slate-500"
               )}
             >
               {item.label}
             </Link>
           ))}
-        </nav>
+          </nav>
+        </div>
 
         <div className="hidden items-center gap-2 md:flex">
           <Button asChild size="sm" variant="secondary">
@@ -181,12 +171,22 @@ export function SiteHeader() {
           </Button>
         </div>
 
+        <button
+          type="button"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 md:hidden"
+          onClick={() => setIsMenuOpen((current) => !current)}
+        >
+          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+
         <div
-          className={`overflow-hidden transition-all duration-300 md:hidden ${
+          className={`absolute left-0 right-0 top-full overflow-hidden border-b border-slate-200 bg-white transition-all duration-300 md:hidden ${
             isMenuOpen ? "max-h-[24rem] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="rounded-2xl border border-slate-200 bg-white p-4">
+          <div className="container py-4">
             <nav className="flex flex-col gap-2 text-sm text-slate-700">
               {siteConfig.nav.map((item) => (
                 <Link

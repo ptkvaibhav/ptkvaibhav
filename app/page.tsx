@@ -27,49 +27,39 @@ export default async function HomePage() {
     <div>
       <section id="about" className="section">
         <div className="container">
-          <div className="grid items-center gap-14 md:grid-cols-[minmax(0,1fr)_280px] lg:grid-cols-[minmax(0,1fr)_320px]">
-            <Reveal className="text-container space-y-8">
-              <div className="space-y-4">
-                <h1 className={typography.pageTitle}>Hi, I&apos;m Pratik Vaibhav</h1>
-                <p className="text-xl font-semibold tracking-tight text-violet-700 md:text-2xl">
-                  Application Security Engineer
-                </p>
-                <p className={typography.pageDescription}>
-                  6+ years securing enterprise and government systems across application,
-                  infrastructure, and DevSecOps environments.
-                </p>
-              </div>
-              <div className="text-container text-base text-slate-600">
-                <p>
-                  Most of my work involves testing production systems, identifying weaknesses that
-                  matter, and helping teams fix them in a way that scales.
-                </p>
-                <p>
-                  I don&apos;t rely on scanner output alone. I look at how applications behave, how
-                  attackers think, and whether a finding actually changes risk for the business.
-                </p>
-              </div>
-            </Reveal>
+          <Reveal className="mx-auto flex max-w-3xl flex-col items-center text-center">
+            <div className="overflow-hidden rounded-full shadow-[0_22px_60px_rgba(124,58,237,0.18)]">
+              <Image
+                src="/pratik-vaibhav.png"
+                alt="Pratik Vaibhav"
+                width={190}
+                height={190}
+                priority
+                className="h-[190px] w-[190px] object-cover"
+              />
+            </div>
 
-            <Reveal delay={0.08} className="w-full max-w-[320px] md:justify-self-end">
-              <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_24px_48px_rgba(15,23,42,0.08)]">
-                <Image
-                  src="/pratik-vaibhav.png"
-                  alt="Pratik Vaibhav"
-                  width={640}
-                  height={800}
-                  priority
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </Reveal>
-          </div>
+            <div className="mt-8 space-y-4">
+              <h1 className={typography.pageTitle}>Hi there, I&apos;m Pratik</h1>
+              <p className="text-2xl font-semibold tracking-tight text-violet-700 md:text-3xl">
+                I&apos;m an Application Security Engineer
+              </p>
+              <p className="mx-auto max-w-2xl text-lg leading-8 text-slate-700">
+                I have 6+ years of experience securing enterprise and government systems across
+                application security, DevSecOps, and offensive testing.
+              </p>
+              <p className="mx-auto max-w-2xl text-lg leading-8 text-slate-700">
+                I focus on finding real vulnerabilities, understanding how systems behave under
+                attack, and helping teams fix what actually matters.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       <section id="experience" className="section section-alt">
         <div className="container">
-          <Reveal className="text-container space-y-5">
+          <Reveal className="mx-auto max-w-3xl space-y-5 text-center">
             <h2 className={typography.sectionTitle}>Professional Experience</h2>
             <p className={typography.sectionDescription}>
               A focused timeline of roles covering application security, DevSecOps, penetration
@@ -79,7 +69,7 @@ export default async function HomePage() {
 
           <div className="mt-10 border-t border-slate-200" />
 
-          <Reveal delay={0.05} className="mt-12 max-w-5xl">
+          <Reveal delay={0.05} className="mt-12">
             <ExperienceSection />
           </Reveal>
         </div>
@@ -87,7 +77,7 @@ export default async function HomePage() {
 
       <section id="projects" className="section">
         <div className="container">
-          <Reveal className="text-container space-y-5">
+          <Reveal className="mx-auto max-w-3xl space-y-5 text-center">
             <h2 className={typography.sectionTitle}>Projects</h2>
             <p className={typography.sectionDescription}>
               A small set of projects focused on improving how security testing is performed,
@@ -95,7 +85,7 @@ export default async function HomePage() {
             </p>
           </Reveal>
 
-          <div className="mt-14 space-y-8">
+          <div className="mx-auto mt-14 max-w-5xl space-y-8">
             {featuredProject ? (
               <Reveal>
                 <ProjectCard project={featuredProject} featured />
@@ -125,7 +115,7 @@ export default async function HomePage() {
 
       <section id="contact" className="section">
         <div className="container">
-          <Reveal className="text-container space-y-5">
+          <Reveal className="mx-auto max-w-3xl space-y-5 text-center">
             <h2 className={typography.sectionTitle}>Contact</h2>
             <p className={typography.sectionDescription}>
               If you&apos;re hiring, collaborating, or want to discuss security problems, feel free
@@ -133,8 +123,8 @@ export default async function HomePage() {
             </p>
           </Reveal>
 
-          <div className="mt-14 text-container space-y-14">
-            <Reveal className="space-y-4">
+          <div className="mx-auto mt-14 grid max-w-5xl gap-12 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start">
+            <Reveal className="space-y-4 text-center lg:text-left">
               <p className={typography.panelLabel}>Resume</p>
               <p className={typography.cardText}>
                 Download my resume for a concise overview of experience, projects, and impact.
@@ -148,7 +138,7 @@ export default async function HomePage() {
             </Reveal>
 
             <Reveal delay={0.05} className="space-y-6">
-              <div className="space-y-3">
+              <div className="space-y-3 text-center lg:text-left">
                 <p className={typography.panelLabel}>Form</p>
                 <p className={typography.cardText}>
                   If you&apos;re hiring, collaborating, or want to discuss security problems, feel

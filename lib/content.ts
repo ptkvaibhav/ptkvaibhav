@@ -14,11 +14,10 @@ export const professionalExperience = {
       period: "Jun 2025 - Present",
       metrics: ["33% posture improvement", "14-member team led"],
       focus: [
-        "Led product security for Deloitte Health Interactive systems serving US government clients",
-        "Improved overall security posture by 33% through structured AppSec workflows",
-        "Built AI-assisted testing workflows using Burp Suite integrations",
-        "Directed a 14-member team across multiple systems",
-        "Owned hiring and evaluation for AppSec roles",
+        "Led product security for US government healthcare systems",
+        "Improved security posture by 33%",
+        "Built AI-assisted testing workflows using Burp Suite",
+        "Managed and mentored a 14-member AppSec team",
       ],
     },
     {

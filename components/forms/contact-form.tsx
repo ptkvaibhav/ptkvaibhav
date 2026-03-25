@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { type ContactFormInput, contactFormSchema } from "@/lib/validators/contact";
-import type { ContactApiResponse } from "@/types/contact";
 
 type FormState = {
   status: "idle" | "success" | "error";
@@ -35,29 +34,26 @@ export function ContactForm() {
   const onSubmit = form.handleSubmit(async (values) => {
     setFormState({ status: "idle" });
 
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+    const subject = values.subject?.trim() || "Security discussion";
+    const lines = [
+      `Name: ${values.name}`,
+      `Email: ${values.email}`,
+      values.organization ? `Organization: ${values.organization}` : null,
+      "",
+      values.message,
+    ].filter((value): value is string => Boolean(value));
 
-    const data = (await response.json()) as ContactApiResponse;
-
-    if (!response.ok) {
-      setFormState({
-        status: "error",
-        message: "error" in data ? data.error : "Unable to send message right now.",
-      });
-      return;
-    }
+    const mailtoUrl = `mailto:ptkvaibhav@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(lines.join("\n"))}`;
 
     form.reset();
     setFormState({
       status: "success",
-      message: "message" in data ? data.message : "Message received.",
+      message: "Opening your email client.",
     });
+
+    window.location.href = mailtoUrl;
   });
 
   return (
@@ -138,12 +134,12 @@ export function ContactForm() {
           {form.formState.isSubmitting ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              Sending
+              Preparing
             </>
           ) : (
             <>
               <Send className="h-4 w-4" />
-              Send message
+              Send via email
             </>
           )}
         </Button>

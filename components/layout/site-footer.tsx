@@ -9,13 +9,13 @@ const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
 export function SiteFooter() {
   return (
     <footer className="border-t border-slate-200 bg-white py-8">
-      <div className="container flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div className="container flex flex-col gap-6 text-center md:flex-row md:items-center md:justify-between md:text-left">
         <div className="max-w-xl space-y-3">
-          <p className="text-xs uppercase tracking-[0.3em] text-violet-700">Pratik Vaibhav</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-violet-700">{siteConfig.name}</p>
           <p className="text-sm text-slate-600">{siteConfig.bio}</p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <Button asChild size="sm" variant="secondary">
             <Link href={resumePath} target="_blank" rel="noreferrer">
               Resume

@@ -49,7 +49,7 @@ const staticProjects: Project[] = [
       "Deeper exploit verification logic to distinguish theoretical findings from reproducible weaknesses.",
       "Better evidence graphs and replayable workflows for collaborative security reviews.",
     ],
-    tags: ["Python", "LLM systems", "Security automation", "Docker"],
+    tags: ["Python", "Docker", "LLM", "Security Automation", "Pentesting"],
     github: "https://github.com/ptkvaibhav/clinkz",
     featured: true,
     status: "Active development",
@@ -97,7 +97,7 @@ const staticProjects: Project[] = [
       "Project-specific mapping rules for richer metadata and severity translation.",
       "Automated validation tests against representative finding corpora to reduce parser regressions.",
     ],
-    tags: ["Burp Suite", "Fortify", "Parsing", "Workflow tooling"],
+    tags: ["Burp Suite", "Fortify", "AppSec Workflow"],
     github: "https://github.com/ptkvaibhav/Burp_to_Fortify_Parser",
     featured: true,
     status: "Maintained",
@@ -145,7 +145,7 @@ const staticProjects: Project[] = [
       "Evaluation loops for measuring ranking quality against analyst decisions.",
       "Safer integration patterns for model-assisted reasoning inside real security workflows.",
     ],
-    tags: ["AI security", "Vulnerability scanning", "Python"],
+    tags: ["Python", "AI Security", "Vulnerability Triage"],
     github: "https://github.com/ptkvaibhav/invoker",
     featured: true,
     status: "Exploratory build",
@@ -182,7 +182,9 @@ function mergeProjectWithFallback(project: Project): Project {
       ? project.securityImpact
       : fallback.securityImpact,
     futureWork: project.futureWork.length ? project.futureWork : fallback.futureWork,
-    tags: project.tags.length ? project.tags : fallback.tags,
+    tags: project.tags.length
+      ? Array.from(new Set([...fallback.tags, ...project.tags]))
+      : fallback.tags,
     status: fallback.status || project.status,
   };
 }
