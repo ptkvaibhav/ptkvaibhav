@@ -65,42 +65,45 @@ export function ExperienceSection() {
             height={36}
             className="h-10 w-auto"
           />
-          <div className="mt-6 h-[560px] w-px bg-slate-200" />
         </div>
       </div>
 
-      <div className="space-y-10">
-        <div className="space-y-3 lg:hidden">
+      <div className="space-y-8">
+        <div className="space-y-3">
           <Image
             src={professionalExperience.logo}
             alt={`${professionalExperience.brand} logo`}
             width={150}
             height={36}
-            className="h-10 w-auto"
+            className="h-10 w-auto lg:hidden"
           />
           <p className={typography.panelLabel}>{professionalExperience.brand}</p>
         </div>
 
-        {professionalExperience.roles.map((role) => (
-          <article
-            key={`${role.title}-${role.period}`}
-            data-experience-role
-            className="space-y-4 border-t border-slate-200 pt-8 first:border-t-0 first:pt-0"
-          >
-            <div className="space-y-2">
-              <h3 className="text-[1.55rem] font-semibold tracking-tight text-slate-900">
-                {role.title}
-              </h3>
-              <p className={typography.panelLabel}>{role.period}</p>
-            </div>
+        <div className="relative border-l border-slate-200 pl-8">
+          {professionalExperience.roles.map((role) => (
+            <article
+              key={`${role.title}-${role.period}`}
+              data-experience-role
+              className="relative space-y-4 pb-10 last:pb-0"
+            >
+              <span className="absolute -left-[2.05rem] top-[0.5rem] h-3 w-3 rounded-full bg-violet-600 ring-4 ring-[#f8f7ff]" />
 
-            <ul className="space-y-2 pl-5 text-sm leading-7 text-slate-600 marker:text-violet-600">
-              {role.focus.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </article>
-        ))}
+              <div className="space-y-2">
+                <h3 className="text-[1.7rem] font-semibold tracking-tight text-slate-900 md:text-[1.9rem]">
+                  {role.title}
+                </h3>
+                <p className={typography.panelLabel}>{role.period}</p>
+              </div>
+
+              <ul className="space-y-2 pl-5 text-sm leading-7 text-slate-600 marker:text-violet-600">
+                {role.focus.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
       </div>
     </div>
   );

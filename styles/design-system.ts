@@ -1,12 +1,12 @@
 export const typography = {
   sectionLabel: "text-xs font-semibold uppercase tracking-[0.22em] text-violet-700",
   sectionTitle:
-    "text-[2.25rem] font-bold leading-[1.08] tracking-tight text-slate-900 md:text-[2.9rem]",
-  sectionDescription: "max-w-2xl text-sm leading-7 text-slate-600 md:text-base",
-  pageTitle: "text-[3.1rem] font-bold leading-[0.98] tracking-tight text-slate-900 md:text-[4.5rem]",
+    "text-[2.5rem] font-bold leading-[1.04] tracking-tight text-slate-900 md:text-[3.2rem]",
+  sectionDescription: "max-w-2xl text-sm leading-6 text-slate-600 md:text-base md:leading-7",
+  pageTitle: "text-[3.45rem] font-bold leading-[0.96] tracking-tight text-slate-900 md:text-[4.9rem]",
   pageDescription: "text-lg leading-8 text-slate-700",
   cardTitle: "text-[1.35rem] font-semibold tracking-tight text-slate-900 md:text-[1.55rem]",
-  cardText: "text-sm leading-6 text-slate-600",
+  cardText: "text-sm leading-[1.55rem] text-slate-600",
   panelLabel: "text-sm uppercase tracking-[0.16em] text-slate-500",
   statValue: "text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl",
   statLabel: "text-xs uppercase tracking-wide text-slate-500",

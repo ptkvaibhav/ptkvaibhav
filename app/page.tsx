@@ -36,28 +36,26 @@ export default async function HomePage() {
             <Reveal className="max-w-2xl space-y-6">
               <div className="space-y-3">
                 <h1 className={typography.pageTitle}>Hi, I&apos;m Pratik</h1>
-                <p className="text-[1.5rem] font-semibold tracking-tight text-violet-700 md:text-[1.9rem]">
+                <p className="text-[1.65rem] font-bold tracking-tight text-violet-700 md:text-[2rem]">
                   Application Security Engineer
                 </p>
               </div>
 
-              <p className="max-w-2xl text-base leading-8 text-slate-700 md:text-lg">
-                I have 6+ years of experience securing enterprise and government systems across
-                application security, DevSecOps, and offensive testing. I focus on finding real
-                vulnerabilities, understanding how systems behave under attack, and helping teams
-                fix what actually matters.
+              <p className="max-w-2xl text-base font-medium leading-7 text-slate-700 md:text-lg">
+                I work on securing real-world systems - identifying vulnerabilities, understanding
+                attack behavior, and helping teams fix what actually matters.
               </p>
             </Reveal>
 
-            <Reveal delay={0.08} className="w-full max-w-[360px] lg:justify-self-end">
-              <div className="overflow-hidden rounded-[36px] shadow-[0_28px_70px_rgba(124,58,237,0.14)]">
+            <Reveal delay={0.08} className="w-full max-w-[250px] pt-8 md:max-w-[280px] lg:justify-self-end lg:pt-12">
+              <div className="overflow-hidden rounded-[34px] shadow-[0_22px_54px_rgba(124,58,237,0.14)]">
                 <Image
                   src="/pratik-vaibhav.png"
                   alt="Pratik Vaibhav"
                   width={720}
                   height={900}
                   priority
-                  className="h-[340px] w-full object-cover md:h-[420px]"
+                  className="h-[240px] w-full object-cover md:h-[300px]"
                 />
               </div>
             </Reveal>
@@ -97,14 +95,15 @@ export default async function HomePage() {
             <div className="mt-14 space-y-10">
               <div className="grid gap-10 lg:grid-cols-[1.18fr_0.82fr] lg:items-start">
                 <Reveal>
-                  <div className="rounded-[32px] bg-white/82 p-7 shadow-[0_18px_46px_rgba(124,58,237,0.08)]">
+                  <div className="rounded-[32px] bg-white/82 p-6 shadow-[0_18px_46px_rgba(124,58,237,0.08)]">
                     <div className="space-y-5">
                       <p className={typography.panelLabel}>Featured project</p>
                       <h3 className="text-[2rem] font-semibold tracking-tight text-slate-900 md:text-[2.4rem]">
                         {featuredProject.title}
                       </h3>
                       <p className="max-w-2xl text-base leading-8 text-slate-700">
-                        {featuredProject.excerpt}
+                        Clinkz is an autonomous offensive testing system that coordinates discovery,
+                        validation, and reporting across agent-driven security workflows.
                       </p>
                       {featuredKeywords.length ? (
                         <p className="text-xs font-medium uppercase tracking-[0.16em] text-violet-700">
@@ -113,11 +112,13 @@ export default async function HomePage() {
                       ) : null}
                     </div>
 
-                    <div className="mt-10 grid gap-6 md:grid-cols-3">
-                      <div className="space-y-2">
-                        <p className={typography.panelLabel}>What it does</p>
-                        <p className={typography.cardText}>{featuredProject.problem}</p>
-                      </div>
+                    <ul className="mt-8 space-y-2 pl-5 text-sm leading-7 text-slate-600 marker:text-violet-600">
+                      <li>Agent-driven testing workflows</li>
+                      <li>Dynamic vulnerability discovery</li>
+                      <li>Evidence-based reporting system</li>
+                    </ul>
+
+                    <div className="mt-8 grid gap-6 md:grid-cols-2">
                       <div className="space-y-2">
                         <p className={typography.panelLabel}>How it works</p>
                         <p className={typography.cardText}>

@@ -23,7 +23,7 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
     <article
       className={cn(
         "flex h-full flex-col rounded-[28px] bg-white/78 shadow-[0_12px_36px_rgba(124,58,237,0.08)] transition duration-200 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_18px_44px_rgba(124,58,237,0.12)]",
-        featured ? "min-h-[320px] p-6 md:p-7" : "min-h-[260px] p-5 md:p-6"
+        featured ? "min-h-[320px] p-5 md:p-6" : "min-h-[260px] p-4 md:p-5"
       )}
     >
       <div className="space-y-3">
