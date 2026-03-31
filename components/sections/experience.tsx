@@ -52,58 +52,39 @@ export function ExperienceSection() {
   }, []);
 
   return (
-    <div
-      className="grid gap-10 lg:grid-cols-[180px_minmax(0,1fr)] lg:gap-14"
-      ref={containerRef}
-    >
-      <div className="hidden lg:block">
-        <div className="sticky top-28 flex flex-col items-center">
-          <Image
-            src={professionalExperience.logo}
-            alt={`${professionalExperience.brand} logo`}
-            width={150}
-            height={36}
-            className="h-10 w-auto"
-          />
-        </div>
+    <div className="experience-layout" ref={containerRef}>
+      <div className="experience-brand">
+        <Image
+          src={professionalExperience.logo}
+          alt={`${professionalExperience.brand} logo`}
+          width={140}
+          height={34}
+          className="h-9 w-auto"
+        />
+        <p className={typography.panelLabel}>{professionalExperience.brand}</p>
       </div>
 
-      <div className="space-y-8">
-        <div className="space-y-3">
-          <Image
-            src={professionalExperience.logo}
-            alt={`${professionalExperience.brand} logo`}
-            width={150}
-            height={36}
-            className="h-10 w-auto lg:hidden"
-          />
-          <p className={typography.panelLabel}>{professionalExperience.brand}</p>
-        </div>
+      <div className="timeline">
+        {professionalExperience.roles.map((role) => (
+          <article
+            key={`${role.title}-${role.period}`}
+            data-experience-role
+            className="role"
+          >
+            <div className="space-y-2">
+              <h3 className="text-[1.45rem] font-semibold tracking-tight text-slate-900 md:text-[1.6rem]">
+                {role.title}
+              </h3>
+              <p className={typography.panelLabel}>{role.period}</p>
+            </div>
 
-        <div className="relative border-l border-slate-200 pl-8">
-          {professionalExperience.roles.map((role) => (
-            <article
-              key={`${role.title}-${role.period}`}
-              data-experience-role
-              className="relative space-y-4 pb-10 last:pb-0"
-            >
-              <span className="absolute -left-[2.05rem] top-[0.5rem] h-3 w-3 rounded-full bg-violet-600 ring-4 ring-[#f8f7ff]" />
-
-              <div className="space-y-2">
-                <h3 className="text-[1.7rem] font-semibold tracking-tight text-slate-900 md:text-[1.9rem]">
-                  {role.title}
-                </h3>
-                <p className={typography.panelLabel}>{role.period}</p>
-              </div>
-
-              <ul className="space-y-2 pl-5 text-sm leading-7 text-slate-600 marker:text-violet-600">
-                {role.focus.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
+            <ul className="mt-4 space-y-2 pl-5 text-sm leading-7 text-slate-600 marker:text-violet-600">
+              {role.focus.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
       </div>
     </div>
   );
