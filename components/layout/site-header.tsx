@@ -131,7 +131,7 @@ export function SiteHeader() {
                 }}
                 aria-current={isActiveRoute(item.href) ? "page" : undefined}
                 className={cn(
-                  "relative whitespace-nowrap py-2 text-sm font-medium transition-colors hover:text-slate-900",
+                  "relative whitespace-nowrap py-2 text-sm font-medium transition-colors after:absolute after:bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-violet-600 after:transition-transform after:duration-200 hover:text-slate-900 hover:after:scale-x-100",
                   isActiveRoute(item.href) ? "text-violet-700" : "text-slate-500"
                 )}
               >

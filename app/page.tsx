@@ -34,24 +34,27 @@ export default async function HomePage() {
         <div className="container">
           <Reveal className="flex flex-col items-center text-center">
             <div className="w-full max-w-[136px] pt-14 md:max-w-[140px]">
-              <div className="overflow-hidden rounded-full shadow-[0_16px_40px_rgba(124,58,237,0.12)]">
-                <Image
-                  src="/pratik-vaibhav.png"
-                  alt="Pratik Vaibhav"
-                  width={320}
-                  height={320}
-                  priority
-                  className="aspect-square w-full object-cover"
-                />
+              <div className="relative animate-[hero-scale-in_0.72s_ease-out_both]">
+                <div className="pointer-events-none absolute inset-[-18px] -z-10 rounded-full bg-[radial-gradient(circle,rgba(124,58,237,0.18),rgba(124,58,237,0.04)_58%,transparent_76%)] blur-2xl" />
+                <div className="overflow-hidden rounded-full shadow-[0_18px_42px_rgba(124,58,237,0.14)]">
+                  <Image
+                    src="/pratik-vaibhav.png"
+                    alt="Pratik Vaibhav"
+                    width={320}
+                    height={320}
+                    priority
+                    className="aspect-square w-full object-cover"
+                  />
+                </div>
               </div>
             </div>
 
             <div className="mt-8 flex max-w-[520px] flex-col items-center space-y-4">
-              <h1 className={typography.pageTitle}>Hi, I&apos;m Pratik</h1>
+              <h1 className={`${typography.pageTitle} tracking-[0.03em]`}>Hi, I&apos;m Pratik</h1>
               <p className="text-[1.55rem] font-semibold tracking-tight text-violet-700 md:text-[1.8rem]">
                 Application Security Engineer
               </p>
-              <p className="max-w-[460px] text-sm font-medium leading-6 text-slate-700 md:text-[0.95rem]">
+              <p className="max-w-[400px] text-sm font-medium leading-6 text-slate-700 md:text-[0.95rem]">
                 Working on securing real-world systems across application security and offensive
                 testing.
               </p>
@@ -91,10 +94,10 @@ export default async function HomePage() {
           {featuredProject ? (
             <div className="mt-10 space-y-8">
               <Reveal>
-                <div className="rounded-[28px] bg-white/82 p-5 shadow-[0_14px_36px_rgba(124,58,237,0.08)] md:p-6">
+                <div className="rounded-[28px] border border-violet-200/70 bg-white/88 p-5 shadow-[0_18px_42px_rgba(124,58,237,0.12)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(124,58,237,0.16)] md:p-6">
                   <div className="space-y-3">
                     <p className={typography.panelLabel}>Featured project</p>
-                    <h3 className="text-[1.9rem] font-semibold tracking-tight text-slate-900 md:text-[2.1rem]">
+                    <h3 className="text-[2.05rem] font-semibold tracking-tight text-slate-900 md:text-[2.25rem]">
                       {featuredProject.title}
                     </h3>
                     <p className="max-w-[560px] text-sm leading-6 text-slate-700 md:text-[0.95rem]">
@@ -133,7 +136,7 @@ export default async function HomePage() {
               {supportingProjects.length ? (
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                   {supportingProjects.map((project, index) => (
-                    <Reveal key={project.slug} delay={index * 0.06}>
+                    <Reveal key={project.slug} delay={index * 0.06} className="opacity-90">
                       <ProjectCard project={project} compact />
                     </Reveal>
                   ))}

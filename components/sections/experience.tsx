@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { professionalExperience } from "@/lib/content";
+import { cn } from "@/lib/utils";
 import { typography } from "@/styles/design-system";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -58,9 +59,9 @@ export function ExperienceSection() {
         <Image
           src={professionalExperience.logo}
           alt={`${professionalExperience.brand} logo`}
-          width={140}
-          height={34}
-          className="h-9 w-auto"
+          width={164}
+          height={40}
+          className="h-10 w-auto opacity-100"
         />
       </div>
 
@@ -71,24 +72,33 @@ export function ExperienceSection() {
             data-experience-role
             className={index === 0 ? "role" : "role opacity-80"}
           >
-            <div className="space-y-2">
-              <h3
-                className={
-                  index === 0
-                    ? "text-[1.55rem] font-bold tracking-tight text-slate-900 md:text-[1.7rem]"
-                    : "text-[1.45rem] font-semibold tracking-tight text-slate-900 md:text-[1.55rem]"
-                }
-              >
-                {role.title}
-              </h3>
-              <p className={typography.panelLabel}>{role.period}</p>
-            </div>
+            <div
+              className={cn(
+                "-ml-4 rounded-2xl px-4 py-3 transition duration-200",
+                index === 0
+                  ? "bg-white/80 shadow-[0_12px_28px_rgba(124,58,237,0.08)]"
+                  : "hover:bg-white/65 hover:shadow-[0_10px_24px_rgba(124,58,237,0.06)]"
+              )}
+            >
+              <div className="space-y-2">
+                <h3
+                  className={
+                    index === 0
+                      ? "text-[1.6rem] font-bold tracking-tight text-slate-950 md:text-[1.75rem]"
+                      : "text-[1.45rem] font-semibold tracking-tight text-slate-900 md:text-[1.55rem]"
+                  }
+                >
+                  {role.title}
+                </h3>
+                <p className={typography.panelLabel}>{role.period}</p>
+              </div>
 
-            <ul className="mt-4 space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
-              {role.focus.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+              <ul className="mt-4 space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
+                {role.focus.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
           </article>
         ))}
       </div>
