@@ -33,7 +33,7 @@ export default async function HomePage() {
       <section id="about" className="section">
         <div className="container">
           <Reveal className="flex flex-col items-center text-center">
-            <div className="w-full max-w-[160px] pt-8">
+            <div className="w-full max-w-[136px] pt-14 md:max-w-[140px]">
               <div className="overflow-hidden rounded-full shadow-[0_16px_40px_rgba(124,58,237,0.12)]">
                 <Image
                   src="/pratik-vaibhav.png"
@@ -46,14 +46,14 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="mt-6 flex max-w-[700px] flex-col items-center space-y-3">
+            <div className="mt-8 flex max-w-[520px] flex-col items-center space-y-4">
               <h1 className={typography.pageTitle}>Hi, I&apos;m Pratik</h1>
-              <p className="text-[1.45rem] font-semibold tracking-tight text-violet-700 md:text-[1.65rem]">
+              <p className="text-[1.55rem] font-semibold tracking-tight text-violet-700 md:text-[1.8rem]">
                 Application Security Engineer
               </p>
-              <p className="max-w-[700px] text-base font-medium leading-[1.6] text-slate-700">
-                I work on securing real-world systems by identifying vulnerabilities,
-                understanding attack behavior, and helping teams fix what actually matters.
+              <p className="max-w-[460px] text-sm font-medium leading-6 text-slate-700 md:text-[0.95rem]">
+                Working on securing real-world systems across application security and offensive
+                testing.
               </p>
             </div>
           </Reveal>
@@ -70,9 +70,9 @@ export default async function HomePage() {
             </p>
           </Reveal>
 
-          <div className="mt-8 border-t border-slate-200" />
+          <div className="mt-10 border-t border-slate-200" />
 
-          <Reveal delay={0.05} className="mt-10">
+          <Reveal delay={0.05} className="mt-9">
             <ExperienceSection />
           </Reveal>
         </div>
@@ -89,20 +89,17 @@ export default async function HomePage() {
           </Reveal>
 
           {featuredProject ? (
-            <div className="mt-12 space-y-8">
+            <div className="mt-10 space-y-8">
               <Reveal>
-                <div className="rounded-[28px] bg-white/82 p-6 shadow-[0_14px_36px_rgba(124,58,237,0.08)] md:p-7">
-                  <div className="space-y-4">
+                <div className="rounded-[28px] bg-white/82 p-5 shadow-[0_14px_36px_rgba(124,58,237,0.08)] md:p-6">
+                  <div className="space-y-3">
                     <p className={typography.panelLabel}>Featured project</p>
-                    <h3 className="text-[1.75rem] font-semibold tracking-tight text-slate-900 md:text-[2rem]">
+                    <h3 className="text-[1.9rem] font-semibold tracking-tight text-slate-900 md:text-[2.1rem]">
                       {featuredProject.title}
                     </h3>
-                    <p className="max-w-[700px] text-base leading-[1.6] text-slate-700">
-                      Clinkz is an autonomous offensive testing system that coordinates discovery,
-                      validation, and reporting across agent-driven security workflows.
+                    <p className="max-w-[560px] text-sm leading-6 text-slate-700 md:text-[0.95rem]">
+                      Agent-based system for automated vulnerability discovery and analysis
                     </p>
-                    <p className={typography.cardText}>{featuredProject.architecture.processing[0]}</p>
-                    <p className={typography.cardText}>{featuredProject.securityImpact[0]}</p>
                     {featuredKeywords.length ? (
                       <p className="text-xs font-medium uppercase tracking-[0.16em] text-violet-700">
                         {featuredKeywords.join(" / ")}
@@ -110,13 +107,13 @@ export default async function HomePage() {
                     ) : null}
                   </div>
 
-                  <ul className="mt-6 space-y-2 pl-5 text-sm leading-7 text-slate-600 marker:text-violet-600">
-                    <li>Agent-driven testing workflows</li>
-                    <li>Dynamic vulnerability discovery</li>
-                    <li>Evidence-based reporting system</li>
+                  <ul className="mt-5 space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
+                    <li>Dynamic testing workflows</li>
+                    <li>LLM-driven decision making</li>
+                    <li>Security signal prioritization</li>
                   </ul>
 
-                  <div className="mt-6 flex flex-wrap items-center gap-3">
+                  <div className="mt-5 flex flex-wrap items-center gap-3">
                     {featuredProject.readmeUrl ? (
                       <Button asChild variant="secondary" size="sm">
                         <Link href={featuredProject.readmeUrl} target="_blank" rel="noreferrer">

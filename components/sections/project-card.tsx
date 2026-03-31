@@ -23,7 +23,7 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
     <article
       className={cn(
         "flex h-full flex-col rounded-[28px] bg-white/78 shadow-[0_12px_36px_rgba(124,58,237,0.08)] transition duration-200 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_18px_44px_rgba(124,58,237,0.12)]",
-        featured ? "min-h-[320px] p-5 md:p-6" : "min-h-[260px] p-4 md:p-5"
+        featured ? "min-h-[320px] p-5" : "min-h-[260px] p-4"
       )}
     >
       <div className="space-y-3">
@@ -40,7 +40,7 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
           {shouldRenderSummary ? (
             <p
               className={cn(
-                "text-sm leading-7 text-slate-600 md:text-base",
+                "text-sm leading-6 text-slate-600 md:text-[0.95rem]",
                 featured ? "line-clamp-3 max-w-3xl" : "line-clamp-2"
               )}
             >
@@ -50,7 +50,7 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
         </div>
       </div>
 
-      <div className="mt-auto flex flex-wrap items-center gap-2 pt-5">
+      <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">
         {project.readmeUrl ? (
           <Button asChild variant="secondary" size="sm">
             <Link href={project.readmeUrl} target="_blank" rel="noreferrer">

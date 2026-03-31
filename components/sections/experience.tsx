@@ -54,6 +54,7 @@ export function ExperienceSection() {
   return (
     <div className="experience-layout" ref={containerRef}>
       <div className="experience-brand">
+        <p className={typography.panelLabel}>Deloitte</p>
         <Image
           src={professionalExperience.logo}
           alt={`${professionalExperience.brand} logo`}
@@ -61,24 +62,29 @@ export function ExperienceSection() {
           height={34}
           className="h-9 w-auto"
         />
-        <p className={typography.panelLabel}>{professionalExperience.brand}</p>
       </div>
 
       <div className="timeline">
-        {professionalExperience.roles.map((role) => (
+        {professionalExperience.roles.map((role, index) => (
           <article
             key={`${role.title}-${role.period}`}
             data-experience-role
-            className="role"
+            className={index === 0 ? "role" : "role opacity-80"}
           >
             <div className="space-y-2">
-              <h3 className="text-[1.45rem] font-semibold tracking-tight text-slate-900 md:text-[1.6rem]">
+              <h3
+                className={
+                  index === 0
+                    ? "text-[1.55rem] font-bold tracking-tight text-slate-900 md:text-[1.7rem]"
+                    : "text-[1.45rem] font-semibold tracking-tight text-slate-900 md:text-[1.55rem]"
+                }
+              >
                 {role.title}
               </h3>
               <p className={typography.panelLabel}>{role.period}</p>
             </div>
 
-            <ul className="mt-4 space-y-2 pl-5 text-sm leading-7 text-slate-600 marker:text-violet-600">
+            <ul className="mt-4 space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
               {role.focus.map((item) => (
                 <li key={item}>{item}</li>
               ))}

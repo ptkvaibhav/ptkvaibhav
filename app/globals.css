@@ -49,13 +49,13 @@
 
 @layer components {
   .section {
-    padding: 5rem 0;
+    padding: 6rem 0 4.75rem;
     scroll-margin-top: 100px;
   }
 
   .section-alt {
     background: #f8f7ff;
-    padding: 5rem 0;
+    padding: 6rem 0 4.75rem;
     scroll-margin-top: 100px;
   }
 
@@ -137,13 +137,13 @@
   }
 
   .timeline {
-    border-left: 2px solid #cccccc;
+    border-left: 2px solid #b9bfd0;
     padding-left: 20px;
   }
 
   .role {
     position: relative;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
   }
 
   .role:last-child {
@@ -154,11 +154,12 @@
     content: "";
     position: absolute;
     left: -26px;
-    top: 10px;
-    width: 10px;
-    height: 10px;
+    top: 9px;
+    width: 12px;
+    height: 12px;
     border-radius: 9999px;
     background: #7c3aed;
+    box-shadow: 0 0 0 4px #f8f7ff;
   }
 }
 
@@ -182,7 +183,7 @@
 @media (max-width: 768px) {
   .section,
   .section-alt {
-    padding: 4.5rem 0;
+    padding: 5rem 0 4rem;
   }
 
   .timeline {
@@ -201,7 +202,7 @@
 
   .section,
   .section-alt {
-    padding: 4rem 0;
+    padding: 4.5rem 0 3.5rem;
   }
 
   .text-container {
