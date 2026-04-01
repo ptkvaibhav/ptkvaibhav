@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { type ContactFormInput, contactFormSchema } from "@/lib/validators/contact";
+import { ContactSchema, type ContactInput } from "@/lib/validation";
 import type { ContactApiResponse } from "@/types/contact";
 
 type FormState = {
@@ -20,8 +20,8 @@ export function ContactForm() {
   const [formState, setFormState] = useState<FormState>({ status: "idle" });
   const [toast, setToast] = useState<FormState | null>(null);
 
-  const form = useForm<ContactFormInput>({
-    resolver: zodResolver(contactFormSchema),
+  const form = useForm<ContactInput>({
+    resolver: zodResolver(ContactSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -42,6 +42,12 @@ export function ContactForm() {
     return () => window.clearTimeout(timer);
   }, [toast]);
 
+  function getCookieValue(name: string) {
+    const cookies = document.cookie.split("; ");
+    const target = cookies.find((cookie) => cookie.startsWith(`${name}=`));
+    return target ? decodeURIComponent(target.split("=").slice(1).join("=")) : "";
+  }
+
   const onSubmit = form.handleSubmit(async (values) => {
     setFormState({ status: "idle" });
     setToast(null);
@@ -51,6 +57,7 @@ export function ContactForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-CSRF-Token": getCookieValue("csrf-token"),
         },
         body: JSON.stringify(values),
       });

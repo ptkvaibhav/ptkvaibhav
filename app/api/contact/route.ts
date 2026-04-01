@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 
 import { rateLimit } from "@/lib/rate-limit";
 import { siteConfig } from "@/lib/site";
-import { contactFormSchema } from "@/lib/validators/contact";
+import { ContactSchema } from "@/lib/validation";
+import { hasResendConfig, sendContactEmail } from "@/services/resend";
 
 export const runtime = "nodejs";
-
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 function buildHeaders(limit: number, remaining: number, resetAt: number) {
   return {
@@ -38,13 +36,36 @@ function readCompanyHoneypot(payload: unknown) {
   return typeof company === "string" ? company.trim() : "";
 }
 
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+function getAllowedOrigins() {
+  const configuredOrigin = new URL(siteConfig.url).origin;
+  return new Set([configuredOrigin, "http://localhost:3000", "http://127.0.0.1:3000"]);
+}
+
+function hasAllowedOrigin(request: NextRequest) {
+  const allowedOrigins = getAllowedOrigins();
+  const origin = request.headers.get("origin");
+  const referer = request.headers.get("referer");
+
+  if (origin && allowedOrigins.has(origin)) {
+    return true;
+  }
+
+  if (referer) {
+    try {
+      const refererOrigin = new URL(referer).origin;
+      return allowedOrigins.has(refererOrigin);
+    } catch {
+      return false;
+    }
+  }
+
+  return false;
+}
+
+function hasValidCsrfToken(request: NextRequest) {
+  const headerToken = request.headers.get("x-csrf-token");
+  const cookieToken = request.cookies.get("csrf-token")?.value;
+  return Boolean(headerToken && cookieToken && headerToken === cookieToken);
 }
 
 export async function POST(request: NextRequest) {
@@ -70,6 +91,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if (!hasAllowedOrigin(request) || !hasValidCsrfToken(request)) {
+    return NextResponse.json(
+      { error: "Invalid request origin." },
+      { status: 403, headers }
+    );
+  }
+
   let payload: unknown;
 
   try {
@@ -82,7 +110,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true }, { status: 200, headers });
   }
 
-  const parsed = contactFormSchema.safeParse(payload);
+  const parsed = ContactSchema.safeParse(payload);
 
   if (!parsed.success) {
     return NextResponse.json(
@@ -98,7 +126,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (!resend) {
+  if (!hasResendConfig()) {
     return NextResponse.json(
       { error: "Contact service is not configured yet." },
       { status: 503, headers }
@@ -106,29 +134,16 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const subject = parsed.data.subject || "New Message";
-    const organization = parsed.data.organization ? escapeHtml(parsed.data.organization) : null;
-    const { error } = await resend.emails.send({
-      from: "Portfolio <onboarding@resend.dev>",
-      to: [siteConfig.email],
-      subject: `Portfolio Contact: ${subject}`,
-      html: `
-        <h3>New Message</h3>
-        <p><strong>Name:</strong> ${escapeHtml(parsed.data.name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(parsed.data.email)}</p>
-        ${
-          organization
-            ? `<p><strong>Organization:</strong> ${organization}</p>`
-            : ""
-        }
-        <p><strong>Subject:</strong> ${escapeHtml(subject)}</p>
-        <p>${escapeHtml(parsed.data.message).replace(/\n/g, "<br />")}</p>
-        <p><strong>IP:</strong> ${escapeHtml(identifier)}</p>
-      `,
-      replyTo: parsed.data.email,
+    const { error } = await sendContactEmail({
+      ...parsed.data,
+      identifier,
     });
 
     if (error) {
+      console.error("Contact API error", {
+        error,
+        timestamp: new Date().toISOString(),
+      });
       return NextResponse.json(
         { error: "Unable to send message right now. Please try again later." },
         { status: 500, headers }
@@ -139,7 +154,11 @@ export async function POST(request: NextRequest) {
       { success: true, message: "Message sent successfully." },
       { status: 201, headers }
     );
-  } catch {
+  } catch (error) {
+    console.error("Contact API error", {
+      error: error instanceof Error ? error.message : error,
+      timestamp: new Date().toISOString(),
+    });
     return NextResponse.json(
       { error: "Unable to send message right now. Please try again later." },
       { status: 500, headers }

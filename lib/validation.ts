@@ -54,7 +54,7 @@ const honeypotSchema = z
   .transform((value) => sanitizeInlineText(value ?? ""))
   .pipe(z.string().max(0));
 
-export const contactFormSchema = z
+export const ContactSchema = z
   .object({
     name: nameSchema,
     email: emailSchema,
@@ -66,4 +66,4 @@ export const contactFormSchema = z
   })
   .strict();
 
-export type ContactFormInput = z.infer<typeof contactFormSchema>;
+export type ContactInput = z.infer<typeof ContactSchema>;
