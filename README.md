@@ -97,6 +97,8 @@ For production use, configure GitHub branch protection on `main`:
 - Require CI and security workflows to pass
 - Require branch up to date before merge when possible
 
+Default branch: `main`
+
 ## License
 
 This repository is licensed under the MIT License. See [LICENSE](./LICENSE).
