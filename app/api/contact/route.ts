@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
 
 import { rateLimit } from "@/lib/rate-limit";
-import { hasSupabaseAdminConfig, supabaseAdmin } from "@/lib/supabase";
+import { siteConfig } from "@/lib/site";
 import { contactFormSchema } from "@/lib/validators/contact";
-import type { ContactMessage } from "@/types/contact";
 
 export const runtime = "nodejs";
+
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 function buildHeaders(limit: number, remaining: number, resetAt: number) {
   return {
@@ -34,6 +36,15 @@ function readCompanyHoneypot(payload: unknown) {
 
   const company = Reflect.get(payload, "company");
   return typeof company === "string" ? company.trim() : "";
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 export async function POST(request: NextRequest) {
@@ -82,12 +93,12 @@ export async function POST(request: NextRequest) {
 
   if (parsed.data.nickname) {
     return NextResponse.json(
-      { message: "Message received. I will get back to you soon." },
+      { success: true, message: "Message received. I will get back to you soon." },
       { status: 200, headers }
     );
   }
 
-  if (!hasSupabaseAdminConfig() || !supabaseAdmin) {
+  if (!resend) {
     return NextResponse.json(
       { error: "Contact service is not configured yet." },
       { status: 503, headers }
@@ -95,25 +106,26 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const userAgent = request.headers.get("user-agent");
-    const messageRecord: ContactMessage = {
-      name: parsed.data.name,
-      email: parsed.data.email,
-      message: parsed.data.message,
-      company: parsed.data.organization || null,
-      subject: parsed.data.subject || null,
-      ipAddress: identifier,
-      userAgent: userAgent ? userAgent.slice(0, 512) : null,
-    };
-
-    const { error } = await supabaseAdmin.from("messages").insert({
-      name: messageRecord.name,
-      email: messageRecord.email,
-      company: messageRecord.company,
-      subject: messageRecord.subject,
-      message: messageRecord.message,
-      ip_address: messageRecord.ipAddress,
-      user_agent: messageRecord.userAgent,
+    const subject = parsed.data.subject || "New Message";
+    const organization = parsed.data.organization ? escapeHtml(parsed.data.organization) : null;
+    const { error } = await resend.emails.send({
+      from: "Portfolio <onboarding@resend.dev>",
+      to: [siteConfig.email],
+      subject: `Portfolio Contact: ${subject}`,
+      html: `
+        <h3>New Message</h3>
+        <p><strong>Name:</strong> ${escapeHtml(parsed.data.name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(parsed.data.email)}</p>
+        ${
+          organization
+            ? `<p><strong>Organization:</strong> ${organization}</p>`
+            : ""
+        }
+        <p><strong>Subject:</strong> ${escapeHtml(subject)}</p>
+        <p>${escapeHtml(parsed.data.message).replace(/\n/g, "<br />")}</p>
+        <p><strong>IP:</strong> ${escapeHtml(identifier)}</p>
+      `,
+      replyTo: parsed.data.email,
     });
 
     if (error) {
@@ -124,7 +136,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: "Message received. I will get back to you soon." },
+      { success: true, message: "Message sent successfully." },
       { status: 201, headers }
     );
   } catch {

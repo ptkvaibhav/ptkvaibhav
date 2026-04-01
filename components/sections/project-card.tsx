@@ -53,14 +53,14 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
       <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">
         {project.readmeUrl ? (
           <Button asChild variant="secondary" size="sm">
-            <Link href={project.readmeUrl} target="_blank" rel="noreferrer">
+            <Link href={project.readmeUrl} target="_blank" rel="noopener noreferrer">
               View README
               <ArrowUpRight className="h-4 w-4" />
             </Link>
           </Button>
         ) : null}
         <Button asChild variant="secondary" size="sm">
-          <Link href={project.github} target="_blank" rel="noreferrer">
+          <Link href={project.github} target="_blank" rel="noopener noreferrer">
             View repo
             <ArrowUpRight className="h-4 w-4" />
           </Link>

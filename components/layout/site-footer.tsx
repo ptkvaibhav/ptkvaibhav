@@ -13,18 +13,22 @@ export function SiteFooter() {
         <div className="max-w-xl space-y-3">
           <p className="text-xs uppercase tracking-[0.3em] text-violet-700">{siteConfig.name}</p>
           <p className="text-sm text-slate-600">{siteConfig.bio}</p>
+          <p className="text-xs leading-5 text-slate-500">
+            This site follows secure coding practices including CSP, input validation, and rate
+            limiting.
+          </p>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Button asChild size="sm" variant="secondary">
-            <Link href={resumePath} target="_blank" rel="noreferrer">
+            <Link href={resumePath} target="_blank" rel="noopener noreferrer">
               Resume
             </Link>
           </Button>
           <Link
             href={siteConfig.social.github}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="text-link"
           >
             <Github className="h-4 w-4" />
@@ -33,7 +37,7 @@ export function SiteFooter() {
           <Link
             href={siteConfig.social.linkedin}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="text-link"
           >
             <Linkedin className="h-4 w-4" />

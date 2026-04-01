@@ -7,6 +7,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { AwardsSection } from "@/components/sections/awards";
 import { ExperienceSection } from "@/components/sections/experience";
 import { ProjectCard } from "@/components/sections/project-card";
+import { SkillsSection } from "@/components/sections/skills";
 import { Button } from "@/components/ui/button";
 import { getFeaturedProjects } from "@/lib/projects";
 import { typography } from "@/styles/design-system";
@@ -40,25 +41,37 @@ export default async function HomePage() {
                   <Image
                     src="/pratik-vaibhav.png"
                     alt="Pratik Vaibhav"
-                    width={320}
-                    height={320}
+                    width={160}
+                    height={160}
                     priority
+                    sizes="(max-width: 768px) 120px, 160px"
                     className="aspect-square w-full object-cover"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 flex max-w-[520px] flex-col items-center space-y-4">
-              <h1 className={`${typography.pageTitle} tracking-[0.03em]`}>Hi, I&apos;m Pratik</h1>
-              <p className="text-[1.55rem] font-semibold tracking-tight text-violet-700 md:text-[1.8rem]">
-                Application Security Engineer
+            <div className="mt-8 flex max-w-[680px] flex-col items-center space-y-4">
+              <h1 className={`${typography.pageTitle} tracking-[0.03em]`}>Hi, I&apos;m Pratik.</h1>
+              <p className="max-w-[640px] text-[1.45rem] font-semibold leading-8 tracking-tight text-violet-700 md:text-[1.8rem]">
+                Application Security Engineer specializing in securing enterprise and
+                government systems across application, infrastructure, and DevSecOps
+                environments.
               </p>
-              <p className="max-w-[400px] text-sm font-medium leading-6 text-slate-700 md:text-[0.95rem]">
-                Working on securing real-world systems across application security and offensive
-                testing.
+              <p className="max-w-[620px] text-sm font-medium leading-6 text-slate-700 md:text-[0.95rem]">
+                I design security architectures, lead testing strategies, and build
+                automation that improves how vulnerabilities are identified and fixed at
+                scale.
               </p>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <Reveal>
+            <SkillsSection />
           </Reveal>
         </div>
       </section>
@@ -101,7 +114,8 @@ export default async function HomePage() {
                       {featuredProject.title}
                     </h3>
                     <p className="max-w-[560px] text-sm leading-6 text-slate-700 md:text-[0.95rem]">
-                      Agent-based system for automated vulnerability discovery and analysis
+                      An autonomous penetration testing system using agentic AI to dynamically
+                      adapt testing strategies based on real-world attack methodologies.
                     </p>
                     {featuredKeywords.length ? (
                       <p className="text-xs font-medium uppercase tracking-[0.16em] text-violet-700">
@@ -111,21 +125,29 @@ export default async function HomePage() {
                   </div>
 
                   <ul className="mt-5 space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
-                    <li>Dynamic testing workflows</li>
-                    <li>LLM-driven decision making</li>
-                    <li>Security signal prioritization</li>
+                    <li>Correlates CVEs, bug bounty writeups, and exploit research</li>
+                    <li>Automates reconnaissance, fuzzing, and vulnerability validation</li>
+                    <li>Continuously evolves testing methodology using AI reasoning</li>
                   </ul>
 
                   <div className="mt-5 flex flex-wrap items-center gap-3">
                     {featuredProject.readmeUrl ? (
                       <Button asChild variant="secondary" size="sm">
-                        <Link href={featuredProject.readmeUrl} target="_blank" rel="noreferrer">
+                        <Link
+                          href={featuredProject.readmeUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           View README
                         </Link>
                       </Button>
                     ) : null}
                     <Button asChild size="sm">
-                      <Link href={featuredProject.github} target="_blank" rel="noreferrer">
+                      <Link
+                        href={featuredProject.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         View repo
                       </Link>
                     </Button>
@@ -161,13 +183,14 @@ export default async function HomePage() {
             <Reveal className="text-container space-y-5">
               <h2 className={typography.sectionTitle}>Contact</h2>
               <p className={typography.sectionDescription}>
-                Feel free to reach out if you&apos;re building something interesting.
+                If you&apos;re hiring, collaborating, or want to discuss security problems,
+                feel free to reach out.
               </p>
 
               <div className="space-y-4 pt-6">
                 <p className={typography.panelLabel}>Resume</p>
                 <Button asChild>
-                  <Link href={resumePath} target="_blank" rel="noreferrer">
+                  <Link href={resumePath} target="_blank" rel="noopener noreferrer">
                     Download resume
                     <Download className="h-4 w-4" />
                   </Link>

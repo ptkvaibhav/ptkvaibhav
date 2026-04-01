@@ -9,6 +9,7 @@ export interface ContactMessage {
 }
 
 export interface ContactApiSuccessResponse {
+  success: true;
   message: string;
 }
 

@@ -13,7 +13,15 @@ export function AwardsSection() {
           <div className="h-px w-full bg-slate-200" />
           <ul className="space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
             <li>Outstanding Performance Award (Top 1%)</li>
-            <li>Additional internal awards (total: 9 across delivery and performance)</li>
+            <li>
+              Excellence in delivering and managing cybersecurity programs for US government
+              systems
+            </li>
+            <li>Applause Awards</li>
+            <li>
+              Recognized for security program implementation, automation, and delivery impact
+              across multiple engagements
+            </li>
           </ul>
         </div>
 
@@ -21,7 +29,11 @@ export function AwardsSection() {
           <p className={typography.panelLabel}>Community</p>
           <div className="h-px w-full bg-slate-200" />
           <ul className="space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
-            <li>NULLCON Speaker - presented applied security concepts</li>
+            <li>
+              Speaker at NULLCON 2025 - &ldquo;Smart Automation using Artificial
+              Intelligence&rdquo;, focusing on using AI to automate repetitive security
+              workflows
+            </li>
           </ul>
         </div>
       </div>

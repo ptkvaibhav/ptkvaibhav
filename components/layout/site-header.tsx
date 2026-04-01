@@ -9,6 +9,56 @@ import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
+type SectionNavigationProps = {
+  activeSection: string;
+  linkRefs?: React.MutableRefObject<Record<string, HTMLAnchorElement | null>>;
+  onNavigate?: () => void;
+  mobile?: boolean;
+};
+
+function SectionNavigation({
+  activeSection,
+  linkRefs,
+  onNavigate,
+  mobile = false,
+}: SectionNavigationProps) {
+  function isActiveRoute(href: string) {
+    return href === `#${activeSection}`;
+  }
+
+  return (
+    <>
+      {siteConfig.nav.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          ref={(element) => {
+            if (linkRefs) {
+              linkRefs.current[item.href] = element;
+            }
+          }}
+          aria-current={isActiveRoute(item.href) ? "page" : undefined}
+          className={cn(
+            mobile
+              ? "rounded-xl px-3 py-2 transition hover:bg-slate-50 hover:text-slate-900"
+              : "relative whitespace-nowrap py-2 text-sm font-medium transition-colors after:absolute after:bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-violet-600 after:transition-transform after:duration-200 hover:text-slate-900 hover:after:scale-x-100",
+            isActiveRoute(item.href)
+              ? mobile
+                ? "bg-violet-50 text-violet-700"
+                : "text-violet-700"
+              : mobile
+                ? "text-slate-700"
+                : "text-slate-500"
+          )}
+          onClick={onNavigate}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </>
+  );
+}
+
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
@@ -99,10 +149,6 @@ export function SiteHeader() {
     setIsMenuOpen(false);
   }
 
-  function isActiveRoute(href: string) {
-    return href === `#${activeSection}`;
-  }
-
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
       <div className="container relative flex items-center justify-between gap-6 py-4">
@@ -116,34 +162,20 @@ export function SiteHeader() {
           </Link>
           <nav
             ref={navRef}
+            aria-label="Primary navigation"
             className="relative hidden flex-wrap items-center gap-6 text-sm md:flex"
           >
             <span
               ref={indicatorRef}
               className="pointer-events-none absolute bottom-0 left-0 h-px w-0 bg-violet-600 opacity-0"
             />
-            {siteConfig.nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                ref={(element) => {
-                  linkRefs.current[item.href] = element;
-                }}
-                aria-current={isActiveRoute(item.href) ? "page" : undefined}
-                className={cn(
-                  "relative whitespace-nowrap py-2 text-sm font-medium transition-colors after:absolute after:bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-violet-600 after:transition-transform after:duration-200 hover:text-slate-900 hover:after:scale-x-100",
-                  isActiveRoute(item.href) ? "text-violet-700" : "text-slate-500"
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
+            <SectionNavigation activeSection={activeSection} linkRefs={linkRefs} />
           </nav>
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
           <Button asChild size="sm" variant="secondary">
-            <Link href={resumePath} target="_blank" rel="noreferrer">
+            <Link href={resumePath} target="_blank" rel="noopener noreferrer">
               Resume
             </Link>
           </Button>
@@ -151,7 +183,7 @@ export function SiteHeader() {
             <Link
               href={siteConfig.social.github}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label="GitHub profile"
             >
               <Github className="h-4 w-4" />
@@ -162,7 +194,7 @@ export function SiteHeader() {
             <Link
               href={siteConfig.social.linkedin}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label="LinkedIn profile"
             >
               <Linkedin className="h-4 w-4" />
@@ -184,66 +216,56 @@ export function SiteHeader() {
           {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
 
-        <div
-          className={`absolute left-0 right-0 top-full overflow-hidden border-b border-slate-200 bg-white transition-all duration-300 md:hidden ${
-            isMenuOpen ? "max-h-[24rem] opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="container py-4">
-            <nav className="flex flex-col gap-2 text-sm text-slate-700">
-              {siteConfig.nav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={isActiveRoute(item.href) ? "page" : undefined}
-                  className={cn(
-                    "rounded-xl px-3 py-2 transition hover:bg-slate-50 hover:text-slate-900",
-                    isActiveRoute(item.href) ? "bg-violet-50 text-violet-700" : "text-slate-700"
-                  )}
-                  onClick={closeMenu}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              <Button asChild size="sm" variant="secondary" className="col-span-2">
-                <Link href={resumePath} target="_blank" rel="noreferrer" onClick={closeMenu}>
-                  Resume
-                </Link>
-              </Button>
-              <Button asChild size="sm" variant="ghost">
-                <Link
-                  href={siteConfig.social.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub profile"
-                  onClick={closeMenu}
-                >
-                  <Github className="h-4 w-4" />
-                  GitHub
-                </Link>
-              </Button>
-              <Button asChild size="sm" variant="ghost">
-                <Link
-                  href={siteConfig.social.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn profile"
-                  onClick={closeMenu}
-                >
-                  <Linkedin className="h-4 w-4" />
-                  LinkedIn
-                </Link>
-              </Button>
-              <Button asChild size="sm" className="col-span-2">
-                <Link href="#contact" onClick={closeMenu}>
-                  Let&apos;s talk
-                </Link>
-              </Button>
+        {isMenuOpen ? (
+          <div className="absolute left-0 right-0 top-full border-b border-slate-200 bg-white md:hidden">
+            <div className="container py-4">
+              <nav aria-label="Mobile navigation" className="flex flex-col gap-2 text-sm text-slate-700">
+                <SectionNavigation activeSection={activeSection} onNavigate={closeMenu} mobile />
+              </nav>
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <Button asChild size="sm" variant="secondary" className="col-span-2">
+                  <Link
+                    href={resumePath}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMenu}
+                  >
+                    Resume
+                  </Link>
+                </Button>
+                <Button asChild size="sm" variant="ghost">
+                  <Link
+                    href={siteConfig.social.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub profile"
+                    onClick={closeMenu}
+                  >
+                    <Github className="h-4 w-4" />
+                    GitHub
+                  </Link>
+                </Button>
+                <Button asChild size="sm" variant="ghost">
+                  <Link
+                    href={siteConfig.social.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn profile"
+                    onClick={closeMenu}
+                  >
+                    <Linkedin className="h-4 w-4" />
+                    LinkedIn
+                  </Link>
+                </Button>
+                <Button asChild size="sm" className="col-span-2">
+                  <Link href="#contact" onClick={closeMenu}>
+                    Let&apos;s talk
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </header>
   );

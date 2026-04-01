@@ -18,16 +18,19 @@ export const professionalExperience = {
         "Improved security posture by 33%",
         "Built AI-assisted testing workflows using Burp Suite",
         "Managed and mentored a 14-member AppSec team",
+        "Led security architecture design with CISO",
+        "Owned AppSec strategy across 3 enterprise products",
+        "Led incident response for application security issues",
       ],
     },
     {
       title: "Advisory Solution Advisor",
       company: "Deloitte",
       period: "Jul 2023 - Jun 2025",
-      metrics: ["40% faster reviews", "65% fewer false positives"],
+      metrics: ["False positives reduced to near-zero"],
       focus: [
         "Implemented SAST pipelines using Fortify SSC",
-        "Reduced review time by 40% and false positives by 65%",
+        "Reduced false positives from ~30% (300/1000 findings) to near-zero by correlating SAST, DAST, and SCA outputs for accurate risk prioritization.",
         "Built application security standards and checklists",
         "Investigated high-risk vulnerabilities in government systems",
       ],
@@ -62,19 +65,19 @@ export const awards = [
     title: "Outstanding Performance Award",
     highlight: "Top 1%",
     description:
-      "Recognized within Deloitte's top one percent for sustained delivery impact and leadership in application security work.",
+      "Excellence in delivering and managing cybersecurity programs for US government systems.",
   },
   {
-    title: "Deloitte awards",
-    highlight: "9 awards",
+    title: "Applause Awards",
+    highlight: "Multiple awards",
     description:
-      "Received nine Deloitte awards across delivery quality, ownership, security execution, and team contribution.",
+      "Recognized for security program implementation, automation, and delivery impact across multiple engagements.",
   },
   {
     title: "NULLCON speaker",
-    highlight: "Speaker",
+    highlight: "NULLCON 2025",
     description:
-      "Presented applied security ideas and practitioner experience in a public conference setting.",
+      "Speaker at NULLCON 2025 - 'Smart Automation using Artificial Intelligence', focusing on using AI to automate repetitive security workflows.",
   },
 ] as const;
 

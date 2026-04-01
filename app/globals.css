@@ -30,7 +30,7 @@
   html {
     color-scheme: light;
     scroll-behavior: smooth;
-    scroll-padding-top: 100px;
+    scroll-padding-top: 80px;
   }
 
   body {
@@ -51,14 +51,14 @@
   .section {
     position: relative;
     padding: 6rem 0 4.75rem;
-    scroll-margin-top: 100px;
+    scroll-margin-top: 80px;
   }
 
   .section-alt {
     position: relative;
     background: #f8f7ff;
     padding: 6rem 0 4.75rem;
-    scroll-margin-top: 100px;
+    scroll-margin-top: 80px;
   }
 
   main section + section::before {
