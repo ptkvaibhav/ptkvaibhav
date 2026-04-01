@@ -1,12 +1,12 @@
-name: Security
+name: Security Scan
 
 on:
   push:
     branches:
       - main
-      - master
-      - final/repo-enterprise-grade
   pull_request:
+    branches:
+      - main
   schedule:
     - cron: "0 5 * * 1"
 
@@ -34,6 +34,7 @@ jobs:
         run: npm run sbom
 
   codeql:
+    name: CodeQL
     runs-on: ubuntu-latest
     permissions:
       actions: read
