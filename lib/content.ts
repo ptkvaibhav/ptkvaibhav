@@ -18,9 +18,9 @@ export const professionalExperience = {
         "Improved security posture by 33%",
         "Built AI-assisted testing workflows using Burp Suite",
         "Managed and mentored a 14-member AppSec team",
-        "Led security architecture design with CISO",
-        "Owned AppSec strategy across 3 enterprise products",
-        "Led incident response for application security issues",
+        "Owned end-to-end application security strategy across 3 enterprise systems.",
+        "Acted as primary security decision-maker for product architecture and risk acceptance.",
+        "Led incident response and vulnerability triage for production systems.",
       ],
     },
     {

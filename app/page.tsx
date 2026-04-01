@@ -81,8 +81,8 @@ export default async function HomePage() {
           <Reveal className="text-container space-y-5">
             <h2 className={typography.sectionTitle}>Professional Experience</h2>
             <p className={typography.sectionDescription}>
-              A focused timeline of roles covering application security, DevSecOps, penetration
-              testing, and security program delivery.
+              Security leadership across enterprise and government systems spanning
+              architecture decisions, testing strategy, and production risk management.
             </p>
           </Reveal>
 
@@ -99,8 +99,8 @@ export default async function HomePage() {
           <Reveal className="text-container space-y-5">
             <h2 className={typography.sectionTitle}>Projects</h2>
             <p className={typography.sectionDescription}>
-              A small set of projects focused on improving how security testing is performed,
-              validated, and operationalized.
+              Security tooling focused on autonomous testing, validation depth, and better
+              vulnerability signal.
             </p>
           </Reveal>
 
@@ -109,7 +109,7 @@ export default async function HomePage() {
               <Reveal>
                 <div className="rounded-[28px] border border-violet-200/70 bg-white/88 p-5 shadow-[0_18px_42px_rgba(124,58,237,0.12)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(124,58,237,0.16)] md:p-6">
                   <div className="space-y-3">
-                    <p className={typography.panelLabel}>Featured project</p>
+                    <p className={typography.panelLabel}>Flagship Project</p>
                     <h3 className="text-[2.05rem] font-semibold tracking-tight text-slate-900 md:text-[2.25rem]">
                       {featuredProject.title}
                     </h3>
@@ -127,6 +127,8 @@ export default async function HomePage() {
                   <ul className="mt-5 space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
                     <li>Correlates CVEs, bug bounty writeups, and exploit research</li>
                     <li>Automates reconnaissance, fuzzing, and vulnerability validation</li>
+                    <li>Designed to reduce manual pentesting effort</li>
+                    <li>Focuses on discovering non-obvious vulnerabilities</li>
                     <li>Continuously evolves testing methodology using AI reasoning</li>
                   </ul>
 

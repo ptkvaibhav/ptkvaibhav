@@ -187,6 +187,10 @@ export function ContactForm() {
             </p>
           ) : null}
         </div>
+
+        <p className="text-xs leading-5 text-slate-500">
+          This endpoint is rate-limited, validated, and sanitized.
+        </p>
       </form>
 
       {toast ? (

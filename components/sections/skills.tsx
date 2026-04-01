@@ -45,17 +45,26 @@ export function SkillsSection() {
         <h2 className={typography.sectionTitle}>Skills</h2>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      <div className="overflow-hidden rounded-[28px] border border-violet-100 bg-white/84 shadow-[0_12px_32px_rgba(124,58,237,0.08)]">
         {skillGroups.map((group) => (
-          <article
+          <div
             key={group.title}
-            className="rounded-[24px] border border-violet-100 bg-white/82 p-5 shadow-[0_12px_32px_rgba(124,58,237,0.08)]"
+            className="grid gap-3 border-t border-slate-200/80 px-5 py-4 first:border-t-0 md:grid-cols-[220px_minmax(0,1fr)] md:items-start"
           >
-            <h3 className="text-[1.15rem] font-semibold tracking-tight text-slate-900">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-900">
               {group.title}
             </h3>
-            <p className="mt-3 text-sm leading-6 text-slate-600">{group.items.join(", ")}</p>
-          </article>
+            <div className="flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full bg-violet-50 px-3 py-1 text-xs font-medium text-violet-700"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </div>
