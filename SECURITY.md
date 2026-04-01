@@ -2,31 +2,41 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in this project, please report it privately instead of opening a public issue.
-
-Contact:
+Please report vulnerabilities privately by email:
 
 - Email: `ptkvaibhav@gmail.com`
 
-Please include:
+Do not disclose vulnerabilities publicly before a fix is available.
 
-- A clear description of the issue
-- Steps to reproduce
-- Affected routes, components, or APIs
-- Potential impact
-- Any suggested remediation, if available
+## Responsible Disclosure
 
-## Response Expectations
+When reporting an issue, include:
 
-I will review the report, validate the issue, and work toward a fix as quickly as possible. Verified issues will be handled privately until a patch is ready and deployed.
+- A clear description of the vulnerability
+- Affected pages, APIs, or components
+- Reproduction steps or proof of concept
+- Impact assessment
+- Suggested remediation if available
+
+Please do not:
+
+- Open a public GitHub issue for a vulnerability
+- Share exploit details broadly before remediation
+- Access data that does not belong to you
+
+## Response Timeline
+
+Best-effort response targets:
+
+- Initial acknowledgement: within 3 business days
+- Triage update: within 7 business days
+- Remediation planning: as quickly as practical based on severity
 
 ## Scope
 
-This policy applies to:
+This policy covers:
 
-- The Next.js application
-- Server-side API routes
-- Supabase-backed contact handling
-- GitHub integration logic
-
-Thank you for reporting issues responsibly.
+- The public website and application routes
+- Contact API functionality
+- Repository workflows and deployment configuration
+- Supporting infrastructure and documented security controls

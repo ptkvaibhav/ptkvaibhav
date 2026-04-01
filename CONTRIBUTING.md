@@ -1,38 +1,30 @@
 # Contributing
 
-## Scope
+## Contribution Policy
 
-This repository backs a personal engineering portfolio. Contributions are welcome when they improve correctness, accessibility, security, performance, or documentation without disrupting the existing content and design direction.
+This repository is not maintained as a general open-source project.
 
-## Getting Started
+- Contributions are restricted.
+- Feature contributions are not accepted unless explicitly invited.
+- Pull requests are limited to critical bug fixes, documentation corrections, or security-related improvements.
+- All pull requests require maintainer review before merge.
 
-1. Fork the repository.
-2. Create a feature branch from `master`.
-3. Install dependencies with `npm install`.
-4. Run the local development server with `npm run dev`.
-5. Run checks before opening a pull request:
+## Before Opening a Pull Request
+
+If you have been asked to contribute, keep changes narrow and well-scoped.
+
+1. Create a branch from the current integration branch.
+2. Make the smallest viable change.
+3. Run the required checks:
 
 ```bash
+npm install
 npm run lint
 npm run build
 ```
 
-## Pull Request Guidelines
+4. Do not commit secrets, credentials, generated local environment files, or build artifacts other than approved repository outputs such as `sbom.json`.
 
-- Keep changes focused and scoped.
-- Preserve the existing App Router architecture unless a change clearly requires otherwise.
-- Prefer server-side data fetching for GitHub or Supabase integrations.
-- Maintain TypeScript strictness and avoid introducing unused code.
-- Include screenshots or notes for visible UI changes when relevant.
+## Security-Sensitive Issues
 
-## Reporting Issues
-
-If you find a bug, open an issue with:
-
-- A concise summary
-- Reproduction steps
-- Expected behavior
-- Actual behavior
-- Relevant environment details
-
-Security-sensitive issues should not be filed publicly. Please use the process in [SECURITY.md](./SECURITY.md).
+Do not file public issues for security problems. Follow the reporting process in [SECURITY.md](./SECURITY.md).

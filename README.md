@@ -1,45 +1,58 @@
 # ptkvaibhav.dev
 
-## Overview
+Enterprise-focused application security portfolio built with Next.js App Router, typed server-side integrations, and production-oriented security controls.
 
-This repository contains the source code for a modern personal engineering portfolio focused on:
+## Live Demo
 
-- Application Security
-- Offensive Security
-- Security Automation
-- Research-driven tooling
-
-The site is designed to present technical work clearly, document project case studies, and surface active GitHub engineering activity without relying on client-side API calls.
+- Production: https://ptkvaibhav.dev
 
 ## Tech Stack
 
-- Next.js 15 (App Router)
+- Next.js 15 App Router
 - TypeScript
-- TailwindCSS
-- Framer Motion
-- Supabase
+- Tailwind CSS
+- React 19
+- GSAP
+- Resend
+- Upstash Redis / Ratelimit
+- Zod
 - Vercel
 
-## Architecture
+## Architecture Overview
 
-Key architectural decisions:
+This repository powers a single-page portfolio focused on application security, offensive testing, and security engineering work.
 
-- Server Components are used for data fetching so GitHub and content data are resolved on the server and cached with ISR.
-- ISR is used for GitHub project sync and activity feeds to keep data current without calling external APIs on every request.
-- Supabase handles contact form persistence through server-side API routes.
-- Security headers and CSP are enforced through Next.js configuration.
-- Typed data models keep project, research, contact, and GitHub data structures consistent across the app.
+- App Router is used for server-rendered routes, layouts, and API handlers.
+- UI is organized under `components/` with shared primitives under `components/ui/`.
+- Contact submission is handled through `app/api/contact/route.ts`.
+- Email delivery is isolated in `services/resend.ts`.
+- Validation and request typing are centralized in `lib/validation.ts` and `types/contact.ts`.
+- Security controls such as CSP, CSRF checks, and request hardening are applied in middleware and API handlers.
+
+Additional implementation details are documented in [docs/architecture.md](./docs/architecture.md).
+
+## Security Features
+
+- Nonce-based Content Security Policy
+- CSRF protection with origin validation and token checks
+- Zod-based input validation
+- DOMPurify sanitization for email payloads
+- Redis-backed distributed rate limiting via Upstash
+- Security headers through Next.js and middleware
+- Automated SCA support through `npm audit` and SBOM generation
+- Server-side handling of all sensitive contact workflows
+
+Security design details are documented in [docs/security.md](./docs/security.md).
 
 ## Features
 
-- Dynamic GitHub project sync
-- GitHub activity feed
-- Technical project case studies
-- Research article previews
-- Security workbench hero
-- Contact form with validation and rate limiting
+- Single-page portfolio with anchored navigation
+- Structured experience and project storytelling
+- Production contact flow using Resend
+- Typed validation and shared request models
+- Security-focused operational posture and repository governance
 
-## Local Development
+## Setup
 
 ```bash
 git clone https://github.com/ptkvaibhav/ptkvaibhav.dev.git
@@ -50,55 +63,40 @@ npm run dev
 
 ## Environment Variables
 
-Create a local `.env` file with the following values:
+Copy `.env.example` to `.env.local` and provide values for the variables you need:
 
-- `NEXT_PUBLIC_SITE_URL`
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
-- `GITHUB_TOKEN`
+```bash
+NEXT_PUBLIC_SITE_URL=
+RESEND_API_KEY=
+GITHUB_TOKEN=
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+```
 
-Optional values already supported by the project:
-
-- `CONTACT_RATE_LIMIT_WINDOW_MS`
-- `CONTACT_RATE_LIMIT_MAX_REQUESTS`
-
-## Supabase Security Configuration
-
-- Never expose `SUPABASE_SERVICE_ROLE_KEY` in client-side code or browser-delivered bundles.
-- Use Row Level Security policies on every table that stores project or contact data.
-- Restrict API access to the minimum Supabase roles required for each workflow.
-- Enable Supabase audit logs so administrative and data access activity can be reviewed.
-- Store Supabase credentials in Vercel Environment Variables instead of committing them.
-- Rotate Supabase keys periodically and after any suspected exposure.
+The committed `.env.example` file contains the full supported set.
 
 ## Deployment
 
-The site is intended for deployment on Vercel. Connect the repository to a Vercel project, configure the required environment variables, and deploy from the default branch. ISR-backed GitHub data and App Router server rendering work well within the Vercel Hobby deployment model used by this project.
+The site is intended for deployment on Vercel.
 
-## Vercel Security
+1. Import the repository into Vercel.
+2. Configure environment variables in the Vercel project settings.
+3. Deploy from the protected production branch.
+4. Confirm CI and security workflows pass before promoting changes.
 
-- Store secrets only in Vercel Environment Variables and never commit deployment credentials.
-- Disable preview deployment secrets when they are not required by the workflow.
-- Enable available Vercel firewall protections to reduce unwanted traffic and abuse.
-- Configure domain-level HTTPS enforcement for every production hostname.
-- Keep secure headers configured through `next.config.mjs` so transport and browser protections are applied consistently.
+## Screenshots
 
-## Abuse Protection
+Screenshots are optional and can be added later under `docs/` if needed for release notes or portfolio previews.
 
-The contact API uses Redis-backed distributed rate limiting through Upstash. This avoids the weak process-local behavior of in-memory counters on serverless platforms and keeps abuse controls consistent across cold starts, parallel invocations, and multiple regions.
+## Branch Protection
 
-## Security
+For production use, configure GitHub branch protection on `main`:
 
-Security considerations built into the project:
-
-- CSP headers and additional security headers are configured through Next.js
-- Input validation is enforced with Zod
-- Contact route requests are rate-limited
-- GitHub API usage is server-side only, preventing token exposure in the browser
-
-If you discover a vulnerability, please follow the instructions in [SECURITY.md](./SECURITY.md).
+- Require pull request reviews before merge
+- Block direct commits to `main`
+- Require CI and security workflows to pass
+- Require branch up to date before merge when possible
 
 ## License
 
-MIT License. See [LICENSE](./LICENSE).
+This repository is licensed under the MIT License. See [LICENSE](./LICENSE).

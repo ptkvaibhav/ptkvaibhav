@@ -1,29 +1,18 @@
-name: Security Scan
+name: Security
 
 on:
   push:
     branches:
+      - main
       - master
+      - final/repo-enterprise-grade
   pull_request:
-    branches:
-      - master
   schedule:
     - cron: "0 5 * * 1"
 
 jobs:
-  codeql:
-    name: CodeQL
+  dependency-and-sbom:
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language:
-          - javascript-typescript
 
     steps:
       - name: Checkout repository
@@ -43,6 +32,23 @@ jobs:
 
       - name: Generate SBOM
         run: npm run sbom
+
+  codeql:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+          - javascript-typescript
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
