@@ -29,7 +29,7 @@ jobs:
         run: npm ci
 
       - name: Audit production dependencies
-        run: npm audit --production
+        run: npm audit --omit=dev
 
       - name: Generate SBOM
         run: npm run sbom
