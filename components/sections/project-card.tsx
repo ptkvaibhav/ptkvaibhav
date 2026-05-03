@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, GitFork, Star } from "lucide-react";
+import { ArrowDownToLine, ArrowUpRight, GitFork, Star } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -52,14 +52,19 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
             {project.title}
           </h3>
           {shouldRenderSummary ? (
-            <p
-              className={cn(
-                "text-sm leading-6 text-slate-600 md:text-[0.95rem]",
-                featured ? "line-clamp-3 max-w-3xl" : "line-clamp-2"
-              )}
-            >
-              {summary}
-            </p>
+            <div className="space-y-1">
+              <p className="text-[0.68rem] font-black uppercase tracking-[0.18em] text-cyan-800">
+                What it is for
+              </p>
+              <p
+                className={cn(
+                  "text-sm leading-6 text-slate-600 md:text-[0.95rem]",
+                  featured ? "line-clamp-4 max-w-3xl" : "line-clamp-3"
+                )}
+              >
+                {summary}
+              </p>
+            </div>
           ) : null}
         </div>
       </div>
@@ -99,6 +104,14 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
             <Link href={project.readmeUrl} target="_blank" rel="noopener noreferrer">
               View README
               <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        ) : null}
+        {project.downloadUrl ? (
+          <Button asChild variant="secondary" size="sm">
+            <Link href={project.downloadUrl} target="_blank" rel="noopener noreferrer">
+              Download
+              <ArrowDownToLine className="h-4 w-4" />
             </Link>
           </Button>
         ) : null}

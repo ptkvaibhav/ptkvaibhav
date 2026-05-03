@@ -103,6 +103,56 @@ const staticProjects: Project[] = [
     status: "Maintained",
   },
   {
+    slug: "burp-fortify-ssc-parser-plugin",
+    title: "Burp Fortify SSC Parser Plugin",
+    excerpt:
+      "A Java parser plugin that helps enterprise AppSec teams move Burp Suite evidence into Fortify SSC workflows with cleaner triage context.",
+    description:
+      "A Fortify SSC parser plugin for ingesting and normalizing Burp Suite findings so application security teams can preserve request evidence, reduce manual re-entry, and improve remediation handoff quality.",
+    problem:
+      "Burp findings often sit outside the enterprise vulnerability management workflow, forcing analysts to manually translate evidence and weakening remediation traceability.",
+    architecture: {
+      inputs: ["Burp Suite issue exports", "Fortify SSC parser configuration"],
+      processing: ["Finding normalization", "Evidence mapping", "Severity and metadata translation"],
+      outputs: ["Fortify SSC-ready vulnerability records", "Triage-friendly evidence"],
+    },
+    components: ["Parser plugin", "Finding mapper", "Evidence formatter"],
+    securityImpact: [
+      "Improves DAST evidence fidelity inside enterprise remediation workflows.",
+      "Reduces analyst time spent translating scanner output into tracking systems.",
+    ],
+    futureWork: ["Additional scanner mappings", "Expanded test fixtures for parser regression coverage"],
+    tags: ["Java", "Burp Suite", "Fortify SSC", "DAST", "AppSec Workflow"],
+    github: "https://github.com/ptkvaibhav/burp-fortify-ssc-parser-plugin",
+    featured: true,
+    status: "Enterprise tooling",
+  },
+  {
+    slug: "nyx",
+    title: "nyx",
+    excerpt:
+      "A safety-first local file intelligence tool that fingerprints directories, identifies duplicates, and supports defensible cleanup decisions.",
+    description:
+      "nyx audits local directories with SHA-256 fingerprinting and duplicate detection so users can understand file sprawl before deleting or reorganizing data.",
+    problem:
+      "Local file cleanup is risky when users cannot quickly tell which files are duplicates, stale, or important enough to keep.",
+    architecture: {
+      inputs: ["Local directory paths", "File metadata", "SHA-256 fingerprints"],
+      processing: ["Directory traversal", "Content hashing", "Duplicate grouping"],
+      outputs: ["File intelligence summaries", "Duplicate candidates", "Cleanup evidence"],
+    },
+    components: ["Scanner", "Hashing pipeline", "Duplicate detector", "Report output"],
+    securityImpact: [
+      "Encourages evidence-based file cleanup rather than destructive guesswork.",
+      "Uses local-first analysis to avoid exposing private file contents to external services.",
+    ],
+    futureWork: ["Interactive review mode", "Safer quarantine workflows"],
+    tags: ["TypeScript", "Automation", "Backup System", "File Intelligence"],
+    github: "https://github.com/ptkvaibhav/nyx",
+    featured: true,
+    status: "Active build",
+  },
+  {
     slug: "invoker",
     title: "Invoker",
     excerpt:
@@ -163,7 +213,7 @@ function mergeProjectWithFallback(project: Project): Project {
     ...fallback,
     ...project,
     title: fallback.title,
-    excerpt: project.excerpt || fallback.excerpt,
+    excerpt: fallback.excerpt || project.excerpt,
     description: fallback.description,
     problem: project.problem || fallback.problem,
     architecture: {
@@ -186,6 +236,7 @@ function mergeProjectWithFallback(project: Project): Project {
       ? Array.from(new Set([...fallback.tags, ...project.tags]))
       : fallback.tags,
     status: fallback.status || project.status,
+    downloadUrl: project.downloadUrl,
   };
 }
 
