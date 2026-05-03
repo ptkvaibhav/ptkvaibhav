@@ -55,14 +55,14 @@ export function ExperienceSection() {
   return (
     <div className="experience-layout" ref={containerRef}>
       <div className="experience-brand">
-        <p className={typography.panelLabel}>Deloitte</p>
         <Image
           src={professionalExperience.logo}
           alt={`${professionalExperience.brand} logo`}
           width={164}
           height={40}
-          className="h-10 w-auto opacity-100"
+          className="h-7 w-auto opacity-100"
         />
+        <p className={typography.panelLabel}>Application Security</p>
       </div>
 
       <div className="timeline">
@@ -74,28 +74,32 @@ export function ExperienceSection() {
           >
             <div
               className={cn(
-                "-ml-4 rounded-2xl px-4 py-3 transition duration-200",
+                "rounded-[26px] border border-white/70 px-5 py-5 transition duration-200 md:px-6",
                 index === 0
-                  ? "bg-white/80 shadow-[0_14px_34px_rgba(15,23,42,0.08)]"
-                  : "hover:bg-white/65 hover:shadow-[0_12px_28px_rgba(15,23,42,0.06)]"
+                  ? "bg-white/86 shadow-[0_16px_40px_rgba(15,23,42,0.08)]"
+                  : "bg-white/58 hover:bg-white/78 hover:shadow-[0_12px_28px_rgba(15,23,42,0.06)]"
               )}
             >
-              <div className="space-y-2">
+              <div className="flex flex-wrap items-start justify-between gap-3">
                 <h3
                   className={
                     index === 0
-                      ? "text-[1.6rem] font-bold tracking-tight text-slate-950 md:text-[1.75rem]"
-                      : "text-[1.45rem] font-semibold tracking-tight text-slate-900 md:text-[1.55rem]"
+                      ? "text-[1.45rem] font-black tracking-tight text-slate-950 md:text-[1.7rem]"
+                      : "text-[1.25rem] font-bold tracking-tight text-slate-900 md:text-[1.45rem]"
                   }
                 >
                   {role.title}
                 </h3>
-                <p className={typography.panelLabel}>{role.period}</p>
+                <p className="rounded-full border border-cyan-100 bg-cyan-50 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-[0.16em] text-cyan-800">
+                  {role.period}
+                </p>
               </div>
 
-              <ul className="mt-4 space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-cyan-700">
+              <ul className="mt-4 grid gap-2 text-sm leading-6 text-slate-600 md:grid-cols-2">
                 {role.focus.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item} className="rounded-2xl border border-slate-200/70 bg-white/70 px-4 py-2">
+                    {item}
+                  </li>
                 ))}
               </ul>
             </div>
