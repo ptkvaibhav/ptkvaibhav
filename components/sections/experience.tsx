@@ -76,8 +76,8 @@ export function ExperienceSection() {
               className={cn(
                 "-ml-4 rounded-2xl px-4 py-3 transition duration-200",
                 index === 0
-                  ? "bg-white/80 shadow-[0_12px_28px_rgba(124,58,237,0.08)]"
-                  : "hover:bg-white/65 hover:shadow-[0_10px_24px_rgba(124,58,237,0.06)]"
+                  ? "bg-white/80 shadow-[0_14px_34px_rgba(15,23,42,0.08)]"
+                  : "hover:bg-white/65 hover:shadow-[0_12px_28px_rgba(15,23,42,0.06)]"
               )}
             >
               <div className="space-y-2">
@@ -93,7 +93,7 @@ export function ExperienceSection() {
                 <p className={typography.panelLabel}>{role.period}</p>
               </div>
 
-              <ul className="mt-4 space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
+              <ul className="mt-4 space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-cyan-700">
                 {role.focus.map((item) => (
                   <li key={item}>{item}</li>
                 ))}

@@ -186,7 +186,7 @@ export function ContactForm() {
             <p
               className={
                 formState.status === "success"
-                  ? "text-sm text-violet-700"
+                  ? "text-sm text-cyan-800"
                   : "text-sm text-red-600"
               }
             >
@@ -206,7 +206,7 @@ export function ContactForm() {
           aria-live="polite"
           className={`fixed bottom-5 right-5 z-[60] max-w-sm rounded-2xl border px-4 py-3 text-sm shadow-lg ${
             toast.status === "success"
-              ? "border-violet-200 bg-white text-slate-900"
+              ? "border-cyan-200 bg-white text-slate-900"
               : "border-red-200 bg-white text-red-700"
           }`}
         >

@@ -11,7 +11,7 @@ export function AwardsSection() {
         <div className="space-y-6">
           <p className={typography.panelLabel}>Deloitte</p>
           <div className="h-px w-full bg-slate-200" />
-          <ul className="space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
+          <ul className="space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-cyan-700">
             <li>Outstanding Performance Award (Top 1%)</li>
             <li>
               Excellence in delivering and managing cybersecurity programs for US government
@@ -28,7 +28,7 @@ export function AwardsSection() {
         <div className="space-y-6 border-t border-slate-200 pt-10">
           <p className={typography.panelLabel}>Community</p>
           <div className="h-px w-full bg-slate-200" />
-          <ul className="space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-violet-600">
+          <ul className="space-y-2 pl-5 text-sm leading-6 text-slate-600 marker:text-cyan-700">
             <li>
               Speaker at NULLCON 2025 - &ldquo;Smart Automation using Artificial
               Intelligence&rdquo;, focusing on using AI to automate repetitive security

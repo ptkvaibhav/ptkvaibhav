@@ -37,9 +37,9 @@ function SectionNavigation({
           }}
           aria-current={isActiveRoute(item.href) ? "page" : undefined}
           className={cn(
-            "rounded-xl px-3 py-2 text-sm font-medium transition hover:bg-slate-50 hover:text-slate-900 md:rounded-none md:px-0 md:hover:bg-transparent md:after:absolute md:after:bottom-1 md:after:left-0 md:after:h-px md:after:w-full md:after:origin-left md:after:scale-x-0 md:after:bg-violet-600 md:after:transition-transform md:after:duration-200 md:hover:after:scale-x-100",
+            "rounded-xl px-3 py-2 text-sm font-medium transition hover:bg-slate-50 hover:text-slate-900 md:rounded-none md:px-0 md:hover:bg-transparent md:after:absolute md:after:bottom-1 md:after:left-0 md:after:h-px md:after:w-full md:after:origin-left md:after:scale-x-0 md:after:bg-cyan-700 md:after:transition-transform md:after:duration-200 md:hover:after:scale-x-100",
             isActiveRoute(item.href)
-              ? "bg-violet-50 text-violet-700 md:bg-transparent"
+              ? "bg-cyan-50 text-cyan-800 md:bg-transparent"
               : "text-slate-700 md:text-slate-500"
           )}
           onClick={onNavigate}
@@ -142,7 +142,7 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
+    <header className="sticky top-0 z-50 border-b border-white/60 bg-white/82 backdrop-blur-xl">
       <div className="container relative flex items-center justify-between gap-6 py-4">
         <div className="flex items-center gap-8">
           <Link
@@ -164,7 +164,7 @@ export function SiteHeader() {
           >
             <span
               ref={indicatorRef}
-              className="pointer-events-none absolute bottom-0 left-0 hidden h-px w-0 bg-violet-600 opacity-0 md:block"
+              className="pointer-events-none absolute bottom-0 left-0 hidden h-px w-0 bg-cyan-700 opacity-0 md:block"
             />
             <SectionNavigation
               activeSection={activeSection}

@@ -13,7 +13,16 @@ type ContactEmailPayload = Pick<
   identifier: string;
 };
 
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+let resendClient: Resend | null = null;
+
+function getResendClient() {
+  if (!process.env.RESEND_API_KEY) {
+    return null;
+  }
+
+  resendClient ??= new Resend(process.env.RESEND_API_KEY);
+  return resendClient;
+}
 
 function sanitizeForEmail(value: string) {
   return DOMPurify.sanitize(value, {
@@ -23,10 +32,12 @@ function sanitizeForEmail(value: string) {
 }
 
 export function hasResendConfig() {
-  return Boolean(resend);
+  return Boolean(process.env.RESEND_API_KEY);
 }
 
 export async function sendContactEmail(input: ContactEmailPayload) {
+  const resend = getResendClient();
+
   if (!resend) {
     throw new Error("Resend is not configured.");
   }

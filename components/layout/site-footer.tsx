@@ -8,10 +8,10 @@ const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-slate-200 bg-white py-8">
+    <footer className="border-t border-white/70 bg-white/82 py-8 backdrop-blur">
       <div className="container flex flex-col gap-6 text-center md:flex-row md:items-center md:justify-between md:text-left">
         <div className="max-w-xl space-y-3">
-          <p className="text-xs uppercase tracking-[0.3em] text-violet-700">{siteConfig.name}</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-cyan-800">{siteConfig.name}</p>
           <p className="text-sm text-slate-600">{siteConfig.bio}</p>
           <p className="text-xs leading-5 text-slate-500">
             This site follows secure coding practices including CSP, input validation, and rate

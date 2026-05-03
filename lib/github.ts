@@ -4,9 +4,8 @@ import type { GithubActivity, GithubProfileStats } from "@/types/github";
 import type { Project } from "@/types/project";
 
 const GITHUB_USERNAME = "ptkvaibhav";
-const TARGET_REPOS = ["clinkz", "burp-to-fortify-parser", "invoker"] as const;
-const TARGET_REPO_SET = new Set<string>(TARGET_REPOS);
 const REVALIDATE_SECONDS = 3600;
+const MAX_FEATURED_REPOS = 6;
 
 type GitHubRepo = {
   name: string;
@@ -279,14 +278,28 @@ export async function getRepoReadme(owner: string, repo: string) {
       htmlUrl: readme.html_url || undefined,
       content: decodeReadmeContent(readme.content, readme.encoding),
     };
-  } catch (error) {
-    throw new Error(
-      error instanceof Error ? error.message : `Unable to fetch README for ${owner}/${repo}.`
-    );
+  } catch {
+    return {
+      htmlUrl: undefined,
+      content: undefined,
+    };
   }
 }
 
-async function mapRepoToProject(repo: GitHubRepo): Promise<Project> {
+function getRepositoryScore(repo: GitHubRepo) {
+  const updatedAt = new Date(getLatestActivity(repo.updated_at, repo.pushed_at)).getTime();
+  const ageInDays = Number.isNaN(updatedAt)
+    ? 365
+    : Math.max(0, (Date.now() - updatedAt) / 86_400_000);
+  const freshnessScore = Math.max(0, 120 - ageInDays);
+  const popularityScore = repo.stargazers_count * 12 + repo.forks_count * 8;
+  const metadataScore = (repo.description ? 18 : 0) + repo.topics.length * 3;
+  const ownershipScore = repo.fork ? -80 : 0;
+
+  return freshnessScore + popularityScore + metadataScore + ownershipScore;
+}
+
+async function mapRepoToProject(repo: GitHubRepo, featured = true): Promise<Project> {
   const normalizedName = normalizeRepoName(repo.name);
   const readme = await getRepoReadme(GITHUB_USERNAME, repo.name);
   const readmeSummary = extractReadmeSummary(readme.content);
@@ -313,7 +326,7 @@ async function mapRepoToProject(repo: GitHubRepo): Promise<Project> {
     tags: topics,
     github: repo.html_url,
     liveUrl: repo.homepage?.trim() || undefined,
-    featured: true,
+    featured,
     status: repo.archived ? "Archived" : "Synced from GitHub",
     language: repo.language || undefined,
     readmeUrl: readme.htmlUrl,
@@ -351,26 +364,13 @@ async function getRepoCommitCount(repoName: string) {
 export async function getGithubProjects(): Promise<Project[]> {
   try {
     const repositories = await getGithubRepositories();
-    const matchedRepos = repositories.filter((repo) =>
-      TARGET_REPO_SET.has(normalizeRepoName(repo.name))
-    );
-
-    if (matchedRepos.length !== TARGET_REPOS.length) {
-      throw new Error("One or more target repositories were not returned by GitHub.");
-    }
+    const visibleRepos = repositories
+      .filter((repo) => !repo.archived)
+      .sort((left, right) => getRepositoryScore(right) - getRepositoryScore(left))
+      .slice(0, MAX_FEATURED_REPOS);
 
     return Promise.all(
-      TARGET_REPOS.map(async (targetRepo) => {
-        const matchedRepo = matchedRepos.find(
-          (repo) => normalizeRepoName(repo.name) === targetRepo
-        );
-
-        if (!matchedRepo) {
-          throw new Error(`Missing repository data for ${targetRepo}.`);
-        }
-
-        return mapRepoToProject(matchedRepo);
-      })
+      visibleRepos.map((repo, index) => mapRepoToProject(repo, index < MAX_FEATURED_REPOS))
     );
   } catch (error) {
     throw new Error(
