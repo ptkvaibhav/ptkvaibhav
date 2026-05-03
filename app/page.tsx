@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Activity, ArrowUpRight, Download, GitFork, Github, ShieldCheck, Star } from "lucide-react";
+import { ArrowUpRight, Download, GitFork, Github, ShieldCheck, Star } from "lucide-react";
 
 import { ContactForm } from "@/components/forms/contact-form";
 import { Reveal } from "@/components/motion/reveal";
@@ -9,7 +9,6 @@ import { ExperienceSection } from "@/components/sections/experience";
 import { ProjectCard } from "@/components/sections/project-card";
 import { SkillsSection } from "@/components/sections/skills";
 import { Button } from "@/components/ui/button";
-import { getGithubActivity, getGithubProfileStats } from "@/lib/github";
 import { getFeaturedProjects } from "@/lib/projects";
 import { typography } from "@/styles/design-system";
 
@@ -18,11 +17,7 @@ export const revalidate = 3600;
 const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
 
 export default async function HomePage() {
-  const [projects, githubStats, githubActivity] = await Promise.all([
-    getFeaturedProjects(),
-    getGithubProfileStats(),
-    getGithubActivity(),
-  ]);
+  const projects = await getFeaturedProjects();
   const featuredProject =
     projects.find((project) => project.slug.toLowerCase() === "clinkz") ?? projects[0];
   const supportingProjects = projects
@@ -35,20 +30,20 @@ export default async function HomePage() {
     : [];
   const stats = [
     {
-      label: "Public repos",
-      value: githubStats?.totalRepositories ?? projects.length,
+      label: "Security delivery",
+      value: "6+ yrs",
     },
     {
-      label: "GitHub stars",
-      value: githubStats?.stars ?? projects.reduce((total, project) => total + (project.stars ?? 0), 0),
+      label: "False positives cut",
+      value: "30%",
     },
     {
-      label: "Pull requests",
-      value: githubStats?.pullRequests ?? "Live",
+      label: "Performance band",
+      value: "Top 1%",
     },
     {
-      label: "Activity streak",
-      value: githubStats?.contributionStreak ? `${githubStats.contributionStreak}d` : "Synced",
+      label: "Team mentored",
+      value: "14",
     },
   ];
 
@@ -77,7 +72,7 @@ export default async function HomePage() {
               <div className="flex flex-wrap gap-3">
                 <Button asChild size="lg">
                   <Link href="#projects">
-                    View live GitHub work
+                    View security projects
                     <ArrowUpRight className="h-4 w-4" />
                   </Link>
                 </Button>
@@ -168,11 +163,11 @@ export default async function HomePage() {
               <Github className="h-4 w-4" />
               Auto-synced from GitHub
             </div>
-            <h2 className={typography.sectionTitle}>Live Engineering Work</h2>
+            <h2 className={typography.sectionTitle}>Security Projects</h2>
             <p className={typography.sectionDescription}>
-              Repositories are refreshed through the GitHub API and ranked by recency,
-              stars, forks, and metadata quality so the portfolio keeps pace with active
-              work.
+              A focused selection of security tools and engineering projects. GitHub data
+              keeps stars, forks, language, README links, and source downloads current
+              without turning this into an activity log.
             </p>
           </Reveal>
 
@@ -232,6 +227,18 @@ export default async function HomePage() {
                         </Link>
                       </Button>
                     ) : null}
+                    {featuredProject.downloadUrl ? (
+                      <Button asChild variant="secondary" size="sm">
+                        <Link
+                          href={featuredProject.downloadUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Download source
+                          <Download className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                    ) : null}
                     <Button asChild size="sm">
                       <Link
                         href={featuredProject.github}
@@ -253,32 +260,6 @@ export default async function HomePage() {
                     </Reveal>
                   ))}
                 </div>
-              ) : null}
-
-              {githubActivity.length ? (
-                <Reveal delay={0.08}>
-                  <div className="rounded-[28px] border border-slate-200/80 bg-white/76 p-5 shadow-[0_18px_46px_rgba(15,23,42,0.08)] backdrop-blur">
-                    <div className="mb-4 flex items-center gap-2">
-                      <Activity className="h-4 w-4 text-cyan-700" />
-                      <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-slate-900">
-                        Recent GitHub activity
-                      </h3>
-                    </div>
-                    <div className="grid gap-3 md:grid-cols-2">
-                      {githubActivity.slice(0, 4).map((item) => (
-                        <Link
-                          key={`${item.type}-${item.repo}-${item.createdAt}`}
-                          href={item.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="rounded-2xl border border-slate-200 bg-white/80 p-4 text-sm text-slate-700 transition hover:-translate-y-0.5 hover:border-cyan-200 hover:text-slate-950"
-                        >
-                          {item.message}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </Reveal>
               ) : null}
             </div>
           ) : null}

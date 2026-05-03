@@ -15,7 +15,7 @@ Application Security Engineer focused on securing enterprise and government syst
 
 - Project data is auto-synced from the GitHub API at render time with hourly revalidation.
 - Repositories are ranked by recency, stars, forks, language metadata, topics, and description quality.
-- The UI surfaces repository stars, forks, language, README links, update recency, and recent GitHub activity.
+- The UI surfaces repository purpose, stars, forks, language, README links, update recency, and source download links.
 
 Curated fallback descriptions remain in `lib/projects.ts` for flagship repositories, so the site still has strong content if the GitHub API is unavailable.
 

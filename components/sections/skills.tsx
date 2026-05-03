@@ -2,11 +2,36 @@ import { typography } from "@/styles/design-system";
 
 const skillGroups = [
   {
-    title: "Application Security",
-    items: ["SAST", "DAST", "SCA", "Penetration Testing"],
+    title: "AppSec Program",
+    items: [
+      "SAST",
+      "DAST",
+      "SCA",
+      "Secure SDLC",
+      "Threat Modeling",
+      "Security Architecture Reviews",
+      "Risk Acceptance",
+      "Remediation Governance",
+      "Vulnerability Triage",
+      "False-positive Reduction",
+    ],
   },
   {
-    title: "Tools",
+    title: "Testing",
+    items: [
+      "Web Penetration Testing",
+      "API Security Testing",
+      "Authentication Testing",
+      "Authorization Testing",
+      "Business Logic Testing",
+      "OWASP Top 10",
+      "Evidence Validation",
+      "Exploit Reproduction",
+      "Security Reporting",
+    ],
+  },
+  {
+    title: "Security Tools",
     items: [
       "Burp Suite",
       "Fortify SSC",
@@ -17,23 +42,55 @@ const skillGroups = [
       "AppScan",
       "Prisma Cloud",
       "Nessus",
+      "OWASP Dependency-Check",
+      "CycloneDX SBOM",
+      "GitHub Dependabot",
+      "npm audit",
     ],
   },
   {
-    title: "Platforms",
-    items: ["OpenShift", "CI/CD pipelines"],
-  },
-  {
-    title: "Languages",
-    items: ["Python"],
-  },
-  {
-    title: "Concepts",
+    title: "Cloud & Platform",
     items: [
-      "Threat Modeling",
+      "OpenShift",
+      "Docker",
+      "Linux",
+      "CI/CD Pipelines",
+      "GitHub Actions",
+      "Vercel",
+      "Supabase",
+      "Upstash Redis",
+      "Security Headers",
+      "CSP",
+      "Rate Limiting",
+    ],
+  },
+  {
+    title: "Engineering",
+    items: [
+      "Python",
+      "Java",
+      "TypeScript",
+      "JavaScript",
+      "Next.js",
+      "React",
+      "Node.js",
+      "REST APIs",
+      "SQL",
+      "Shell Scripting",
+      "Git",
+    ],
+  },
+  {
+    title: "Automation & AI",
+    items: [
       "DevSecOps",
-      "Secure Architecture",
-      "AI-assisted security testing",
+      "Security Automation",
+      "AI-assisted Testing",
+      "Agentic Workflows",
+      "Parser Development",
+      "Scanner Orchestration",
+      "Finding Normalization",
+      "Evidence Pipelines",
     ],
   },
 ] as const;
@@ -41,17 +98,21 @@ const skillGroups = [
 export function SkillsSection() {
   return (
     <div className="space-y-8">
-      <div className="text-container space-y-5">
+      <div className="text-container space-y-4">
         <h2 className={typography.sectionTitle}>Skills</h2>
+        <p className={typography.sectionDescription}>
+          Practical security engineering coverage across enterprise AppSec, offensive
+          validation, cloud delivery, automation, and the tooling used to operationalize it.
+        </p>
       </div>
 
-      <div className="overflow-hidden rounded-[28px] border border-white/70 bg-white/82 shadow-[0_18px_46px_rgba(15,23,42,0.08)] backdrop-blur">
+      <div className="grid gap-4 md:grid-cols-2">
         {skillGroups.map((group) => (
           <div
             key={group.title}
-            className="grid gap-3 border-t border-slate-200/80 px-5 py-4 first:border-t-0 md:grid-cols-[220px_minmax(0,1fr)] md:items-start"
+            className="rounded-[26px] border border-white/70 bg-white/82 p-5 shadow-[0_18px_46px_rgba(15,23,42,0.08)] backdrop-blur"
           >
-            <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-900">
+            <h3 className="mb-4 text-sm font-black uppercase tracking-[0.18em] text-slate-950">
               {group.title}
             </h3>
             <div className="flex flex-wrap gap-2">

@@ -19,6 +19,7 @@ export interface Project {
   liveUrl?: string;
   language?: string;
   readmeUrl?: string;
+  downloadUrl?: string;
   stars?: number;
   forks?: number;
   lastUpdated?: string;
