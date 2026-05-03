@@ -230,7 +230,7 @@ export const getProjects = cache(async (): Promise<Project[]> => {
 
 export async function getFeaturedProjects() {
   const projects = await getProjects();
-  return projects.filter((project) => project.featured).slice(0, 3);
+  return projects.filter((project) => project.featured).slice(0, 6);
 }
 
 export async function getProjectBySlug(slug: string) {

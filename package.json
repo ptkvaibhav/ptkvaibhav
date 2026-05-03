@@ -10,6 +10,10 @@
     "security:audit": "npm audit --omit=dev",
     "sbom": "cyclonedx-npm --output-file sbom.json"
   },
+  "overrides": {
+    "postcss": "8.5.13",
+    "svix": "1.92.2"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-slot": "^1.1.0",
@@ -38,7 +42,7 @@
     "autoprefixer": "^10.5.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "^15.5.15",
-    "postcss": "^8.5.9",
+    "postcss": "8.5.13",
     "tailwindcss": "^3.4.13",
     "typescript": "^5.6.3"
   }

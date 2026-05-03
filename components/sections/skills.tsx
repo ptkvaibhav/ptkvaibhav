@@ -45,7 +45,7 @@ export function SkillsSection() {
         <h2 className={typography.sectionTitle}>Skills</h2>
       </div>
 
-      <div className="overflow-hidden rounded-[28px] border border-violet-100 bg-white/84 shadow-[0_12px_32px_rgba(124,58,237,0.08)]">
+      <div className="overflow-hidden rounded-[28px] border border-white/70 bg-white/82 shadow-[0_18px_46px_rgba(15,23,42,0.08)] backdrop-blur">
         {skillGroups.map((group) => (
           <div
             key={group.title}
@@ -58,7 +58,7 @@ export function SkillsSection() {
               {group.items.map((item) => (
                 <span
                   key={item}
-                  className="rounded-full bg-violet-50 px-3 py-1 text-xs font-medium text-violet-700"
+                  className="rounded-full border border-cyan-100 bg-cyan-50 px-3 py-1 text-xs font-medium text-cyan-800"
                 >
                   {item}
                 </span>

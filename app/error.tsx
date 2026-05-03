@@ -19,7 +19,7 @@ export default function GlobalError({
   return (
     <div className="section">
       <div className="container flex min-h-[70vh] flex-col items-start justify-center gap-6">
-        <span className="rounded-full border border-violet-200 bg-violet-50 px-4 py-1 text-xs uppercase tracking-[0.3em] text-violet-700">
+        <span className="rounded-full border border-cyan-200 bg-cyan-50 px-4 py-1 text-xs uppercase tracking-[0.3em] text-cyan-800">
           Error
         </span>
         <div className="text-container space-y-4">
