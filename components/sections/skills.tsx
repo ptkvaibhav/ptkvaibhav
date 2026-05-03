@@ -97,7 +97,7 @@ const skillGroups = [
 
 export function SkillsSection() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-7">
       <div className="text-container space-y-4">
         <h2 className={typography.sectionTitle}>Skills</h2>
         <p className={typography.sectionDescription}>
@@ -106,11 +106,11 @@ export function SkillsSection() {
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2">
         {skillGroups.map((group) => (
           <div
             key={group.title}
-            className="rounded-[26px] border border-white/70 bg-white/82 p-5 shadow-[0_18px_46px_rgba(15,23,42,0.08)] backdrop-blur"
+            className="min-w-0 rounded-[26px] border border-slate-200/70 bg-white/76 p-5 shadow-[0_14px_34px_rgba(15,23,42,0.06)]"
           >
             <h3 className="mb-4 text-sm font-black uppercase tracking-[0.18em] text-slate-950">
               {group.title}

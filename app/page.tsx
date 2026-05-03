@@ -51,88 +51,90 @@ export default async function HomePage() {
     <div>
       <section id="about" className="section hero-section">
         <div className="container relative z-10">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
-            <Reveal className="space-y-8">
-              <div className="inline-flex items-center gap-2 rounded-full border border-cyan-200/70 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800 shadow-sm backdrop-blur">
-                <ShieldCheck className="h-4 w-4" />
-                Application Security Engineer
-              </div>
+          <div className="hero-card p-5 md:p-8 lg:p-10">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-center xl:grid-cols-[minmax(0,1fr)_360px]">
+              <Reveal className="min-w-0 space-y-7">
+                <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-cyan-200/70 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800 shadow-sm backdrop-blur">
+                  <ShieldCheck className="h-4 w-4 shrink-0" />
+                  <span className="truncate">Application Security Engineer</span>
+                </div>
 
-              <div className="space-y-5">
-                <h1 className="max-w-[860px] text-[3.2rem] font-black leading-[0.94] tracking-[-0.06em] text-slate-950 md:text-[5.5rem]">
-                  I build secure systems and prove where they break.
-                </h1>
-                <p className="max-w-[680px] text-lg font-medium leading-8 text-slate-700 md:text-xl">
-                  I work across AppSec, DevSecOps, offensive testing, and security
-                  automation, turning vulnerability noise into engineering decisions teams
-                  can act on.
-                </p>
-              </div>
+                <div className="space-y-5">
+                  <h1 className="max-w-[760px] text-[clamp(2.7rem,7vw,5.15rem)] font-black leading-[0.94] tracking-[-0.065em] text-slate-950">
+                    I build secure systems and prove where they break.
+                  </h1>
+                  <p className="max-w-[660px] text-base font-medium leading-8 text-slate-700 md:text-lg">
+                    I work across AppSec, DevSecOps, offensive testing, and security
+                    automation, turning vulnerability noise into engineering decisions teams
+                    can act on.
+                  </p>
+                </div>
 
-              <div className="flex flex-wrap gap-3">
-                <Button asChild size="lg">
-                  <Link href="#projects">
-                    View security projects
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="secondary">
-                  <Link href={resumePath} target="_blank" rel="noopener noreferrer">
-                    Download resume
-                    <Download className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
+                <div className="flex flex-wrap gap-3">
+                  <Button asChild size="lg">
+                    <Link href="#projects">
+                      View security projects
+                      <ArrowUpRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild size="lg" variant="secondary">
+                    <Link href={resumePath} target="_blank" rel="noopener noreferrer">
+                      Download resume
+                      <Download className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
 
-              <div className="grid gap-3 sm:grid-cols-4">
-                {stats.map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="rounded-3xl border border-white/70 bg-white/72 p-4 shadow-[0_16px_44px_rgba(15,23,42,0.08)] backdrop-blur"
-                  >
-                    <p className="text-2xl font-black tracking-tight text-slate-950">
-                      {stat.value}
-                    </p>
-                    <p className="mt-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
+                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                  {stats.map((stat) => (
+                    <div
+                      key={stat.label}
+                      className="rounded-3xl border border-white/70 bg-white/72 p-4 shadow-[0_16px_44px_rgba(15,23,42,0.08)] backdrop-blur"
+                    >
+                      <p className="text-2xl font-black tracking-tight text-slate-950">
+                        {stat.value}
+                      </p>
+                      <p className="mt-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                        {stat.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </Reveal>
 
-            <Reveal delay={0.08}>
-              <div className="relative mx-auto max-w-[360px]">
-                <div className="absolute inset-[-22px] rounded-[44px] bg-gradient-to-br from-cyan-300/35 via-blue-500/20 to-amber-200/35 blur-2xl" />
-                <div className="relative overflow-hidden rounded-[36px] border border-white/80 bg-slate-950 p-3 shadow-[0_34px_90px_rgba(15,23,42,0.26)]">
-                  <Image
-                    src="/pratik-vaibhav.png"
-                    alt="Pratik Vaibhav"
-                    width={520}
-                    height={620}
-                    priority
-                    sizes="(max-width: 1024px) 320px, 360px"
-                    className="aspect-[4/5] rounded-[28px] object-cover"
-                  />
-                  <div className="absolute bottom-6 left-6 right-6 rounded-3xl border border-white/10 bg-slate-950/82 p-4 text-white shadow-2xl backdrop-blur">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200">
-                      Current focus
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-slate-200">
-                      Agentic security testing, evidence-led vulnerability validation, and
-                      AppSec workflow automation.
-                    </p>
+              <Reveal delay={0.08}>
+                <div className="relative mx-auto w-full max-w-[360px]">
+                  <div className="absolute inset-[-18px] rounded-[42px] bg-gradient-to-br from-cyan-300/35 via-blue-500/20 to-amber-200/35 blur-2xl" />
+                  <div className="relative overflow-hidden rounded-[32px] border border-white/80 bg-slate-950 p-3 shadow-[0_30px_80px_rgba(15,23,42,0.24)]">
+                    <Image
+                      src="/pratik-vaibhav.png"
+                      alt="Pratik Vaibhav"
+                      width={520}
+                      height={620}
+                      priority
+                      sizes="(max-width: 1024px) 300px, 360px"
+                      className="aspect-[4/5] w-full rounded-[24px] object-cover"
+                    />
+                    <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/10 bg-slate-950/84 p-4 text-white shadow-2xl backdrop-blur">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200">
+                        Current focus
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-slate-200">
+                        Agentic security testing, evidence-led validation, and AppSec workflow
+                        automation.
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
-          <Reveal>
+          <Reveal className="section-panel p-5 md:p-8">
             <SkillsSection />
           </Reveal>
         </div>
@@ -140,17 +142,14 @@ export default async function HomePage() {
 
       <section id="experience" className="section section-alt">
         <div className="container">
-          <Reveal className="text-container space-y-5">
+          <Reveal className="mx-auto max-w-3xl text-center space-y-5">
             <h2 className={typography.sectionTitle}>Professional Experience</h2>
             <p className={typography.sectionDescription}>
               Security leadership across enterprise and government systems spanning
               architecture decisions, testing strategy, and production risk management.
             </p>
           </Reveal>
-
-          <div className="mt-10 border-t border-slate-200" />
-
-          <Reveal delay={0.05} className="mt-9">
+          <Reveal delay={0.05} className="section-panel mt-9 p-5 md:p-8">
             <ExperienceSection />
           </Reveal>
         </div>
@@ -158,13 +157,13 @@ export default async function HomePage() {
 
       <section id="projects" className="section">
         <div className="container">
-          <Reveal className="text-container space-y-5">
+          <Reveal className="mx-auto max-w-3xl text-center space-y-5">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-800">
               <Github className="h-4 w-4" />
               Auto-synced from GitHub
             </div>
             <h2 className={typography.sectionTitle}>Security Projects</h2>
-            <p className={typography.sectionDescription}>
+            <p className={`${typography.sectionDescription} mx-auto`}>
               A focused selection of security tools and engineering projects. GitHub data
               keeps stars, forks, language, README links, and source downloads current
               without turning this into an activity log.
@@ -172,9 +171,9 @@ export default async function HomePage() {
           </Reveal>
 
           {featuredProject ? (
-            <div className="mt-10 space-y-8">
+            <div className="mt-10 space-y-6">
               <Reveal>
-                <div className="relative overflow-hidden rounded-[34px] border border-slate-900/10 bg-slate-950 p-5 text-white shadow-[0_32px_90px_rgba(15,23,42,0.28)] transition duration-300 hover:-translate-y-1 md:p-7">
+                <div className="relative overflow-hidden rounded-[34px] border border-slate-900/10 bg-slate-950 p-5 text-white shadow-[0_32px_90px_rgba(15,23,42,0.24)] transition duration-300 hover:-translate-y-1 md:p-8">
                   <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" />
                   <div className="pointer-events-none absolute -bottom-28 left-12 h-72 w-72 rounded-full bg-amber-300/20 blur-3xl" />
                   <div className="relative space-y-3">
@@ -253,7 +252,7 @@ export default async function HomePage() {
               </Reveal>
 
               {supportingProjects.length ? (
-                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
                   {supportingProjects.map((project, index) => (
                     <Reveal key={project.slug} delay={index * 0.06} className="opacity-90">
                       <ProjectCard project={project} compact />
@@ -268,7 +267,7 @@ export default async function HomePage() {
 
       <section id="awards" className="section section-alt">
         <div className="container">
-          <Reveal>
+          <Reveal className="section-panel p-5 md:p-8">
             <AwardsSection />
           </Reveal>
         </div>
@@ -276,7 +275,7 @@ export default async function HomePage() {
 
       <section id="contact" className="section">
         <div className="container">
-          <div className="grid gap-10 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-start">
+          <div className="section-panel grid gap-10 p-5 md:p-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start">
             <Reveal className="text-container space-y-5">
               <h2 className={typography.sectionTitle}>Contact</h2>
               <p className={typography.sectionDescription}>

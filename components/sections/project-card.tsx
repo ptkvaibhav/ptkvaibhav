@@ -29,8 +29,8 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
   return (
     <article
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/70 bg-white/82 shadow-[0_18px_46px_rgba(15,23,42,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(15,23,42,0.14)]",
-        featured ? "min-h-[320px] p-5" : "min-h-[260px] p-4 opacity-95 hover:opacity-100"
+        "group relative flex h-full min-w-0 flex-col overflow-hidden rounded-[28px] border border-white/70 bg-white/82 shadow-[0_18px_46px_rgba(15,23,42,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(15,23,42,0.14)]",
+        featured ? "min-h-[320px] p-5" : "min-h-[300px] p-5 opacity-95 hover:opacity-100"
       )}
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-amber-300 opacity-80" />
@@ -48,7 +48,7 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
         </div>
 
         <div className="space-y-2">
-          <h3 className={cn(typography.cardTitle, featured && "text-2xl md:text-3xl")}>
+          <h3 className={cn("break-words", typography.cardTitle, featured && "text-2xl md:text-3xl")}>
             {project.title}
           </h3>
           {shouldRenderSummary ? (
@@ -98,9 +98,9 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
         </div>
       ) : null}
 
-      <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">
+      <div className="mt-auto grid grid-cols-1 gap-2 pt-5 sm:grid-cols-2">
         {project.readmeUrl ? (
-          <Button asChild variant="secondary" size="sm">
+          <Button asChild variant="secondary" size="sm" className="w-full">
             <Link href={project.readmeUrl} target="_blank" rel="noopener noreferrer">
               View README
               <ArrowUpRight className="h-4 w-4" />
@@ -108,14 +108,14 @@ export function ProjectCard({ project, compact = false, featured = false }: Proj
           </Button>
         ) : null}
         {project.downloadUrl ? (
-          <Button asChild variant="secondary" size="sm">
+          <Button asChild variant="secondary" size="sm" className="w-full">
             <Link href={project.downloadUrl} target="_blank" rel="noopener noreferrer">
               Download
               <ArrowDownToLine className="h-4 w-4" />
             </Link>
           </Button>
         ) : null}
-        <Button asChild variant="secondary" size="sm">
+        <Button asChild variant="secondary" size="sm" className="w-full">
           <Link href={project.github} target="_blank" rel="noopener noreferrer">
             View repo
             <ArrowUpRight className="h-4 w-4" />

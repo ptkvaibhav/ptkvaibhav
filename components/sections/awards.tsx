@@ -33,7 +33,7 @@ const awardGroups = [
 
 export function AwardsSection() {
   return (
-    <div className="grid gap-12 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-14">
+    <div className="grid gap-8 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-12">
       <div className="space-y-4">
         <h2 className={typography.sectionTitle}>Awards</h2>
         <p className={typography.sectionDescription}>
@@ -45,7 +45,7 @@ export function AwardsSection() {
         {awardGroups.map((group) => (
           <section
             key={group.source}
-            className="rounded-[28px] border border-white/70 bg-white/82 p-5 shadow-[0_18px_46px_rgba(15,23,42,0.08)] backdrop-blur"
+            className="rounded-[28px] border border-slate-200/70 bg-white/76 p-5 shadow-[0_14px_34px_rgba(15,23,42,0.06)]"
           >
             <p className="mb-4 text-xs font-black uppercase tracking-[0.22em] text-cyan-800">
               {group.source}
@@ -54,7 +54,7 @@ export function AwardsSection() {
               {group.items.map((item) => (
                 <article
                   key={item.title}
-                  className="rounded-3xl border border-slate-200/80 bg-white/76 p-5"
+                  className="rounded-3xl border border-slate-200/80 bg-white/82 p-5"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <h3 className="text-xl font-black tracking-tight text-slate-950">

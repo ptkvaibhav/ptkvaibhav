@@ -53,7 +53,7 @@
 @layer components {
   .section {
     position: relative;
-    padding: 6rem 0 4.75rem;
+    padding: 4.75rem 0;
     scroll-margin-top: 80px;
   }
 
@@ -62,7 +62,7 @@
     background:
       linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(236, 254, 255, 0.5)),
       radial-gradient(circle at 15% 20%, rgba(245, 158, 11, 0.08), transparent 24%);
-    padding: 6rem 0 4.75rem;
+    padding: 4.75rem 0;
     scroll-margin-top: 80px;
   }
 
@@ -78,9 +78,9 @@
   }
 
   .container {
-    max-width: 1100px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
   }
 
   .text-container {
@@ -143,63 +143,62 @@
 
   .experience-layout {
     display: grid;
-    grid-template-columns: 120px minmax(0, 1fr);
-    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
     align-items: start;
   }
 
   .experience-brand {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
     gap: 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(203, 213, 225, 0.72);
+    background: rgba(255, 255, 255, 0.74);
+    padding: 0.6rem 0.9rem;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
   }
 
   .timeline {
-    border-left: 3px solid rgba(8, 145, 178, 0.24);
-    padding-left: 20px;
+    display: grid;
+    gap: 1rem;
+    border-left: 0;
+    padding-left: 0;
   }
 
   .role {
     position: relative;
-    margin-bottom: 40px;
-  }
-
-  .role:last-child {
     margin-bottom: 0;
   }
 
   .role::before {
-    content: "";
-    position: absolute;
-    left: -26px;
-    top: 9px;
-    width: 12px;
-    height: 12px;
-    border-radius: 9999px;
-    background: #0891b2;
-    box-shadow: 0 0 0 4px #ecfeff;
+    content: none;
   }
 
   .hero-section {
     isolation: isolate;
     overflow: hidden;
-    padding-top: 7rem;
+    padding-top: 2rem;
   }
 
-  .hero-section::before {
-    content: "";
-    position: absolute;
-    inset: 2rem max(1rem, calc((100vw - 1180px) / 2)) auto;
-    height: 520px;
-    border-radius: 48px;
-    background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(236, 254, 255, 0.52)),
-      radial-gradient(circle at 20% 25%, rgba(34, 211, 238, 0.18), transparent 28%),
-      radial-gradient(circle at 80% 18%, rgba(245, 158, 11, 0.16), transparent 24%);
+  .hero-card {
+    overflow: hidden;
+    border-radius: 42px;
     border: 1px solid rgba(255, 255, 255, 0.78);
-    box-shadow: 0 40px 120px rgba(15, 23, 42, 0.08);
-    z-index: -1;
+    background:
+      radial-gradient(circle at 84% 18%, rgba(245, 158, 11, 0.16), transparent 25%),
+      radial-gradient(circle at 18% 20%, rgba(34, 211, 238, 0.18), transparent 30%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(236, 254, 255, 0.58));
+    box-shadow: 0 34px 100px rgba(15, 23, 42, 0.1);
+  }
+
+  .section-panel {
+    border-radius: 34px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(18px);
   }
 }
 
@@ -235,7 +234,7 @@
 @media (max-width: 768px) {
   .section,
   .section-alt {
-    padding: 5rem 0 4rem;
+    padding: 3.75rem 0;
   }
 
   .timeline {
@@ -249,12 +248,12 @@
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 16px;
+    padding: 0 18px;
   }
 
   .section,
   .section-alt {
-    padding: 4.5rem 0 3.5rem;
+    padding: 3.25rem 0;
   }
 
   .text-container {
