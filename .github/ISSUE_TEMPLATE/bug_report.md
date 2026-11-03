@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a reproducible bug
+about: Report a reproducible bug on ptkvaibhav.vercel.app
 title: "[Bug] "
 labels: bug
 assignees: ""
@@ -30,6 +30,7 @@ Add screenshots or recordings if they help explain the issue.
 
 ## Environment
 
-- Browser:
-- OS:
-- Commit / branch:
+- Page / URL:
+- Browser and version:
+- Device / OS:
+- Light or dark mode:

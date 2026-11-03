@@ -39,5 +39,5 @@ This release introduces an end-to-end overhaul of the personal portfolio and Git
 
 ---
 
-**Live Portfolio**: [https://ptkvaibhav.dev](https://ptkvaibhav.dev)  
+**Live Portfolio**: [https://ptkvaibhav.vercel.app](https://ptkvaibhav.vercel.app)  
 **Pull Request**: [#79](https://github.com/ptkvaibhav/ptkvaibhav/pull/79)

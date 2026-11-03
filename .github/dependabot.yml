@@ -1,21 +1,68 @@
 version: 2
+
+# Dependency update policy (production website):
+# - Security fixes arrive as one grouped PR as soon as an advisory is published.
+# - Routine minor/patch bumps arrive weekly as at most two grouped PRs
+#   (runtime dependencies, dev tooling), so the PR list stays short.
+# - Major versions are opened individually so breaking changes are reviewed one at a time.
+# - GitHub Actions versions are kept current monthly.
 updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 3
+      day: "monday"
+      time: "06:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
     groups:
-      npm-production-maintenance:
+      security-fixes:
+        applies-to: security-updates
         patterns:
           - "*"
+      runtime-minor-patch:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      tooling-minor-patch:
+        dependency-type: "development"
         update-types:
           - "minor"
           - "patch"
     ignore:
-      - dependency-name: "*"
-        update-types:
-          - "version-update:semver-major"
+      # lucide-react renames/removes icons in minor releases; bump it deliberately.
       - dependency-name: "lucide-react"
         update-types:
           - "version-update:semver-minor"
+      # Stay on Next.js 15 / Tailwind 3 / ESLint 9 until a planned migration.
+      - dependency-name: "next"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "eslint-config-next"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "tailwindcss"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "eslint"
+        update-types:
+          - "version-update:semver-major"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "ci"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
