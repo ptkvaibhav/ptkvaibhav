@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Github, Linkedin, Menu, X, Search, Moon, Sun, Download } from "lucide-react";
+import { Menu, X, Search, Moon, Sun, Download } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons";
 
 import { useTheme } from "@/components/providers/theme-provider";
 import { siteConfig } from "@/lib/site";
@@ -177,10 +178,10 @@ export function SiteHeader() {
               </a>
               <div className="grid grid-cols-2 gap-3">
                 <a href={siteConfig.social.github} target="_blank" rel="noopener noreferrer" className="flex h-12 items-center justify-center gap-2 rounded-md border-2 border-foreground font-mono text-sm font-medium text-foreground">
-                  <Github className="h-4 w-4" /> GitHub
+                  <GithubIcon className="h-4 w-4" /> GitHub
                 </a>
                 <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="flex h-12 items-center justify-center gap-2 rounded-md border-2 border-foreground font-mono text-sm font-medium text-foreground">
-                  <Linkedin className="h-4 w-4" /> LinkedIn
+                  <LinkedinIcon className="h-4 w-4" /> LinkedIn
                 </a>
               </div>
             </div>

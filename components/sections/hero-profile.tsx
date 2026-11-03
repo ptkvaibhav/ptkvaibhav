@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ArrowDown, Download, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowDown, Download, Mail } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons";
 
 import { DecryptText } from "@/components/dossier/decrypt-text";
 import { Redacted } from "@/components/dossier/redacted";
@@ -146,8 +147,8 @@ export function HeroProfileSection({ resumePath = "/resume/Pratik_Vaibhav_Resume
                   </a>
                   <div className="flex items-center justify-center gap-1 pt-1 sm:pt-0">
                     {[
-                      { href: siteConfig.social.github, label: "GitHub", Icon: Github, external: true },
-                      { href: siteConfig.social.linkedin, label: "LinkedIn", Icon: Linkedin, external: true },
+                      { href: siteConfig.social.github, label: "GitHub", Icon: GithubIcon, external: true },
+                      { href: siteConfig.social.linkedin, label: "LinkedIn", Icon: LinkedinIcon, external: true },
                       { href: `mailto:${siteConfig.email}`, label: "Email", Icon: Mail, external: false },
                     ].map(({ href, label, Icon, external }) => (
                       <a

@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:f1d059c2-4b2f-46c7-b18e-e9ad77fa7059",
+  "serialNumber": "urn:uuid:84326344-9943-4e1a-9912-9e43e94b1548",
   "metadata": {
-    "timestamp": "2026-11-03T10:32:19.276Z",
+    "timestamp": "2026-11-03T10:53:45.062Z",
     "tools": {
       "components": [
         {
@@ -529,8 +529,8 @@
       "type": "library",
       "name": "resolvers",
       "group": "@hookform",
-      "version": "5.9.2",
-      "bom-ref": "ptkvaibhav@3.0.0|@hookform/resolvers@5.9.2",
+      "version": "6.0.2",
+      "bom-ref": "ptkvaibhav@3.0.0|@hookform/resolvers@6.0.2",
       "author": "bluebill1049",
       "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types, TypeBox, arktype, Typanion, Effect-TS and VineJS",
       "licenses": [
@@ -541,7 +541,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40hookform/resolvers@5.9.2",
+      "purl": "pkg:npm/%40hookform/resolvers@6.0.2",
       "externalReferences": [
         {
           "url": "git+https://github.com/react-hook-form/resolvers.git",
@@ -559,12 +559,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-5.9.2.tgz",
+          "url": "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-6.0.2.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "46d8d39d9aac0b7f2ce0d2a9d973b77c3f08039bb2378b41ecc710e42eae88c3dc57e5963bc17ec156b77be0575291f649c831821025c0544c56a8d3f560a101"
+              "content": "7b676a50e95a1ae8ab29539dfe265693f620e7379a1b0eedd2149cdcbcf12f7a3b7991b06644f211b04bf07e769b4c11284b0d2d6a0c18e8971876cf1d35e511"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -1455,10 +1455,10 @@
     {
       "type": "library",
       "name": "lucide-react",
-      "version": "0.460.0",
-      "bom-ref": "ptkvaibhav@3.0.0|lucide-react@0.460.0",
+      "version": "1.67.0",
+      "bom-ref": "ptkvaibhav@3.0.0|lucide-react@1.67.0",
       "author": "Eric Fennis",
-      "description": "A Lucide icon library package for React applications",
+      "description": "A Lucide icon library package for React applications.",
       "licenses": [
         {
           "license": {
@@ -1467,7 +1467,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/lucide-react@0.460.0",
+      "purl": "pkg:npm/lucide-react@1.67.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/lucide-icons/lucide.git#packages/lucide-react",
@@ -1485,12 +1485,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/lucide-react/-/lucide-react-0.460.0.tgz",
+          "url": "https://registry.npmjs.org/lucide-react/-/lucide-react-1.67.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "055b6afc3ca455e22f45326f440802b0ec1a18bf149f707187c31b0f13211169596b2dd3e08a44283129c2de4a674289307ce09ba8eb96dc654f97973965c31e"
+              "content": "cfb91ddb560d9bf1b0dc4ee64e7ab9753baf57ec9cf8e13003ffe80c43521b549b67f35580a763c402c914d746a02d098bb1da251d8385af5ebfb5543f1cbd09"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -30935,7 +30935,7 @@
         "ptkvaibhav@3.0.0|@cyclonedx/cyclonedx-npm@6.0.1",
         "ptkvaibhav@3.0.0|@emnapi/runtime@1.11.3",
         "ptkvaibhav@3.0.0|@eslint/eslintrc@3.3.7",
-        "ptkvaibhav@3.0.0|@hookform/resolvers@5.9.2",
+        "ptkvaibhav@3.0.0|@hookform/resolvers@6.0.2",
         "ptkvaibhav@3.0.0|@img/sharp-wasm32@0.35.5",
         "ptkvaibhav@3.0.0|@radix-ui/react-slot@1.5.0",
         "ptkvaibhav@3.0.0|@types/node@22.20.5",
@@ -30949,7 +30949,7 @@
         "ptkvaibhav@3.0.0|eslint-config-next@15.5.28",
         "ptkvaibhav@3.0.0|eslint@9.39.5",
         "ptkvaibhav@3.0.0|gsap@3.15.0",
-        "ptkvaibhav@3.0.0|lucide-react@0.460.0",
+        "ptkvaibhav@3.0.0|lucide-react@1.67.0",
         "ptkvaibhav@3.0.0|next@15.5.28",
         "ptkvaibhav@3.0.0|postcss@8.5.26",
         "ptkvaibhav@3.0.0|react-dom@19.3.1",
@@ -31028,7 +31028,7 @@
       "ref": "ptkvaibhav@3.0.0|@eslint/eslintrc@3.3.7|json-schema-traverse@0.4.1"
     },
     {
-      "ref": "ptkvaibhav@3.0.0|@hookform/resolvers@5.9.2",
+      "ref": "ptkvaibhav@3.0.0|@hookform/resolvers@6.0.2",
       "dependsOn": [
         "ptkvaibhav@3.0.0|@standard-schema/utils@0.3.0",
         "ptkvaibhav@3.0.0|ajv-formats@2.1.1",
@@ -31178,8 +31178,9 @@
       "ref": "ptkvaibhav@3.0.0|gsap@3.15.0"
     },
     {
-      "ref": "ptkvaibhav@3.0.0|lucide-react@0.460.0",
+      "ref": "ptkvaibhav@3.0.0|lucide-react@1.67.0",
       "dependsOn": [
+        "ptkvaibhav@3.0.0|@types/react@19.3.0",
         "ptkvaibhav@3.0.0|react@19.3.1"
       ]
     },

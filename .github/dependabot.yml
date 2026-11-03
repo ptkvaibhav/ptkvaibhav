@@ -36,10 +36,6 @@ updates:
           - "minor"
           - "patch"
     ignore:
-      # lucide-react renames/removes icons in minor releases; bump it deliberately.
-      - dependency-name: "lucide-react"
-        update-types:
-          - "version-update:semver-minor"
       # Stay on Next.js 15 / Tailwind 3 / ESLint 9 until a planned migration.
       - dependency-name: "next"
         update-types:
@@ -51,6 +47,14 @@ updates:
         update-types:
           - "version-update:semver-major"
       - dependency-name: "eslint"
+        update-types:
+          - "version-update:semver-major"
+      # tailwind-merge 3 targets Tailwind CSS 4; it moves with the Tailwind migration.
+      - dependency-name: "tailwind-merge"
+        update-types:
+          - "version-update:semver-major"
+      # TypeScript 7 (native compiler) is not supported by Next.js 15's build yet.
+      - dependency-name: "typescript"
         update-types:
           - "version-update:semver-major"
 

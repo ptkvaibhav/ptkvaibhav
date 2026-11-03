@@ -1,10 +1,11 @@
-import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowUp, Mail } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons";
 
 import { siteConfig } from "@/lib/site";
 
 const links = [
-  { href: siteConfig.social.github, label: "GitHub", icon: Github, external: true },
-  { href: siteConfig.social.linkedin, label: "LinkedIn", icon: Linkedin, external: true },
+  { href: siteConfig.social.github, label: "GitHub", icon: GithubIcon, external: true },
+  { href: siteConfig.social.linkedin, label: "LinkedIn", icon: LinkedinIcon, external: true },
   { href: `mailto:${siteConfig.email}`, label: "Email", icon: Mail, external: false },
 ];
 
