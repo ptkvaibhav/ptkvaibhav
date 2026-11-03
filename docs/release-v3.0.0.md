@@ -32,7 +32,7 @@ Verified against a production build: forged origins, CSRF mismatches, oversized 
 
 ## Under the hood
 
-- Next.js 15.5.28 · React 19.3 · Zod 4 · lucide-react 1.x · ESLint 9 · CycloneDX 6 (SBOM spec 1.6) · CI on Node 22 with v7 actions.
+- Next.js 15.5.28 · React 19.3 · Zod 4 · lucide-react 1.x · ESLint 9 · CycloneDX 6 (SBOM spec 1.6) · Node.js 24 LTS pinned for CI and Vercel.
 - Removed: interactive lab, sound effects, contribution heatmap, unused code and the unused Supabase schema.
 - New developer guide in [docs/README.md](README.md); the root README is now a focused GitHub profile.
 

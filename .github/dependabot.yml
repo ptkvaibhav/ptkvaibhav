@@ -53,6 +53,11 @@ updates:
       - dependency-name: "tailwind-merge"
         update-types:
           - "version-update:semver-major"
+      # @types/node must match the Node.js runtime pinned in .nvmrc / package.json
+      # "engines" (Vercel and CI read it). Bump it together with the runtime.
+      - dependency-name: "@types/node"
+        update-types:
+          - "version-update:semver-major"
       # TypeScript 7 (native compiler) is not supported by Next.js 15's build yet.
       - dependency-name: "typescript"
         update-types:
