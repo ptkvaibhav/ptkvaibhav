@@ -67,3 +67,5 @@ export const ContactSchema = z
   .strict();
 
 export type ContactInput = z.infer<typeof ContactSchema>;
+/** Raw form values before transforms/sanitisation run. */
+export type ContactFormValues = z.input<typeof ContactSchema>;

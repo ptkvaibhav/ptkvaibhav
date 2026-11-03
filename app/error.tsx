@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect } from "react";
 
-import { Button } from "@/components/ui/button";
 
 export default function GlobalError({
   error,
@@ -18,23 +17,24 @@ export default function GlobalError({
 
   return (
     <div className="section">
-      <div className="container flex min-h-[70vh] flex-col items-start justify-center gap-6">
-        <span className="rounded-full border border-cyan-200 bg-cyan-50 px-4 py-1 text-xs uppercase tracking-[0.3em] text-cyan-800">
-          Error
-        </span>
-        <div className="text-container space-y-4">
-          <h1 className="text-5xl font-bold tracking-tight text-slate-900 md:text-6xl">
-            Something went wrong.
-          </h1>
-          <p className="text-base text-slate-600 md:text-lg">
-            The page hit an unexpected error. You can try again, or head back to the homepage.
+      <div className="container flex min-h-[60vh] items-center justify-center">
+        <div className="paper w-full max-w-xl px-6 py-10 text-center sm:px-10">
+          <span className="stamp px-4 py-2 text-4xl">Incident</span>
+          <h1 className="mt-8 font-display text-5xl font-black uppercase leading-none text-foreground">Something broke</h1>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            Ironic, given the line of work. Try again, or head back to the main file.
           </p>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          <Button onClick={reset}>Try again</Button>
-          <Button asChild variant="secondary">
-            <Link href="/">Back to home</Link>
-          </Button>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <button
+              onClick={reset}
+              className="inline-flex h-12 items-center rounded-md border-2 border-foreground bg-foreground px-6 font-mono text-sm font-semibold text-paper"
+            >
+              Try again
+            </button>
+            <Link href="/" className="inline-flex h-12 items-center rounded-md border-2 border-foreground px-6 font-mono text-sm font-semibold text-foreground">
+              Back to home
+            </Link>
+          </div>
         </div>
       </div>
     </div>

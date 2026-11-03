@@ -18,8 +18,8 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-  theme: "dark",
-  resolvedTheme: "dark",
+  theme: "light",
+  resolvedTheme: "light",
   setTheme: () => null,
   toggleTheme: () => null,
 };
@@ -28,12 +28,12 @@ const ThemeProviderContext = React.createContext<ThemeProviderState>(initialStat
 
 export function ThemeProvider({
   children,
-  defaultTheme = "dark",
+  defaultTheme = "light",
   storageKey = "ptk-theme",
   ...props
 }: ThemeProviderProps) {
   const [theme, setThemeState] = React.useState<Theme>(defaultTheme);
-  const [resolvedTheme, setResolvedTheme] = React.useState<"dark" | "light">("dark");
+  const [resolvedTheme, setResolvedTheme] = React.useState<"dark" | "light">("light");
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -52,7 +52,7 @@ export function ThemeProvider({
     const root = window.document.documentElement;
     root.classList.remove("light", "dark");
 
-    let computedTheme: "dark" | "light" = "dark";
+    let computedTheme: "dark" | "light" = "light";
 
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -87,7 +87,7 @@ export function ThemeProvider({
   const value = React.useMemo(
     () => ({
       theme,
-      resolvedTheme: mounted ? resolvedTheme : "dark",
+      resolvedTheme: mounted ? resolvedTheme : "light",
       setTheme,
       toggleTheme,
     }),

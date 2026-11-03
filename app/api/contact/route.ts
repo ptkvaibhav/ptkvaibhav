@@ -16,15 +16,23 @@ function buildHeaders(limit: number, remaining: number, resetAt: number) {
   };
 }
 
+const MAX_BODY_BYTES = 16 * 1024;
+
+/**
+ * Client IP for rate limiting. Prefer headers set by the Vercel edge, which a client
+ * cannot forge. Only fall back to the *last* X-Forwarded-For hop (appended by the
+ * nearest proxy); the first hop is client-controlled and would let an attacker rotate
+ * fake IPs to bypass the rate limit.
+ */
 function getClientIdentifier(request: NextRequest) {
-  const forwardedFor = request.headers.get("x-forwarded-for");
-  const realIp = request.headers.get("x-real-ip");
+  const vercelIp = request.headers.get("x-vercel-forwarded-for")?.split(",")[0]?.trim();
+  if (vercelIp) return vercelIp;
 
-  if (forwardedFor) {
-    return forwardedFor.split(",")[0]?.trim() || "unknown";
-  }
+  const realIp = request.headers.get("x-real-ip")?.trim();
+  if (realIp) return realIp;
 
-  return realIp || "unknown";
+  const hops = request.headers.get("x-forwarded-for")?.split(",").map((hop) => hop.trim()).filter(Boolean);
+  return hops?.at(-1) || "unknown";
 }
 
 function readCompanyHoneypot(payload: unknown) {
@@ -37,8 +45,15 @@ function readCompanyHoneypot(payload: unknown) {
 }
 
 function getAllowedOrigins() {
-  const configuredOrigin = new URL(siteConfig.url).origin;
-  return new Set([configuredOrigin, "http://localhost:3000", "http://127.0.0.1:3000"]);
+  const origins = new Set([new URL(siteConfig.url).origin]);
+  // Vercel preview deployments
+  if (process.env.VERCEL_URL) origins.add(`https://${process.env.VERCEL_URL}`);
+  // Local development only; never trust localhost origins in production
+  if (process.env.NODE_ENV !== "production") {
+    origins.add("http://localhost:3000");
+    origins.add("http://127.0.0.1:3000");
+  }
+  return origins;
 }
 
 function hasAllowedOrigin(request: NextRequest) {
@@ -98,10 +113,23 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const declaredLength = Number(request.headers.get("content-length") ?? "0");
+  if (declaredLength > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: "Request too large." }, { status: 413, headers });
+  }
+
+  if (!request.headers.get("content-type")?.toLowerCase().startsWith("application/json")) {
+    return NextResponse.json({ error: "Unsupported content type." }, { status: 415, headers });
+  }
+
   let payload: unknown;
 
   try {
-    payload = await request.json();
+    const raw = await request.text();
+    if (raw.length > MAX_BODY_BYTES) {
+      return NextResponse.json({ error: "Request too large." }, { status: 413, headers });
+    }
+    payload = JSON.parse(raw);
   } catch {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400, headers });
   }

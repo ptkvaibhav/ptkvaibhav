@@ -2,150 +2,120 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowDownToLine, ArrowUpRight, GitFork, Star, Eye, ShieldAlert } from "lucide-react";
+import { ArrowUpRight, FileText, GitFork, Star } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { ReadmeModal } from "@/components/interactive/readme-modal";
-import { useSound } from "@/components/providers/sound-provider";
+import { showToast } from "@/components/dossier/toast";
 import { cn } from "@/lib/utils";
-import { typography } from "@/styles/design-system";
 import type { Project } from "@/types/project";
 
 type ProjectCardProps = {
   project: Project;
-  compact?: boolean;
+  exhibit: string;
   featured?: boolean;
+  tilt?: number;
 };
 
-export function ProjectCard({ project, compact = false, featured = false }: ProjectCardProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { playSound } = useSound();
+function fileName(project: Project) {
+  const ext = (project.language ?? project.tags[0] ?? "").toLowerCase();
+  const map: Record<string, string> = { python: "py", java: "jar", typescript: "ts", javascript: "js", go: "go", rust: "rs" };
+  return `${project.slug}.${map[ext] ?? "exe"}`;
+}
 
-  const visibleTags = project.tags
-    .filter((tag) => tag.toLowerCase() !== project.language?.toLowerCase())
-    .slice(0, featured ? 5 : compact ? 3 : 4);
-  const summary = project.excerpt?.trim() || project.title;
-  const shouldRenderSummary = summary.toLowerCase() !== project.title.trim().toLowerCase();
-  const updatedLabel = project.lastUpdated
-    ? new Intl.DateTimeFormat("en", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      }).format(new Date(project.lastUpdated))
-    : null;
+export function ProjectCard({ project, exhibit, featured = false, tilt = 0 }: ProjectCardProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const tags = project.tags.slice(0, featured ? 5 : 4);
+  const stars = project.stars ?? 0;
+  const forks = project.forks ?? 0;
 
   return (
     <>
       <article
+        style={{ ["--tilt" as string]: `${tilt}deg` }}
         className={cn(
-          "group relative flex h-full min-w-0 flex-col overflow-hidden rounded-[26px] border border-slate-200/90 bg-white/95 dark:border-slate-800 dark:bg-slate-900/90 p-5 md:p-6 shadow-[0_18px_46px_rgba(15,23,42,0.06)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:border-cyan-500/50",
-          featured ? "min-h-[340px]" : "min-h-[300px]"
+          "group flex h-full min-w-0 flex-col overflow-hidden rounded-md border-2 border-foreground bg-paper shadow-hard transition-transform duration-300 md:[transform:rotate(var(--tilt))] md:hover:[transform:rotate(0deg)_translateY(-4px)]"
         )}
       >
-        {/* Accent Bar & Ambient Glow */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-400 opacity-80" />
-        <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-cyan-500/10 blur-3xl transition duration-300 group-hover:bg-cyan-500/20" />
-
-        <div className="space-y-3">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              {project.language ? (
-                <span className="rounded-full border border-slate-200 dark:border-slate-700 bg-slate-950 px-2.5 py-0.5 text-[0.68rem] font-bold uppercase tracking-[0.16em] text-white">
-                  {project.language}
-                </span>
-              ) : null}
-              <span className="rounded-full border border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 text-[0.68rem] font-bold uppercase tracking-[0.16em] text-emerald-800 dark:text-emerald-300">
-                {project.status}
-              </span>
-            </div>
-
+        {/* Retro window title bar */}
+        <div className="flex items-center justify-between gap-3 border-b-2 border-foreground bg-foreground px-3 py-1.5 text-paper">
+          <p className="min-w-0 truncate font-mono text-xs">
+            <span className="font-semibold">Exhibit {exhibit}</span>
+            <span className="opacity-60"> — {fileName(project)}</span>
+          </p>
+          <div aria-hidden className="flex shrink-0 gap-1">
+            <span className="flex h-4 w-4 items-center justify-center border border-paper/60 text-[9px] leading-none">_</span>
+            <span className="flex h-4 w-4 items-center justify-center border border-paper/60 text-[9px] leading-none">□</span>
             <button
-              onClick={() => {
-                playSound("click");
-                setIsModalOpen(true);
-              }}
-              title="Quick Architecture Preview"
-              className="inline-flex items-center gap-1 text-xs font-bold text-slate-600 hover:text-cyan-600 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors cursor-pointer"
+              type="button"
+              tabIndex={-1}
+              onClick={() => showToast({ title: "Access denied", body: "Evidence cannot be destroyed. Chain of custody, you know." })}
+              className="flex h-4 w-4 items-center justify-center border border-paper/60 text-[10px] leading-none hover:bg-stamp"
+              data-cursor="Destroy?"
             >
-              <Eye className="h-3.5 w-3.5" />
-              <span>Details</span>
+              ×
             </button>
           </div>
+        </div>
 
-          <div className="space-y-2">
-            <h3 className={cn("break-words text-slate-950 dark:text-white font-black tracking-tight", typography.cardTitle, featured && "text-2xl md:text-3xl")}>
-              {project.title}
-            </h3>
-            {shouldRenderSummary ? (
-              <div className="space-y-1">
-                <p className="text-[0.68rem] font-mono font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-400">
-                  Target &bull; Purpose
-                </p>
-                <p
-                  className={cn(
-                    "text-xs leading-relaxed text-slate-700 dark:text-slate-200 font-sans",
-                    featured ? "line-clamp-4 max-w-3xl" : "line-clamp-3"
-                  )}
-                >
-                  {summary}
-                </p>
-              </div>
+        <div className={cn("flex flex-1 flex-col p-5", featured && "md:p-8")}>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+            <span className="text-stamp">● {project.status}</span>
+            {project.language ? <span>{project.language}</span> : null}
+            {stars > 0 ? (
+              <span className="inline-flex items-center gap-1"><Star className="h-3 w-3" /> {stars}</span>
+            ) : null}
+            {forks > 0 ? (
+              <span className="inline-flex items-center gap-1"><GitFork className="h-3 w-3" /> {forks}</span>
             ) : null}
           </div>
-        </div>
 
-        {/* GitHub Metrics */}
-        <div className="mt-4 flex flex-wrap gap-2 text-xs font-bold font-mono text-slate-700 dark:text-slate-300">
-          <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 px-2.5 py-0.5 shadow-xs">
-            <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500/20" />
-            {project.stars ?? 0} stars
-          </span>
-          <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 px-2.5 py-0.5 shadow-xs">
-            <GitFork className="h-3.5 w-3.5 text-cyan-500" />
-            {project.forks ?? 0} forks
-          </span>
-          {updatedLabel ? (
-            <span className="inline-flex items-center rounded-full border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 px-2.5 py-0.5 shadow-xs">
-              {updatedLabel}
-            </span>
-          ) : null}
-        </div>
-
-        {/* Tags */}
-        {visibleTags.length ? (
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {visibleTags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-2.5 py-0.5 text-[11px] font-medium text-slate-700 dark:text-slate-300"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        ) : null}
-
-        {/* Action Links */}
-        <div className="mt-auto grid grid-cols-2 gap-2 pt-5">
-          <Button
-            variant="secondary"
-            size="sm"
-            className="w-full text-xs font-bold cursor-pointer"
-            onClick={() => {
-              playSound("click");
-              setIsModalOpen(true);
-            }}
+          <h3
+            className={cn(
+              "mt-3 break-words font-display font-black uppercase leading-[0.95] text-foreground",
+              featured ? "text-4xl md:text-6xl" : "text-3xl"
+            )}
           >
-            <Eye className="h-3.5 w-3.5" />
-            Architecture
-          </Button>
+            {project.title}
+          </h3>
 
-          <Button asChild size="sm" className="w-full text-xs bg-slate-950 text-white dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400 font-bold shadow-sm">
-            <Link href={project.github} target="_blank" rel="noopener noreferrer">
-              Repository
-              <ArrowUpRight className="h-3.5 w-3.5" />
+          <p className={cn("mt-3 leading-relaxed text-foreground/85", featured ? "max-w-2xl text-[17px]" : "text-[15px]")}>
+            {project.excerpt}
+          </p>
+
+          {featured && project.problem ? (
+            <p className="mt-4 max-w-2xl border-l-2 border-stamp pl-4 font-mono text-[13px] leading-relaxed text-muted-foreground">
+              <span className="font-semibold text-foreground">Why it exists: </span>
+              {project.problem}
+            </p>
+          ) : null}
+
+          {tags.length ? (
+            <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
+              {tags.map((tag) => (
+                <li key={tag} className="label-tape !text-[10px]">{tag}</li>
+              ))}
+            </ul>
+          ) : null}
+
+          <div className="mt-auto flex flex-wrap gap-2 pt-6">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              data-cursor="Read"
+              className="inline-flex h-10 items-center gap-2 rounded-md border-2 border-foreground px-4 font-mono text-[13px] font-semibold text-foreground transition-colors hover:bg-manila/50"
+            >
+              <FileText className="h-4 w-4" /> Case notes
+            </button>
+            <Link
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 items-center gap-1.5 rounded-md border-2 border-foreground bg-foreground px-4 font-mono text-[13px] font-semibold text-paper transition-colors hover:bg-stamp hover:border-stamp"
+            >
+              Source <ArrowUpRight className="h-4 w-4" />
             </Link>
-          </Button>
+          </div>
         </div>
       </article>
 

@@ -5,18 +5,18 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:pointer-events-none disabled:opacity-50 disabled:hover:translate-y-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-slate-950 text-white shadow-[0_14px_34px_rgba(15,23,42,0.18)] hover:bg-cyan-800 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400 font-bold",
-        secondary: "border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:border-cyan-300 dark:hover:border-cyan-500 hover:bg-cyan-50 dark:hover:bg-slate-800",
-        ghost: "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
-        outline: "border border-slate-200 dark:border-slate-700 bg-transparent text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800",
+        default: "bg-primary text-primary-foreground font-semibold hover:bg-primary/90",
+        secondary: "border border-border bg-card text-foreground hover:bg-secondary",
+        ghost: "text-muted-foreground hover:bg-secondary hover:text-foreground",
+        outline: "border border-border bg-transparent text-foreground hover:bg-secondary",
       },
       size: {
         default: "h-11 px-5",
-        sm: "h-9 px-4 text-xs",
+        sm: "h-9 px-4 text-[13px]",
         lg: "h-12 px-6",
       },
     },

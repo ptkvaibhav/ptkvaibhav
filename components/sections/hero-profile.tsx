@@ -2,204 +2,188 @@
 
 import * as React from "react";
 import Image from "next/image";
-import {
-  ShieldCheck,
-  Award,
-  Terminal as TerminalIcon,
-  Download,
-  Mail,
-  ExternalLink,
-  MapPin,
-  Sparkles,
-  TrendingUp,
-  Flame,
-  CheckCircle2
-} from "lucide-react";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { useSound } from "@/components/providers/sound-provider";
+import { ArrowDown, Download, Github, Linkedin, Mail } from "lucide-react";
+
+import { DecryptText } from "@/components/dossier/decrypt-text";
+import { Redacted } from "@/components/dossier/redacted";
+import { showToast } from "@/components/dossier/toast";
 import { siteConfig } from "@/lib/site";
-import { typography } from "@/styles/design-system";
 
-export function HeroProfileSection({ resumePath = "/resume/pratik-vaibhav-resume.pdf" }: { resumePath?: string }) {
-  const { playSound } = useSound();
+const findings = [
+  { value: "100+", label: "Security incidents handled", note: "MTTR down 33%" },
+  { value: "70→38", label: "Days to invalidate leaked secrets", note: "TruffleHog program" },
+  { value: "30%→0", label: "False-positive rate", note: "SAST × DAST × SCA" },
+  { value: "Top 1%", label: "Performance rating", note: "Deloitte" },
+];
 
-  const handleAction = (type: string) => {
-    playSound("click");
+const fields = [
+  { k: "Name", v: "Pratik Vaibhav" },
+  { k: "Current post", v: "Senior Product Security Engineer, PSIRT" },
+  { k: "Agency", v: "Guidewire Software" },
+  { k: "Previously", v: "Deloitte · AppSec lead, 2019–2026" },
+  { k: "Base", v: "Bangalore, India" },
+];
+
+function Paperclip({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 40 110" className={className} aria-hidden fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round">
+      <path d="M28 30 V88 a10 10 0 0 1 -20 0 V20 a14 14 0 0 1 28 0 V80" />
+    </svg>
+  );
+}
+
+export function HeroProfileSection({ resumePath = "/resume/Pratik_Vaibhav_Resume.pdf" }: { resumePath?: string }) {
+  const stampClicks = React.useRef(0);
+
+  const onStampClick = () => {
+    stampClicks.current += 1;
+    if (stampClicks.current === 5) {
+      stampClicks.current = 0;
+      showToast({ title: "Ouch", body: "That stamp has been approved enough. flag{st4mp_0f_4ppr0v4l}" });
+    }
   };
 
   return (
-    <section id="about" className="section !py-0">
-      <div className="container relative z-10">
-        <div className="hero-card p-6 sm:p-8 md:p-12 transition-all">
-          <div className="grid gap-8 lg:grid-cols-[380px_minmax(0,1fr)] lg:items-center">
-            
-            {/* Left Column: Prominent Portrait & Identity Card */}
-            <div className="flex flex-col items-center text-center lg:text-left space-y-6">
-              <div className="relative group">
-                {/* Glowing Aura Ring */}
-                <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-r from-emerald-500 to-cyan-500 opacity-60 blur-lg transition duration-500 group-hover:opacity-100 group-hover:blur-xl animate-pulse" />
-                
-                {/* High-Resolution Portrait Container */}
-                <div className="relative h-64 w-64 sm:h-72 sm:w-72 overflow-hidden rounded-3xl border-2 border-emerald-500/40 bg-slate-950 shadow-2xl">
-                  <Image
-                    src="/pratik-vaibhav.png"
-                    alt="Pratik Vaibhav - Senior Product Security Engineer"
-                    width={400}
-                    height={400}
-                    priority
-                    className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
-                  />
-                  {/* Subtle Scanline Overlay */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                </div>
+    <section id="about" className="relative z-[1] scroll-mt-20 pb-10 pt-8 md:pb-16 md:pt-14">
+      <div className="container">
+        {/* Folder tab peeking out behind the sheet */}
+        <div className="relative">
+          <div className="absolute -top-6 left-6 h-10 w-48 rounded-t-lg border-2 border-b-0 border-foreground/20 bg-manila px-4 pt-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground/70 md:left-10">
+            Personnel file
+          </div>
 
-                {/* Live Status Badge */}
-                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-emerald-500/60 bg-slate-950/90 px-3.5 py-1 text-[11px] font-mono font-bold text-emerald-400 shadow-lg backdrop-blur flex items-center gap-1.5 whitespace-nowrap">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-                  <span>Senior PSIRT &bull; Bangalore, IN</span>
-                </div>
+          <article className="paper relative px-5 pb-8 pt-6 sm:px-8 md:px-12 md:pb-12 md:pt-8">
+            {/* File header strip */}
+            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-b border-dashed border-foreground/30 pb-4 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+              <span>
+                Classification: <span className="text-foreground">Public</span> (mostly)
+              </span>
+              <span>File no. PV-2019-SEC</span>
+            </div>
+
+            <div className="mt-8 grid gap-10 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-14">
+              {/* Polaroid + form fields */}
+              <div className="flex flex-col gap-8 sm:flex-row lg:flex-col">
+                <figure className="relative mx-auto w-[220px] shrink-0 -rotate-3 bg-white p-3 pb-12 shadow-lift transition-transform duration-300 hover:rotate-0 sm:mx-0 lg:mx-auto lg:w-[260px]">
+                  <Paperclip className="absolute -top-7 left-8 z-10 h-20 w-7 text-zinc-400" />
+                  <div className="relative aspect-square overflow-hidden bg-zinc-900">
+                    <Image
+                      src="/pratik-vaibhav.png"
+                      alt="Portrait of Pratik Vaibhav"
+                      fill
+                      sizes="(min-width: 1024px) 236px, 196px"
+                      priority
+                      className="object-cover object-top grayscale-[35%] contrast-[1.05]"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={onStampClick}
+                    aria-label="Status: active"
+                    data-cursor="Stamp it"
+                    className="absolute -bottom-6 -right-3 z-10 sm:-right-12"
+                  >
+                    <span className="stamp animate-stamp-in bg-paper/40 px-2.5 py-1 text-xl sm:px-3 sm:py-1.5 sm:text-2xl [animation-delay:500ms] lg:text-3xl" style={{ ["--stamp-rot" as string]: "-14deg" }}>
+                      Active duty
+                    </span>
+                  </button>
+                  <figcaption className="absolute inset-x-0 bottom-2 text-center font-hand text-xl text-zinc-700">
+                    subject, probably mid-triage
+                  </figcaption>
+                </figure>
+
+                <dl className="w-full space-y-3 self-center font-mono text-sm">
+                  {fields.map((f) => (
+                    <div key={f.k} className="flex flex-col border-b border-foreground/15 pb-2 sm:flex-row sm:gap-3 lg:flex-col lg:gap-0">
+                      <dt className="field-label w-32 shrink-0 pt-0.5">{f.k}</dt>
+                      <dd className="text-foreground">{f.v}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
 
-              {/* Quick Profile Meta */}
-              <div className="w-full space-y-3 pt-2">
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-                  <span className="rounded-full border border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 text-xs font-bold text-emerald-700 dark:text-emerald-300 font-mono">
-                    Guidewire Software
-                  </span>
-                  <span className="rounded-full border border-cyan-500/30 bg-cyan-50 dark:bg-cyan-950/60 px-3 py-1 text-xs font-bold text-cyan-700 dark:text-cyan-300 font-mono">
-                    Ex-Deloitte Top 1%
-                  </span>
-                </div>
+              {/* Statement */}
+              <div className="relative min-w-0">
 
-                {/* Quick Social & Action Links */}
-                <div className="flex items-center justify-center lg:justify-start gap-2 pt-1">
-                  <a
-                    href={siteConfig.social.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => handleAction("github")}
-                    className="rounded-xl border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 p-2.5 text-slate-800 dark:text-slate-200 hover:border-emerald-500 hover:text-emerald-400 transition-all shadow-xs"
-                    title="GitHub Profile"
-                  >
-                    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                <p className="font-mono text-xs font-medium uppercase tracking-[0.16em] text-stamp sm:text-sm">
+                  <DecryptText text={"> Decrypting subject profile... OK"} duration={1100} />
+                </p>
+
+                <h1 className="mt-5 font-display text-[3.1rem] font-black uppercase leading-[0.88] tracking-tight text-foreground sm:text-7xl lg:text-[5.6rem]">
+                  I build secure systems
+                  <br className="hidden sm:block" /> and prove where{" "}
+                  <span className="relative inline-block">
+                    <span className="relative z-[1]">they break.</span>
+                    <svg aria-hidden viewBox="0 0 300 20" preserveAspectRatio="none" className="absolute -bottom-1 left-0 h-3 w-full text-stamp sm:h-4">
+                      <path d="M2 14 C 60 4, 120 18, 180 8 S 270 6, 298 12" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" />
                     </svg>
-                  </a>
+                  </span>
+                </h1>
 
+                <p className="mt-7 max-w-[640px] text-[17px] leading-relaxed text-foreground/85">
+                  Senior Product Security Engineer on the <span className="highlight">incident response team at Guidewire</span>,
+                  and before that nearly seven years of application security at Deloitte. I triage incidents, chase leaked secrets,
+                  correlate scanner noise into real findings, and build AI agents that do the boring parts.
+                </p>
+                <p className="mt-3 font-mono text-sm text-muted-foreground">
+                  Known weaknesses: <Redacted>filter coffee and a well-written post-mortem</Redacted>
+                </p>
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                   <a
-                    href={siteConfig.social.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => handleAction("linkedin")}
-                    className="rounded-xl border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 p-2.5 text-slate-800 dark:text-slate-200 hover:border-cyan-500 hover:text-cyan-400 transition-all shadow-xs"
-                    title="LinkedIn Profile"
+                    href="#experience"
+                    className="inline-flex h-12 items-center justify-center gap-2 rounded-md border-2 border-foreground bg-foreground px-6 font-mono text-sm font-semibold text-paper shadow-[4px_4px_0_0_hsl(var(--stamp))] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
                   >
-                    <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                    </svg>
+                    Read the file <ArrowDown className="h-4 w-4" />
                   </a>
-
-                  <a
-                    href={`mailto:${siteConfig.email}`}
-                    onClick={() => handleAction("email")}
-                    className="rounded-xl border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 p-2.5 text-slate-800 dark:text-slate-200 hover:border-amber-500 hover:text-amber-400 transition-all shadow-xs"
-                    title="Direct Email"
-                  >
-                    <Mail className="h-4 w-4" />
-                  </a>
-
                   <a
                     href={resumePath}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => handleAction("resume")}
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/50 bg-emerald-500/10 px-3 py-2 text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/20 transition-all"
+                    className="inline-flex h-12 items-center justify-center gap-2 rounded-md border-2 border-foreground bg-paper px-6 font-mono text-sm font-semibold text-foreground transition-colors hover:bg-manila/50"
                   >
-                    <Download className="h-3.5 w-3.5" />
-                    <span>Resume</span>
+                    <Download className="h-4 w-4" /> Resume (PDF)
                   </a>
+                  <div className="flex items-center justify-center gap-1 pt-1 sm:pt-0">
+                    {[
+                      { href: siteConfig.social.github, label: "GitHub", Icon: Github, external: true },
+                      { href: siteConfig.social.linkedin, label: "LinkedIn", Icon: Linkedin, external: true },
+                      { href: `mailto:${siteConfig.email}`, label: "Email", Icon: Mail, external: false },
+                    ].map(({ href, label, Icon, external }) => (
+                      <a
+                        key={label}
+                        href={href}
+                        aria-label={label}
+                        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground/70 transition-colors hover:bg-foreground/5 hover:text-foreground"
+                      >
+                        <Icon className="h-5 w-5" />
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Right Column: Hero Pitch & High-Impact Metric Cards */}
-            <div className="space-y-6 text-left">
-              <div className="space-y-4">
-                {/* Role Pill */}
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/15 px-4 py-1.5 text-xs font-mono font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-300 shadow-sm backdrop-blur">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="truncate">Senior Product Security Engineer (PSIRT)</span>
-                </div>
-
-                {/* Main Heading */}
-                <h1 className="text-[clamp(2.2rem,5vw,3.8rem)] font-black leading-[1.02] tracking-[-0.04em] text-slate-950 dark:text-white">
-                  I build secure systems and prove where they break.
-                </h1>
-
-                {/* High-Readability Bio */}
-                <p className="max-w-[660px] text-base font-normal leading-relaxed text-slate-700 dark:text-slate-200 md:text-lg">
-                  Senior Product Security Engineer in the Product Security Incident Response Team (PSIRT) at <strong className="font-bold text-slate-950 dark:text-white">Guidewire Software</strong>, and former Lead Solution Advisor at <strong className="font-bold text-slate-950 dark:text-white">Deloitte</strong>. Focused on incident response, TruffleHog secret governance, multi-tool AST correlation, and autonomous AI vulnerability agents.
+                <p aria-hidden className="mt-3 hidden -rotate-2 font-hand text-2xl text-blueink sm:block">
+                  ↑ recruiters, start here. it&apos;s a quick read, promise.
                 </p>
               </div>
-
-              {/* 4 Quantifiable Impact Metric Bento Cards */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 p-3.5 shadow-sm">
-                  <p className="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400">PSIRT Incidents</p>
-                  <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">100+</p>
-                  <p className="text-[10px] font-mono text-slate-600 dark:text-slate-300 mt-0.5">33% MTTR Drop</p>
-                </div>
-
-                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 p-3.5 shadow-sm">
-                  <p className="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400">Secret Invalidation</p>
-                  <p className="text-xl font-black text-cyan-600 dark:text-cyan-400 mt-1">70d ➔ 38d</p>
-                  <p className="text-[10px] font-mono text-slate-600 dark:text-slate-300 mt-0.5">TruffleHog SLA</p>
-                </div>
-
-                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 p-3.5 shadow-sm">
-                  <p className="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400">False Positives</p>
-                  <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">30% Cut</p>
-                  <p className="text-[10px] font-mono text-slate-600 dark:text-slate-300 mt-0.5">Near-Zero Noise</p>
-                </div>
-
-                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 p-3.5 shadow-sm">
-                  <p className="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400">Performance Band</p>
-                  <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">Top 1%</p>
-                  <p className="text-[10px] font-mono text-slate-600 dark:text-slate-300 mt-0.5">Deloitte Advisory</p>
-                </div>
-              </div>
-
-              {/* Quick Jump Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <a
-                  href="#experience"
-                  onClick={() => playSound("click")}
-                  className="rounded-2xl bg-slate-950 text-white dark:bg-white dark:text-slate-950 px-5 py-2.5 text-xs font-bold uppercase tracking-wider shadow-md hover:opacity-90 transition-all cursor-pointer"
-                >
-                  View Experience Journey
-                </a>
-
-                <a
-                  href="#skills"
-                  onClick={() => playSound("click")}
-                  className="rounded-2xl border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white shadow-xs hover:border-cyan-500 transition-all cursor-pointer"
-                >
-                  Explore Core Skills
-                </a>
-
-                <a
-                  href="#interactive-console"
-                  onClick={() => playSound("click")}
-                  className="inline-flex items-center gap-2 rounded-2xl border border-cyan-500/40 bg-cyan-500/10 px-4 py-2.5 text-xs font-mono font-bold text-cyan-800 dark:text-cyan-300 hover:bg-cyan-500/20 transition-all cursor-pointer"
-                >
-                  <TerminalIcon className="h-3.5 w-3.5" />
-                  <span>Launch Live Security Console</span>
-                </a>
-              </div>
-
             </div>
 
-          </div>
+            {/* Key findings */}
+            <div className="mt-12 border-t-2 border-foreground pt-6">
+              <p className="field-label">Key findings</p>
+              <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-6 lg:grid-cols-4">
+                {findings.map((f, i) => (
+                  <div key={f.label} className="relative">
+                    <dd className="font-display text-4xl font-black text-foreground sm:text-5xl">
+                      <span className={i === 0 ? "highlight" : undefined}>{f.value}</span>
+                    </dd>
+                    <dt className="mt-1 text-sm font-medium leading-snug text-foreground">{f.label}</dt>
+                    <dd className="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">{f.note}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </article>
         </div>
       </div>
     </section>
