@@ -11,7 +11,7 @@ import { AwardsSection } from "@/components/sections/awards";
 import { Stamp } from "@/components/dossier/stamp";
 import { SectionHeader } from "@/components/ui/section-header";
 import { getFeaturedProjects } from "@/lib/projects";
-import { getGithubContributions, getGithubUserProfile } from "@/lib/github";
+import { getGithubUserProfile } from "@/lib/github";
 import { siteConfig } from "@/lib/site";
 
 export const revalidate = 3600;
@@ -21,11 +21,7 @@ const EXHIBIT_LETTERS = "ABCDEFGH";
 const TILTS = [0.8, -0.7, 0.5, -0.9];
 
 export default async function HomePage() {
-  const [projects, contributionCalendar, githubProfile] = await Promise.all([
-    getFeaturedProjects(),
-    getGithubContributions(),
-    getGithubUserProfile(),
-  ]);
+  const [projects, githubProfile] = await Promise.all([getFeaturedProjects(), getGithubUserProfile()]);
 
   const featuredProject =
     projects.find((project) => project.slug.toLowerCase() === "clinkz") ?? projects[0];
@@ -81,7 +77,7 @@ export default async function HomePage() {
           </div>
 
           <Reveal>
-            <GithubActivitySection calendar={contributionCalendar} userProfile={githubProfile} />
+            <GithubActivitySection userProfile={githubProfile} />
           </Reveal>
         </div>
       </section>
