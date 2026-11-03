@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:1fd36c25-ce2b-4906-bcd7-06ecd8aad88f",
+  "serialNumber": "urn:uuid:7753eed6-0243-42ee-b80b-31d9fe0317f8",
   "metadata": {
-    "timestamp": "2026-11-03T11:08:12.178Z",
+    "timestamp": "2026-11-03T11:25:46.277Z",
     "tools": {
       "components": [
         {
@@ -533,8 +533,8 @@
       "type": "library",
       "name": "resolvers",
       "group": "@hookform",
-      "version": "6.0.2",
-      "bom-ref": "ptkvaibhav@3.0.0|@hookform/resolvers@6.0.2",
+      "version": "7.0.0",
+      "bom-ref": "ptkvaibhav@3.0.0|@hookform/resolvers@7.0.0",
       "author": "bluebill1049",
       "description": "React Hook Form validation resolvers: Yup, Joi, Superstruct, Zod, Vest, Class Validator, io-ts, Nope, computed-types, TypeBox, arktype, Typanion, Effect-TS and VineJS",
       "licenses": [
@@ -545,7 +545,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40hookform/resolvers@6.0.2",
+      "purl": "pkg:npm/%40hookform/resolvers@7.0.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/react-hook-form/resolvers.git",
@@ -563,12 +563,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-6.0.2.tgz",
+          "url": "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-7.0.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "7b676a50e95a1ae8ab29539dfe265693f620e7379a1b0eedd2149cdcbcf12f7a3b7991b06644f211b04bf07e769b4c11284b0d2d6a0c18e8971876cf1d35e511"
+              "content": "689ba08977f89a28e365868929b6a9f23c49b08ad9f7812bd688bc531a0df5f3067523115cf30f29cf84b6c14ada2aa793fdc4d212501c7fd1a998f67088867f"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -3313,58 +3313,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@standard-schema/utils"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "ajv-formats",
-      "version": "2.1.1",
-      "bom-ref": "ptkvaibhav@3.0.0|ajv-formats@2.1.1",
-      "author": "Evgeny Poberezkin",
-      "description": "Format validation for Ajv v7+",
-      "scope": "optional",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/ajv-formats@2.1.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/ajv-validator/ajv-formats.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/ajv-validator/ajv-formats#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/ajv-validator/ajv-formats/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/ajv-formats/-/ajv-formats-2.1.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "5b1d0ac79da1c44ec2d7c8643048206251227ea599b58691828b89a2bf9631d3e743210ad77be0116c9536ea7b4a879ea0b32caf891fe61e9d396d75235e4c50"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/ajv-formats"
         }
       ]
     },
@@ -30939,7 +30887,7 @@
         "ptkvaibhav@3.0.0|@cyclonedx/cyclonedx-npm@6.0.1",
         "ptkvaibhav@3.0.0|@emnapi/runtime@1.11.3",
         "ptkvaibhav@3.0.0|@eslint/eslintrc@3.3.7",
-        "ptkvaibhav@3.0.0|@hookform/resolvers@6.0.2",
+        "ptkvaibhav@3.0.0|@hookform/resolvers@7.0.0",
         "ptkvaibhav@3.0.0|@img/sharp-wasm32@0.35.5",
         "ptkvaibhav@3.0.0|@radix-ui/react-slot@1.5.0",
         "ptkvaibhav@3.0.0|@types/node@24.19.2",
@@ -31032,10 +30980,9 @@
       "ref": "ptkvaibhav@3.0.0|@eslint/eslintrc@3.3.7|json-schema-traverse@0.4.1"
     },
     {
-      "ref": "ptkvaibhav@3.0.0|@hookform/resolvers@6.0.2",
+      "ref": "ptkvaibhav@3.0.0|@hookform/resolvers@7.0.0",
       "dependsOn": [
         "ptkvaibhav@3.0.0|@standard-schema/utils@0.3.0",
-        "ptkvaibhav@3.0.0|ajv-formats@2.1.1",
         "ptkvaibhav@3.0.0|ajv@8.20.0",
         "ptkvaibhav@3.0.0|react-hook-form@7.91.0",
         "ptkvaibhav@3.0.0|zod@4.6.7"
@@ -31404,12 +31351,6 @@
     },
     {
       "ref": "ptkvaibhav@3.0.0|@standard-schema/utils@0.3.0"
-    },
-    {
-      "ref": "ptkvaibhav@3.0.0|ajv-formats@2.1.1",
-      "dependsOn": [
-        "ptkvaibhav@3.0.0|ajv@8.20.0"
-      ]
     },
     {
       "ref": "ptkvaibhav@3.0.0|@radix-ui/react-compose-refs@1.1.5",
