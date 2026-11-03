@@ -2,116 +2,120 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, GitFork, Star } from "lucide-react";
+import { ArrowUpRight, FileText, GitFork, Star } from "lucide-react";
 
 import { ReadmeModal } from "@/components/interactive/readme-modal";
-import { useSound } from "@/components/providers/sound-provider";
+import { showToast } from "@/components/dossier/toast";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types/project";
 
 type ProjectCardProps = {
   project: Project;
-  compact?: boolean;
+  exhibit: string;
   featured?: boolean;
+  tilt?: number;
 };
 
-export function ProjectCard({ project, compact = false, featured = false }: ProjectCardProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { playSound } = useSound();
+function fileName(project: Project) {
+  const ext = (project.language ?? project.tags[0] ?? "").toLowerCase();
+  const map: Record<string, string> = { python: "py", java: "jar", typescript: "ts", javascript: "js", go: "go", rust: "rs" };
+  return `${project.slug}.${map[ext] ?? "exe"}`;
+}
 
-  const visibleTags = project.tags
-    .filter((tag) => tag.toLowerCase() !== project.language?.toLowerCase())
-    .slice(0, featured ? 5 : compact ? 3 : 4);
-  const summary = project.excerpt?.trim() || "";
-  const showSummary = summary && summary.toLowerCase() !== project.title.trim().toLowerCase();
+export function ProjectCard({ project, exhibit, featured = false, tilt = 0 }: ProjectCardProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const tags = project.tags.slice(0, featured ? 5 : 4);
   const stars = project.stars ?? 0;
   const forks = project.forks ?? 0;
-
-  const openDetails = () => {
-    playSound("click");
-    setIsModalOpen(true);
-  };
 
   return (
     <>
       <article
+        style={{ ["--tilt" as string]: `${tilt}deg` }}
         className={cn(
-          "group surface relative flex h-full min-w-0 flex-col p-6 transition-colors hover:border-foreground/20",
-          featured && "md:p-8"
+          "group flex h-full min-w-0 flex-col overflow-hidden rounded-md border-2 border-foreground bg-paper shadow-hard transition-transform duration-300 md:[transform:rotate(var(--tilt))] md:hover:[transform:rotate(0deg)_translateY(-4px)]"
         )}
       >
-        <div className="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
-          {featured ? <span className="text-primary">Featured</span> : null}
-          {featured ? <span aria-hidden>·</span> : null}
-          <span>{project.status}</span>
-          {project.language ? (
-            <>
-              <span aria-hidden>·</span>
-              <span>{project.language}</span>
-            </>
-          ) : null}
-        </div>
-
-        <h3
-          className={cn(
-            "mt-3 break-words font-semibold tracking-tight text-foreground",
-            featured ? "text-2xl md:text-3xl" : "text-xl"
-          )}
-        >
-          {project.title}
-        </h3>
-
-        {showSummary ? (
-          <p
-            className={cn(
-              "mt-3 text-[15px] leading-relaxed text-muted-foreground",
-              featured ? "max-w-2xl" : "line-clamp-3"
-            )}
-          >
-            {summary}
+        {/* Retro window title bar */}
+        <div className="flex items-center justify-between gap-3 border-b-2 border-foreground bg-foreground px-3 py-1.5 text-paper">
+          <p className="min-w-0 truncate font-mono text-xs">
+            <span className="font-semibold">Exhibit {exhibit}</span>
+            <span className="opacity-60"> — {fileName(project)}</span>
           </p>
-        ) : null}
-
-        {visibleTags.length ? (
-          <div className="mt-5 flex flex-wrap gap-1.5">
-            {visibleTags.map((tag) => (
-              <span key={tag} className="chip">
-                {tag}
-              </span>
-            ))}
-          </div>
-        ) : null}
-
-        <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6">
-          <div className="flex items-center gap-2">
+          <div aria-hidden className="flex shrink-0 gap-1">
+            <span className="flex h-4 w-4 items-center justify-center border border-paper/60 text-[9px] leading-none">_</span>
+            <span className="flex h-4 w-4 items-center justify-center border border-paper/60 text-[9px] leading-none">□</span>
             <button
               type="button"
-              onClick={openDetails}
-              className="inline-flex h-9 items-center rounded-full border border-border px-4 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary"
+              tabIndex={-1}
+              onClick={() => showToast({ title: "Access denied", body: "Evidence cannot be destroyed. Chain of custody, you know." })}
+              className="flex h-4 w-4 items-center justify-center border border-paper/60 text-[10px] leading-none hover:bg-stamp"
+              data-cursor="Destroy?"
             >
-              Details
+              ×
+            </button>
+          </div>
+        </div>
+
+        <div className={cn("flex flex-1 flex-col p-5", featured && "md:p-8")}>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+            <span className="text-stamp">● {project.status}</span>
+            {project.language ? <span>{project.language}</span> : null}
+            {stars > 0 ? (
+              <span className="inline-flex items-center gap-1"><Star className="h-3 w-3" /> {stars}</span>
+            ) : null}
+            {forks > 0 ? (
+              <span className="inline-flex items-center gap-1"><GitFork className="h-3 w-3" /> {forks}</span>
+            ) : null}
+          </div>
+
+          <h3
+            className={cn(
+              "mt-3 break-words font-display font-black uppercase leading-[0.95] text-foreground",
+              featured ? "text-4xl md:text-6xl" : "text-3xl"
+            )}
+          >
+            {project.title}
+          </h3>
+
+          <p className={cn("mt-3 leading-relaxed text-foreground/85", featured ? "max-w-2xl text-[17px]" : "text-[15px]")}>
+            {project.excerpt}
+          </p>
+
+          {featured && project.problem ? (
+            <p className="mt-4 max-w-2xl border-l-2 border-stamp pl-4 font-mono text-[13px] leading-relaxed text-muted-foreground">
+              <span className="font-semibold text-foreground">Why it exists: </span>
+              {project.problem}
+            </p>
+          ) : null}
+
+          {tags.length ? (
+            <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
+              {tags.map((tag) => (
+                <li key={tag} className="label-tape !text-[10px]">{tag}</li>
+              ))}
+            </ul>
+          ) : null}
+
+          <div className="mt-auto flex flex-wrap gap-2 pt-6">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              data-cursor="Read"
+              className="inline-flex h-10 items-center gap-2 rounded-md border-2 border-foreground px-4 font-mono text-[13px] font-semibold text-foreground transition-colors hover:bg-manila/50"
+            >
+              <FileText className="h-4 w-4" /> Case notes
             </button>
             <Link
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => playSound("click")}
-              className="inline-flex h-9 items-center gap-1 rounded-full bg-foreground px-4 text-[13px] font-semibold text-background transition-opacity hover:opacity-90"
+              className="inline-flex h-10 items-center gap-1.5 rounded-md border-2 border-foreground bg-foreground px-4 font-mono text-[13px] font-semibold text-paper transition-colors hover:bg-stamp hover:border-stamp"
             >
-              Code <ArrowUpRight className="h-3.5 w-3.5" />
+              Source <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
-
-          {stars > 0 || forks > 0 ? (
-            <div className="flex items-center gap-3 font-mono text-xs text-muted-foreground">
-              <span className="inline-flex items-center gap-1">
-                <Star className="h-3.5 w-3.5" /> {stars}
-              </span>
-              <span className="inline-flex items-center gap-1">
-                <GitFork className="h-3.5 w-3.5" /> {forks}
-              </span>
-            </div>
-          ) : null}
         </div>
       </article>
 

@@ -1,20 +1,22 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { CommandPalette } from "@/components/interactive/command-palette";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { SoundProvider } from "@/components/providers/sound-provider";
+import { DossierCursor } from "@/components/dossier/cursor";
+import { EasterEggs } from "@/components/dossier/easter-eggs";
+import { fontVariables } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
 
 const defaultTitle = "Pratik Vaibhav | Senior Product Security Engineer (PSIRT)";
 const defaultDescription =
   "Senior Product Security Engineer (PSIRT) at Guidewire Software. Specializing in security incident response, TruffleHog secret governance, DevSecOps automation, and offensive testing.";
+const themeInitScript = `try{var t=localStorage.getItem("ptk-theme");if(t==="system"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.classList.add(t==="dark"?"dark":"light")}catch(e){document.documentElement.classList.add("light")}`;
+
 const personStructuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -36,8 +38,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f7f9" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0b10" },
+    { media: "(prefers-color-scheme: light)", color: "#e3dccb" },
+    { media: "(prefers-color-scheme: dark)", color: "#110f0d" },
   ],
 };
 
@@ -70,8 +72,10 @@ export default async function RootLayout({
   const nonce = (await headers()).get("x-nonce") ?? undefined;
 
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html lang="en" suppressHydrationWarning className={fontVariables}>
       <head>
+        {/* Apply the saved theme before paint to avoid a flash. */}
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script
           type="application/ld+json"
           nonce={nonce}
@@ -79,22 +83,17 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={cn(
-          GeistSans.className,
-          GeistMono.variable,
-          "min-h-screen bg-background text-foreground"
-        )}
+        className={cn("min-h-screen bg-background font-sans text-foreground")}
       >
-        <ThemeProvider defaultTheme="dark" storageKey="ptk-theme">
-          <SoundProvider>
-            <div className="relative flex min-h-screen flex-col">
-              <div aria-hidden className="ambient-layer" />
-              <SiteHeader />
-              <main className="relative flex-1">{children}</main>
-              <SiteFooter />
-              <CommandPalette />
-            </div>
-          </SoundProvider>
+        <ThemeProvider defaultTheme="light" storageKey="ptk-theme">
+          <div className="relative flex min-h-screen flex-col">
+            <SiteHeader />
+            <main className="relative z-[1] flex-1">{children}</main>
+            <SiteFooter />
+            <CommandPalette />
+            <EasterEggs />
+            <DossierCursor />
+          </div>
         </ThemeProvider>
       </body>
     </html>

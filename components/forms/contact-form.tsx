@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useSound } from "@/components/providers/sound-provider";
 import { ContactSchema, type ContactInput } from "@/lib/validation";
 import type { ContactApiResponse } from "@/types/contact";
 
@@ -20,7 +19,6 @@ type FormState = {
 export function ContactForm() {
   const [formState, setFormState] = useState<FormState>({ status: "idle" });
   const [toast, setToast] = useState<FormState | null>(null);
-  const { playSound } = useSound();
 
   const form = useForm<ContactInput>({
     resolver: zodResolver(ContactSchema),
@@ -51,7 +49,6 @@ export function ContactForm() {
   }
 
   const onSubmit = form.handleSubmit(async (values) => {
-    playSound("click");
     setFormState({ status: "idle" });
     setToast(null);
 
@@ -68,7 +65,6 @@ export function ContactForm() {
       const payload = (await response.json()) as ContactApiResponse;
 
       if (!response.ok || ("error" in payload && payload.error)) {
-        playSound("alert");
         const message =
           "error" in payload && payload.error
             ? payload.error
@@ -77,8 +73,6 @@ export function ContactForm() {
         setToast({ status: "error", message });
         return;
       }
-
-      playSound("success");
       const message =
         "message" in payload && payload.message
           ? payload.message
@@ -88,7 +82,6 @@ export function ContactForm() {
       setFormState({ status: "success", message });
       setToast({ status: "success", message });
     } catch {
-      playSound("alert");
       const message = "Unable to send message right now. Please try again later.";
       setFormState({ status: "error", message });
       setToast({ status: "error", message });
@@ -97,65 +90,65 @@ export function ContactForm() {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={onSubmit} className="space-y-4">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-1.5">
-            <label htmlFor="name" className="text-sm font-medium text-foreground">
+      <form onSubmit={onSubmit} className="space-y-6">
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div className="space-y-1">
+            <label htmlFor="name" className="field-label">
               Name
             </label>
             <Input
               id="name"
               placeholder="e.g. Alex Rivera"
-              className="rounded-xl"
+              
               {...form.register("name")}
             />
             {form.formState.errors.name ? (
-              <p className="text-xs text-rose-500 font-mono">{form.formState.errors.name.message}</p>
+              <p className="font-mono text-xs text-stamp">{form.formState.errors.name.message}</p>
             ) : null}
           </div>
 
-          <div className="space-y-1.5">
-            <label htmlFor="email" className="text-sm font-medium text-foreground">
+          <div className="space-y-1">
+            <label htmlFor="email" className="field-label">
               Email
             </label>
             <Input
               id="email"
               type="email"
               placeholder="alex@company.com"
-              className="rounded-xl"
+              
               {...form.register("email")}
             />
             {form.formState.errors.email ? (
-              <p className="text-xs text-rose-500 font-mono">{form.formState.errors.email.message}</p>
+              <p className="font-mono text-xs text-stamp">{form.formState.errors.email.message}</p>
             ) : null}
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-1.5">
-            <label htmlFor="organization" className="text-sm font-medium text-foreground">
-              Organization <span className="font-normal text-muted-foreground">(optional)</span>
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div className="space-y-1">
+            <label htmlFor="organization" className="field-label">
+              Organization <span className="normal-case tracking-normal">(optional)</span>
             </label>
             <Input
               id="organization"
               placeholder="Company / Team name"
-              className="rounded-xl"
+              
               {...form.register("organization")}
             />
           </div>
 
-          <div className="space-y-1.5">
-            <label htmlFor="subject" className="text-sm font-medium text-foreground">
+          <div className="space-y-1">
+            <label htmlFor="subject" className="field-label">
               Subject
             </label>
             <Input
               id="subject"
               placeholder="AppSec Lead Role / Pentest Inquiry"
-              className="rounded-xl"
+              
               {...form.register("subject")}
             />
             {form.formState.errors.subject ? (
-              <p className="text-xs text-rose-500 font-mono">{form.formState.errors.subject.message}</p>
+              <p className="font-mono text-xs text-stamp">{form.formState.errors.subject.message}</p>
             ) : null}
           </div>
         </div>
@@ -166,8 +159,8 @@ export function ContactForm() {
           <Input tabIndex={-1} autoComplete="off" {...form.register("nickname")} />
         </div>
 
-        <div className="space-y-1.5">
-          <label htmlFor="message" className="text-sm font-medium text-foreground">
+        <div className="space-y-1">
+          <label htmlFor="message" className="field-label">
             Message
           </label>
           <Textarea
@@ -175,11 +168,11 @@ export function ContactForm() {
             maxLength={2000}
             rows={4}
             placeholder="Describe your security challenge, project scope, or open role requirements..."
-            className="resize-none rounded-xl"
+            className="resize-none"
             {...form.register("message")}
           />
           {form.formState.errors.message ? (
-            <p className="text-xs text-rose-500 font-mono">{form.formState.errors.message.message}</p>
+            <p className="font-mono text-xs text-stamp">{form.formState.errors.message.message}</p>
           ) : null}
         </div>
 
@@ -187,7 +180,8 @@ export function ContactForm() {
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
-            className="h-12 w-full sm:w-auto"
+            data-cursor="Stamp & send"
+            className="h-14 w-full -rotate-1 rounded-md border-[3px] border-stamp bg-transparent px-8 font-stencil text-2xl font-black uppercase tracking-[0.12em] text-stamp hover:rotate-0 hover:bg-stamp hover:text-paper sm:w-auto"
           >
             {form.formState.isSubmitting ? (
               <>
@@ -196,8 +190,8 @@ export function ContactForm() {
               </>
             ) : (
               <>
-                <Send className="h-4 w-4" />
-                Send message
+                <Send className="h-5 w-5" />
+                Stamp &amp; send
               </>
             )}
           </Button>
@@ -206,14 +200,14 @@ export function ContactForm() {
             <p
               className={
                 formState.status === "success"
-                  ? "text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold"
-                  : "text-xs font-mono text-rose-600 dark:text-rose-400 font-semibold"
+                  ? "font-mono text-xs font-semibold text-blueink"
+                  : "font-mono text-xs font-semibold text-stamp"
               }
             >
               {formState.message}
             </p>
           ) : (
-            <p className="text-[11px] font-mono text-slate-500">
+            <p className="font-mono text-[11px] text-muted-foreground">
               Rate-limited and sanitised server-side.
             </p>
           )}
@@ -224,13 +218,12 @@ export function ContactForm() {
         <div
           role="status"
           aria-live="polite"
-          className={`fixed inset-x-4 bottom-4 z-[80] sm:inset-x-auto sm:bottom-6 sm:right-6 sm:max-w-sm rounded-2xl border px-4 py-3 text-xs font-mono shadow-2xl backdrop-blur-xl ${
-            toast.status === "success"
-              ? "border-emerald-500/40 bg-slate-900/95 text-emerald-300"
-              : "border-rose-500/40 bg-slate-900/95 text-rose-300"
-          }`}
+          className="paper fixed inset-x-4 bottom-4 z-[80] animate-toast-in px-5 py-4 sm:inset-x-auto sm:bottom-6 sm:right-6 sm:max-w-sm"
         >
-          {toast.message}
+          <p className="font-stencil text-xl font-black uppercase tracking-wider text-stamp">
+            {toast.status === "success" ? "Request filed" : "Returned to sender"}
+          </p>
+          <p className="mt-1 font-mono text-xs leading-relaxed text-foreground">{toast.message}</p>
         </div>
       ) : null}
     </div>

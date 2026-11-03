@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Search, Shield, Terminal, Cloud, Cpu, Sparkles, Lock, X } from "lucide-react";
-import { useSound } from "@/components/providers/sound-provider";
+import { Shield, Terminal, Cloud, Cpu, Sparkles, Lock } from "lucide-react";
+import { Stamp } from "@/components/dossier/stamp";
 import { SectionHeader } from "@/components/ui/section-header";
 import { cn } from "@/lib/utils";
 
@@ -166,24 +166,38 @@ const competencyDomains: CompetencyDomain[] = [
   },
 ];
 
-function SkillCard({ domain }: { domain: CompetencyDomain }) {
+const tilts = [-1.2, 0.8, -0.6, 1.1, -0.9, 0.5];
+const tapes = ["left-6 -rotate-6", "right-8 rotate-3", "left-1/2 -translate-x-1/2 rotate-1", "left-10 rotate-6", "right-6 -rotate-3", "left-1/3 -rotate-2"];
+
+function SkillCard({ domain, index }: { domain: CompetencyDomain; index: number }) {
   const [expanded, setExpanded] = React.useState(false);
   const Icon = domain.icon;
+  const isLead = domain.proficiencyLevel === "Production Lead";
+
   return (
-    <article className="surface flex flex-col p-6">
-      <div className="flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+    <article
+      style={{ ["--tilt" as string]: `${tilts[index % tilts.length]}deg` }}
+      className="paper relative flex flex-col px-5 pb-6 pt-8 transition-transform duration-300 md:[transform:rotate(var(--tilt))] md:hover:[transform:rotate(0deg)_scale(1.015)]"
+    >
+      <span aria-hidden className={cn("tape -top-3", tapes[index % tapes.length])} />
+
+      <div className="flex items-start justify-between gap-3">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border-2 border-foreground text-foreground">
           <Icon className="h-5 w-5" />
         </span>
-        <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">{domain.badge}</p>
+        <Stamp rotate={isLead ? 6 : -5} tone={isLead ? "red" : "blue"} className="text-[13px]">
+          {domain.proficiencyLevel}
+        </Stamp>
       </div>
-      <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight text-foreground">{domain.title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{domain.summary}</p>
 
-      <ul className={cn("mt-5 space-y-2.5 border-t border-border pt-5 md:block", expanded ? "block" : "hidden")}>
+      <p className="mt-5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">{domain.badge}</p>
+      <h3 className="mt-1 text-xl font-semibold leading-snug text-foreground">{domain.title}</h3>
+      <p className="mt-2 text-[15px] leading-relaxed text-foreground/80">{domain.summary}</p>
+
+      <ul className={cn("mt-4 space-y-2 border-t border-dashed border-foreground/30 pt-4 md:block", expanded ? "block" : "hidden")}>
         {domain.practicalApplications.map((app) => (
-          <li key={app} className="flex gap-2.5 text-sm leading-snug text-muted-foreground">
-            <span aria-hidden className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-primary" />
+          <li key={app} className="flex gap-2.5 text-sm leading-snug text-foreground/80">
+            <span aria-hidden className="font-mono text-xs font-bold leading-5 text-stamp">✓</span>
             <span>{app}</span>
           </li>
         ))}
@@ -192,124 +206,37 @@ function SkillCard({ domain }: { domain: CompetencyDomain }) {
         type="button"
         onClick={() => setExpanded((v) => !v)}
         aria-expanded={expanded}
-        className="mt-4 self-start text-sm font-medium text-primary md:hidden"
+        className="mt-3 self-start font-hand text-xl text-blueink underline decoration-1 underline-offset-4 md:hidden"
       >
-        {expanded ? "Show less" : "Show highlights"}
+        {expanded ? "fold it back up" : "show the evidence →"}
       </button>
 
-      <div className="mt-auto flex flex-wrap gap-1.5 pt-6">
+      <ul className="mt-auto flex flex-wrap gap-1.5 pt-5" aria-label="Tools">
         {domain.toolsAndStandards.map((tool) => (
-          <span key={tool.name} className="chip" title={tool.tag}>
+          <li key={tool.name} className="label-tape !text-[10px]" title={tool.tag}>
             {tool.name}
-          </span>
+          </li>
         ))}
-      </div>
+      </ul>
     </article>
   );
 }
 
 export function SkillsSection() {
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const [selectedDomain, setSelectedDomain] = React.useState<string>("all");
-  const { playSound } = useSound();
-
-  const handleDomainFilter = (domainId: string) => {
-    playSound("click");
-    setSelectedDomain(domainId);
-  };
-
-  const filteredDomains = React.useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    return competencyDomains
-      .map((domain) => {
-        if (selectedDomain !== "all" && domain.id !== selectedDomain) return null;
-        if (!q) return domain;
-
-        const matchingTools = domain.toolsAndStandards.filter(
-          (t) => t.name.toLowerCase().includes(q) || t.tag.toLowerCase().includes(q)
-        );
-        const matches =
-          domain.title.toLowerCase().includes(q) ||
-          domain.summary.toLowerCase().includes(q) ||
-          domain.practicalApplications.some((app) => app.toLowerCase().includes(q)) ||
-          matchingTools.length > 0;
-
-        if (!matches) return null;
-        return {
-          ...domain,
-          toolsAndStandards: matchingTools.length > 0 ? matchingTools : domain.toolsAndStandards,
-        };
-      })
-      .filter((domain): domain is CompetencyDomain => Boolean(domain));
-  }, [selectedDomain, searchQuery]);
-
-  const filters = [{ id: "all", short: "All" }, ...competencyDomains];
-
   return (
     <>
       <SectionHeader
         index="03"
-        eyebrow="Skills"
-        title="What I bring to a security team."
-        description="Six areas I work in day to day, with the outcomes and tools behind each one."
-        action={
-          <label className="relative block w-full md:w-72">
-            <span className="sr-only">Filter skills</span>
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search e.g. Burp, TruffleHog"
-              className="h-11 w-full rounded-full border border-input bg-card pl-10 pr-10 text-base text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none sm:text-sm"
-            />
-            {searchQuery ? (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                aria-label="Clear search"
-                className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground hover:bg-secondary hover:text-foreground"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            ) : null}
-          </label>
-        }
+        eyebrow="Capabilities assessment"
+        title="What I'm good at"
+        note="verified, not vibes"
+        description="Six areas I work in every week, with the receipts and the tools behind each one."
       />
-
-      <div className="no-scrollbar -mx-5 mb-8 flex gap-2 overflow-x-auto px-5 md:-mx-8 md:flex-wrap md:px-8 lg:mx-0 lg:px-0">
-        {filters.map((filter) => {
-          const isSelected = selectedDomain === filter.id;
-          return (
-            <button
-              key={filter.id}
-              type="button"
-              aria-pressed={isSelected}
-              onClick={() => handleDomainFilter(filter.id)}
-              className={cn(
-                "h-9 shrink-0 rounded-full border px-4 text-sm transition-colors",
-                isSelected
-                  ? "border-foreground bg-foreground font-medium text-background"
-                  : "border-border bg-card text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {filter.short}
-            </button>
-          );
-        })}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        {competencyDomains.map((domain, i) => (
+          <SkillCard key={domain.id} domain={domain} index={i} />
+        ))}
       </div>
-
-      {filteredDomains.length === 0 ? (
-        <p className="surface p-8 text-center text-sm text-muted-foreground">
-          Nothing matches &ldquo;{searchQuery}&rdquo;. Try another keyword.
-        </p>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {filteredDomains.map((domain) => (
-            <SkillCard key={domain.id} domain={domain} />
-          ))}
-        </div>
-      )}
     </>
   );
 }
