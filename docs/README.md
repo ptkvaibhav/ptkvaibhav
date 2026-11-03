@@ -12,7 +12,7 @@ Source for **[ptkvaibhav.vercel.app](https://ptkvaibhav.vercel.app)**. The repos
 | :--- | :--- |
 | Framework | Next.js 15 (App Router), React 19, TypeScript |
 | Styling | Tailwind CSS 3 with CSS-variable design tokens (`app/globals.css`) |
-| Fonts | Self-hosted via `next/font/google` (IBM Plex Sans/Mono, Big Shoulders, Special Elite, Caveat) |
+| Fonts | Self-hosted WOFF2 in `app/fonts` via `next/font/local` (IBM Plex Sans/Mono, Big Shoulders, Special Elite, Caveat); builds need no network access to Google Fonts |
 | Forms | React Hook Form + Zod |
 | Email | Resend |
 | Rate limiting | Upstash Redis (`@upstash/ratelimit`) |
