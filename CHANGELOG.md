@@ -19,8 +19,10 @@ A full redesign, a security review, and a repository clean-up. Released from [#1
 ### Changed
 - Mobile-first layout: no horizontal overflow, full-screen mobile menu, 16px inputs, bottom-sheet case notes.
 - Profile README and site copy updated; duplicate project entry (renamed Burp → Fortify SSC repository) removed.
-- Next.js 15.5.28, React 19.3, Zod 4, `@hookform/resolvers` 5, ESLint 9 (flat config), CycloneDX 6; CI on Node 22 with current action versions.
-- Dependabot policy: grouped security fixes, weekly grouped minor/patch (runtime and tooling), individual majors, monthly GitHub Actions.
+- Next.js 15.5.28, React 19.3, Zod 4, `@hookform/resolvers` 6, lucide-react 1.x (GitHub/LinkedIn marks now inline SVGs), ESLint 9 (flat config), CycloneDX 6; CI on Node 22 with `actions/checkout` and `actions/setup-node` v7.
+- Dependabot policy: grouped security fixes, weekly grouped minor/patch (runtime and tooling), individual majors, monthly GitHub Actions; majors needing a migration (Next.js, Tailwind/`tailwind-merge`, ESLint, TypeScript 7) are held.
+
+- Fonts are self-hosted from `app/fonts` (`next/font/local`) with their licenses, so builds no longer depend on the Google Fonts API.
 
 ### Removed
 - Interactive lab (terminal and triage simulator), sound effects, GitHub contribution heatmap, unused components, the unused Supabase schema, the old design-system spec and a duplicate resume PDF.

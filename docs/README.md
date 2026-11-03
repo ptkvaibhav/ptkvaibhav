@@ -12,7 +12,7 @@ Source for **[ptkvaibhav.vercel.app](https://ptkvaibhav.vercel.app)**. The repos
 | :--- | :--- |
 | Framework | Next.js 15 (App Router), React 19, TypeScript |
 | Styling | Tailwind CSS 3 with CSS-variable design tokens (`app/globals.css`) |
-| Fonts | Self-hosted via `next/font/google` (IBM Plex Sans/Mono, Big Shoulders, Special Elite, Caveat) |
+| Fonts | Self-hosted WOFF2 in `app/fonts` via `next/font/local` (IBM Plex Sans/Mono, Big Shoulders, Special Elite, Caveat); builds need no network access to Google Fonts |
 | Forms | React Hook Form + Zod |
 | Email | Resend |
 | Rate limiting | Upstash Redis (`@upstash/ratelimit`) |
@@ -68,7 +68,7 @@ The site runs without any environment variables. The contact form returns a "not
 
 - **CI** (`.github/workflows/ci.yml`): lint, type check and production build on every PR and push to `main`.
 - **Security** (`.github/workflows/security.yml`): `npm audit --omit=dev`, SBOM generation and CodeQL on every PR, push to `main` and weekly.
-- **Dependabot** (`.github/dependabot.yml`): grouped security fixes as soon as advisories land; weekly grouped minor/patch PRs (runtime and tooling separately); majors one at a time; GitHub Actions monthly. Next.js, Tailwind and ESLint majors are held until a planned migration.
+- **Dependabot** (`.github/dependabot.yml`): grouped security fixes as soon as advisories land; weekly grouped minor/patch PRs (runtime and tooling separately); majors one at a time; GitHub Actions monthly. Majors that need a planned migration are held: Next.js, Tailwind CSS and `tailwind-merge` (Tailwind 4), ESLint, and TypeScript 7 (not yet supported by Next.js 15).
 
 ## Releasing
 
