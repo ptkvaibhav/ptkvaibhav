@@ -21,7 +21,7 @@ const personStructuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Pratik Vaibhav",
-  url: "https://ptkvaibhav.dev",
+  url: siteConfig.url,
   jobTitle: "Senior Product Security Engineer",
   sameAs: [
     "https://github.com/ptkvaibhav",

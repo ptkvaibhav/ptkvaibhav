@@ -1,11 +1,7 @@
 # Support
 
-For repository or site-related questions, contact:
+This is a personal portfolio, so support is best-effort with no formal SLA.
 
-- Email: `ptkvaibhav@gmail.com`
-
-## Support Expectations
-
-- Support is provided on a best-effort basis.
-- There is no formal SLA for responses.
-- Security issues should be reported through the process described in [SECURITY.md](./SECURITY.md).
+- **Bugs on the site:** open an issue using the bug report template.
+- **Security issues:** please report privately — see [SECURITY.md](./SECURITY.md).
+- **Anything else** (questions, opportunities, speaking): use the contact form at https://ptkvaibhav.vercel.app/#contact or email `ptkvaibhav@gmail.com`.

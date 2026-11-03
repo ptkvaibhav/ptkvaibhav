@@ -3,7 +3,36 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project follows semantic versioning for releases when tagged.
+and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [3.0.0] - 2026-11-03
+
+A full redesign, a security review, and a repository clean-up. Released from [#125](https://github.com/ptkvaibhav/ptkvaibhav/pull/125) and the v3.0.0 release PR.
+
+### Added
+- **Dossier theme**: the site is now a declassified case file — paper on a kraft desk, stencil/typewriter/handwritten type, rubber stamps, highlighter and label-maker tags. Dark mode is "desk lamp at night". Theme applies before first paint.
+- Personnel-file hero (polaroid, decrypting status line, redaction joke, key findings); case-file experience timeline; retro-window project "exhibits" with real per-project case notes; taped skill index cards; certificate-style awards; "Form 27-B" contact form.
+- Easter eggs: dev-tools console flag, Konami code declassifies the page, typing "hire", hidden ⌘K commands (`declassify`, `sudo hire pratik`), stamp and window jokes.
+- Desktop investigator cursor (off on touch devices and with reduced motion).
+- Developer guide in `docs/README.md`; the root README is now a focused GitHub profile.
+
+### Changed
+- Mobile-first layout: no horizontal overflow, full-screen mobile menu, 16px inputs, bottom-sheet case notes.
+- Profile README and site copy updated; duplicate project entry (renamed Burp → Fortify SSC repository) removed.
+- Next.js 15.5.28, React 19.3, Zod 4, `@hookform/resolvers` 5, ESLint 9 (flat config), CycloneDX 6; CI on Node 22 with current action versions.
+- Dependabot policy: grouped security fixes, weekly grouped minor/patch (runtime and tooling), individual majors, monthly GitHub Actions.
+
+### Removed
+- Interactive lab (terminal and triage simulator), sound effects, GitHub contribution heatmap, unused components, the unused Supabase schema, the old design-system spec and a duplicate resume PDF.
+- Hard-coded placeholder stats that were shown when GitHub data was unavailable.
+
+### Security
+- Fixed all production `npm audit` findings, including two critical (`next`, `dompurify`).
+- Contact API: rate limit keyed on the edge-provided client IP (was spoofable via `X-Forwarded-For`); no `localhost` origins in production; rejects non-JSON (415) and bodies over 16 KB (413).
+- Contact email: user input is HTML-escaped (replaces tag-stripping).
+- Only `http(s)` links from the GitHub API are rendered.
+- CSP: `frame-src 'none'`, `worker-src`, `manifest-src`, `upgrade-insecure-requests`; added CORP, broader Permissions-Policy, `X-DNS-Prefetch-Control`.
+- RFC 9116 `security.txt`; GitHub Actions default to a read-only token; security issue template replaced by private reporting.
 
 ## [2.1.0] - 2026-08-21
 
@@ -52,5 +81,6 @@ and this project follows semantic versioning for releases when tagged.
 
 ---
 
+[3.0.0]: https://github.com/ptkvaibhav/ptkvaibhav/compare/v2.1.0...v3.0.0
 [2.1.0]: https://github.com/ptkvaibhav/ptkvaibhav/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/ptkvaibhav/ptkvaibhav/compare/v1.0.0...v2.0.0

@@ -55,54 +55,6 @@ const staticProjects: Project[] = [
     status: "Active development",
   },
   {
-    slug: "burp-to-fortify-parser",
-    title: "Burp to Fortify Parser",
-    excerpt:
-      "A bridge between Burp findings and Fortify-aligned review workflows for cleaner vulnerability intake.",
-    description:
-      "Burp to Fortify Parser converts Burp output into a structure that fits Fortify-oriented review pipelines, reducing manual re-entry and improving the handoff between testing output and remediation workflows.",
-    problem:
-      "Dynamic testing results often arrive in formats that do not align with enterprise remediation tooling. That creates manual translation work, inconsistent severity mapping, and loss of evidence between the tester and the engineering workflow.",
-    architecture: {
-      inputs: [
-        "Burp Suite exports containing issue data, request-response pairs, and target metadata",
-        "Fortify-aligned field mappings and severity/category normalization rules",
-        "Parser configuration for project-specific workflows and downstream output expectations",
-      ],
-      processing: [
-        "Parsing of Burp findings into structured records with stable issue identifiers",
-        "Normalization of issue classes, evidence snippets, and metadata to match Fortify-style intake",
-        "Deduplication and transformation logic that prepares data for downstream review pipelines",
-      ],
-      outputs: [
-        "Transformed findings formatted for Fortify-oriented ingestion and review",
-        "Cleaner vulnerability records with preserved technical evidence",
-        "Reduced analyst overhead during triage, assignment, and remediation tracking",
-      ],
-    },
-    components: [
-      "Burp export parser",
-      "Issue normalization and taxonomy mapping engine",
-      "Evidence extraction and formatting logic",
-      "Deduplication and record transformation pipeline",
-      "Output adapters for Fortify-style workflows",
-    ],
-    securityImpact: [
-      "Preserves fidelity of DAST findings so engineering teams see the evidence that matters.",
-      "Reduces manual handling errors that happen when vulnerabilities are re-entered into separate systems.",
-      "Improves signal quality in AppSec workflows by standardizing issue metadata before triage.",
-    ],
-    futureWork: [
-      "Expanded support for additional export formats and scanner sources.",
-      "Project-specific mapping rules for richer metadata and severity translation.",
-      "Automated validation tests against representative finding corpora to reduce parser regressions.",
-    ],
-    tags: ["Burp Suite", "Fortify", "AppSec Workflow"],
-    github: "https://github.com/ptkvaibhav/Burp_to_Fortify_Parser",
-    featured: true,
-    status: "Maintained",
-  },
-  {
     slug: "burp-fortify-ssc-parser-plugin",
     title: "Burp Fortify SSC Parser Plugin",
     excerpt:
@@ -284,7 +236,3 @@ export async function getFeaturedProjects() {
   return projects.filter((project) => project.featured).slice(0, 6);
 }
 
-export async function getProjectBySlug(slug: string) {
-  const projects = await getProjects();
-  return projects.find((project) => project.slug === slug);
-}

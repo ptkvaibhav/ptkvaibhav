@@ -24,15 +24,3 @@ export interface Project {
   forks?: number;
   lastUpdated?: string;
 }
-
-export interface SupabaseProjectRow {
-  slug: string;
-  name: string;
-  excerpt: string;
-  description: string;
-  repository_url: string;
-  live_url: string | null;
-  featured: boolean;
-  status: string;
-  tags: string[];
-}

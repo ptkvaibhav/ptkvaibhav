@@ -11,4 +11,6 @@ List the steps used to validate the change.
 - [ ] Build passes
 - [ ] No secrets or credentials were added
 - [ ] Lint is clean
-- [ ] Documentation was updated if needed
+- [ ] Type check passes (`npm run typecheck`)
+- [ ] Documentation and `CHANGELOG.md` updated if needed
+- [ ] Checked on a phone-sized screen if the UI changed

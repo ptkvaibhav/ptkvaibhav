@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability (private)
+    url: https://github.com/ptkvaibhav/ptkvaibhav/blob/main/SECURITY.md
+    about: Please do not file security issues publicly. Follow SECURITY.md to report privately.
+  - name: Get in touch
+    url: https://ptkvaibhav.vercel.app/#contact
+    about: Questions, opportunities or speaking requests.
