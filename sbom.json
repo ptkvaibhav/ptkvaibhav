@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:84326344-9943-4e1a-9912-9e43e94b1548",
+  "serialNumber": "urn:uuid:1fd36c25-ce2b-4906-bcd7-06ecd8aad88f",
   "metadata": {
-    "timestamp": "2026-11-03T10:53:45.062Z",
+    "timestamp": "2026-11-03T11:08:12.178Z",
     "tools": {
       "components": [
         {
@@ -102,6 +102,10 @@
       "bom-ref": "ptkvaibhav@3.0.0",
       "purl": "pkg:npm/ptkvaibhav@3.0.0",
       "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": "24.x"
+        },
         {
           "name": "cdx:npm:package:private",
           "value": "true"
@@ -690,8 +694,8 @@
       "type": "library",
       "name": "node",
       "group": "@types",
-      "version": "22.20.5",
-      "bom-ref": "ptkvaibhav@3.0.0|@types/node@22.20.5",
+      "version": "24.19.2",
+      "bom-ref": "ptkvaibhav@3.0.0|@types/node@24.19.2",
       "description": "TypeScript definitions for node",
       "licenses": [
         {
@@ -701,7 +705,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40types/node@22.20.5",
+      "purl": "pkg:npm/%40types/node@24.19.2",
       "externalReferences": [
         {
           "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git#types/node",
@@ -719,12 +723,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@types/node/-/node-22.20.5.tgz",
+          "url": "https://registry.npmjs.org/@types/node/-/node-24.19.2.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "536f8336bfb04a3a6c4d2ff0646607abb19cc1fb9298a88abe83ef2b6db3c13951854f75c8e9e2378a914792a1223be27fbcacc3f773fe12a67c31f4462b3868"
+              "content": "f77778f700962640b237ceccc4ba4d37a2973c2c05c3b6d5520efd986515d4e4b8d09196c150abf27eb50d7092ab3ec257afd57cf91bef179ceee3f633e40759"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -3417,8 +3421,8 @@
     {
       "type": "library",
       "name": "undici-types",
-      "version": "6.21.0",
-      "bom-ref": "ptkvaibhav@3.0.0|undici-types@6.21.0",
+      "version": "7.24.6",
+      "bom-ref": "ptkvaibhav@3.0.0|undici-types@7.24.6",
       "description": "A stand-alone types package for Undici",
       "licenses": [
         {
@@ -3428,7 +3432,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/undici-types@6.21.0",
+      "purl": "pkg:npm/undici-types@7.24.6",
       "externalReferences": [
         {
           "url": "git+https://github.com/nodejs/undici.git",
@@ -3446,12 +3450,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/undici-types/-/undici-types-6.21.0.tgz",
+          "url": "https://registry.npmjs.org/undici-types/-/undici-types-7.24.6.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "8b00d9aa0d10006ae0f516afe47e27d0ceb87379a4479f5c27ac10a7eec2e2723482c984c5a79d6982cd3b8e1e4f802d041c236d38863cc96dd8c7744fd1fd25"
+              "content": "591356fac2608f9381378ff42691c5aadab38696e75741ae07e3a8cc0f6008bedaf7ddd2994fb5241642ccb37162c6cc7c87832fe953b29843e6337937e9f4ce"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -30938,7 +30942,7 @@
         "ptkvaibhav@3.0.0|@hookform/resolvers@6.0.2",
         "ptkvaibhav@3.0.0|@img/sharp-wasm32@0.35.5",
         "ptkvaibhav@3.0.0|@radix-ui/react-slot@1.5.0",
-        "ptkvaibhav@3.0.0|@types/node@22.20.5",
+        "ptkvaibhav@3.0.0|@types/node@24.19.2",
         "ptkvaibhav@3.0.0|@types/react-dom@19.3.0",
         "ptkvaibhav@3.0.0|@types/react@19.3.0",
         "ptkvaibhav@3.0.0|@upstash/ratelimit@2.2.0",
@@ -31052,9 +31056,9 @@
       ]
     },
     {
-      "ref": "ptkvaibhav@3.0.0|@types/node@22.20.5",
+      "ref": "ptkvaibhav@3.0.0|@types/node@24.19.2",
       "dependsOn": [
-        "ptkvaibhav@3.0.0|undici-types@6.21.0"
+        "ptkvaibhav@3.0.0|undici-types@7.24.6"
       ]
     },
     {
@@ -31415,7 +31419,7 @@
       ]
     },
     {
-      "ref": "ptkvaibhav@3.0.0|undici-types@6.21.0"
+      "ref": "ptkvaibhav@3.0.0|undici-types@7.24.6"
     },
     {
       "ref": "ptkvaibhav@3.0.0|csstype@3.2.3"
