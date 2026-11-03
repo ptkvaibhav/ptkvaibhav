@@ -1,6 +1,5 @@
 import "server-only";
 
-import DOMPurify from "isomorphic-dompurify";
 import { Resend } from "resend";
 
 import { siteConfig } from "@/lib/site";
@@ -24,11 +23,18 @@ function getResendClient() {
   return resendClient;
 }
 
+/**
+ * HTML-escape user input before interpolating it into the email body. Escaping (rather
+ * than tag-stripping) keeps the sender's text intact and can't be bypassed by parser
+ * differentials, since nothing user-supplied is ever interpreted as markup.
+ */
 function sanitizeForEmail(value: string) {
-  return DOMPurify.sanitize(value, {
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: [],
-  });
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 export function hasResendConfig() {
@@ -54,7 +60,8 @@ export async function sendContactEmail(input: ContactEmailPayload) {
   return resend.emails.send({
     from: "Portfolio <onboarding@resend.dev>",
     to: [siteConfig.email],
-    subject: `Portfolio Contact: ${safeSubject}`,
+    // Plain-text header: use the raw (already control-character-free) subject, not HTML entities.
+    subject: `Portfolio Contact: ${input.subject || "New Message"}`,
     html: `
       <h3>New Message</h3>
       <p><strong>Name:</strong> ${safeName}</p>

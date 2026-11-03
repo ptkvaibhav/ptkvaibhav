@@ -23,6 +23,17 @@ type GitHubRepo = {
   default_branch: string;
 };
 
+/** Accept only absolute http(s) URLs from API data (blocks javascript:, data:, etc.). */
+function safeHttpUrl(value: string | null | undefined) {
+  if (!value?.trim()) return undefined;
+  try {
+    const url = new URL(value.trim());
+    return url.protocol === "https:" || url.protocol === "http:" ? url.toString() : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 type GitHubReadme = {
   html_url: string | null;
   content?: string;
@@ -299,7 +310,7 @@ async function mapRepoToProject(repo: GitHubRepo, featured = true): Promise<Proj
     futureWork: [],
     tags: topics,
     github: repo.html_url,
-    liveUrl: repo.homepage?.trim() || undefined,
+    liveUrl: safeHttpUrl(repo.homepage),
     featured,
     status: repo.archived ? "Archived" : "Synced from GitHub",
     language: repo.language || undefined,

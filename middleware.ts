@@ -13,6 +13,10 @@ function buildContentSecurityPolicy(nonce: string) {
     "base-uri 'self'",
     "form-action 'self'",
     "object-src 'none'",
+    "frame-src 'none'",
+    "worker-src 'self'",
+    "manifest-src 'self'",
+    ...(process.env.NODE_ENV === "production" ? ["upgrade-insecure-requests"] : []),
   ].join("; ");
 }
 

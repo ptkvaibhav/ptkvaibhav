@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ContactSchema, type ContactInput } from "@/lib/validation";
+import { ContactSchema, type ContactFormValues, type ContactInput } from "@/lib/validation";
 import type { ContactApiResponse } from "@/types/contact";
 
 type FormState = {
@@ -20,7 +20,7 @@ export function ContactForm() {
   const [formState, setFormState] = useState<FormState>({ status: "idle" });
   const [toast, setToast] = useState<FormState | null>(null);
 
-  const form = useForm<ContactInput>({
+  const form = useForm<ContactFormValues, unknown, ContactInput>({
     resolver: zodResolver(ContactSchema),
     defaultValues: {
       name: "",
