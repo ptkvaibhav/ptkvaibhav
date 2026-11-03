@@ -100,13 +100,13 @@ export function ContactForm() {
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <label htmlFor="name" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              Your Name *
+            <label htmlFor="name" className="text-sm font-medium text-foreground">
+              Name
             </label>
             <Input
               id="name"
               placeholder="e.g. Alex Rivera"
-              className="rounded-xl border-slate-200 bg-white/90 dark:border-slate-800 dark:bg-slate-950/80 text-xs"
+              className="rounded-xl"
               {...form.register("name")}
             />
             {form.formState.errors.name ? (
@@ -115,14 +115,14 @@ export function ContactForm() {
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="email" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              Email Address *
+            <label htmlFor="email" className="text-sm font-medium text-foreground">
+              Email
             </label>
             <Input
               id="email"
               type="email"
               placeholder="alex@company.com"
-              className="rounded-xl border-slate-200 bg-white/90 dark:border-slate-800 dark:bg-slate-950/80 text-xs"
+              className="rounded-xl"
               {...form.register("email")}
             />
             {form.formState.errors.email ? (
@@ -133,25 +133,25 @@ export function ContactForm() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <label htmlFor="organization" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              Organization (Optional)
+            <label htmlFor="organization" className="text-sm font-medium text-foreground">
+              Organization <span className="font-normal text-muted-foreground">(optional)</span>
             </label>
             <Input
               id="organization"
               placeholder="Company / Team name"
-              className="rounded-xl border-slate-200 bg-white/90 dark:border-slate-800 dark:bg-slate-950/80 text-xs"
+              className="rounded-xl"
               {...form.register("organization")}
             />
           </div>
 
           <div className="space-y-1.5">
-            <label htmlFor="subject" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              Subject *
+            <label htmlFor="subject" className="text-sm font-medium text-foreground">
+              Subject
             </label>
             <Input
               id="subject"
               placeholder="AppSec Lead Role / Pentest Inquiry"
-              className="rounded-xl border-slate-200 bg-white/90 dark:border-slate-800 dark:bg-slate-950/80 text-xs"
+              className="rounded-xl"
               {...form.register("subject")}
             />
             {form.formState.errors.subject ? (
@@ -167,15 +167,15 @@ export function ContactForm() {
         </div>
 
         <div className="space-y-1.5">
-          <label htmlFor="message" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-            Message *
+          <label htmlFor="message" className="text-sm font-medium text-foreground">
+            Message
           </label>
           <Textarea
             id="message"
             maxLength={2000}
             rows={4}
             placeholder="Describe your security challenge, project scope, or open role requirements..."
-            className="rounded-xl border-slate-200 bg-white/90 dark:border-slate-800 dark:bg-slate-950/80 text-xs resize-none"
+            className="resize-none rounded-xl"
             {...form.register("message")}
           />
           {form.formState.errors.message ? (
@@ -187,17 +187,17 @@ export function ContactForm() {
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
-            className="bg-slate-950 text-white dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400 font-bold text-xs"
+            className="h-12 w-full sm:w-auto"
           >
             {form.formState.isSubmitting ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Validating &amp; Transmitting...
+                Sending…
               </>
             ) : (
               <>
                 <Send className="h-4 w-4" />
-                Dispatch Message
+                Send message
               </>
             )}
           </Button>
@@ -214,7 +214,7 @@ export function ContactForm() {
             </p>
           ) : (
             <p className="text-[11px] font-mono text-slate-500">
-              🔒 Rate-limited endpoint &bull; CSRF &amp; HTML sanitized
+              Rate-limited and sanitised server-side.
             </p>
           )}
         </div>
@@ -224,7 +224,7 @@ export function ContactForm() {
         <div
           role="status"
           aria-live="polite"
-          className={`fixed bottom-6 right-6 z-[80] max-w-sm rounded-2xl border px-4 py-3 text-xs font-mono shadow-2xl backdrop-blur-xl ${
+          className={`fixed inset-x-4 bottom-4 z-[80] sm:inset-x-auto sm:bottom-6 sm:right-6 sm:max-w-sm rounded-2xl border px-4 py-3 text-xs font-mono shadow-2xl backdrop-blur-xl ${
             toast.status === "success"
               ? "border-emerald-500/40 bg-slate-900/95 text-emerald-300"
               : "border-rose-500/40 bg-slate-900/95 text-rose-300"

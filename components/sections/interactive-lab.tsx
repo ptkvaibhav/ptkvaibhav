@@ -1,82 +1,58 @@
 "use client";
 
 import * as React from "react";
-import { Terminal as TerminalIcon, Cpu, Activity, Sparkles, ShieldAlert, Sliders } from "lucide-react";
+import { Terminal as TerminalIcon, Sliders } from "lucide-react";
+
 import { SecurityTerminal } from "@/components/interactive/terminal";
 import { TriageSimulator } from "@/components/interactive/triage-simulator";
 import { useSound } from "@/components/providers/sound-provider";
-import { typography } from "@/styles/design-system";
+import { SectionHeader } from "@/components/ui/section-header";
 import { cn } from "@/lib/utils";
+
+const tabs = [
+  { id: "terminal", label: "Terminal", short: "Terminal", icon: TerminalIcon },
+  { id: "simulator", label: "Triage benchmark", short: "Benchmark", icon: Sliders },
+] as const;
 
 export function InteractiveLabSection() {
   const [activeTab, setActiveTab] = React.useState<"terminal" | "simulator">("terminal");
   const { playSound } = useSound();
 
   return (
-    <div className="space-y-8" id="interactive-console">
-      {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1 text-xs font-mono font-bold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-400">
-            <TerminalIcon className="h-3.5 w-3.5" />
-            Interactive Security Console &bull; Live Telemetry
+    <>
+      <SectionHeader
+        index="04"
+        eyebrow="Lab"
+        title="Poke around."
+        description="A small terminal with my background baked in, plus a simulation of how correlating SAST, DAST and SCA results cuts false positives."
+        action={
+          <div role="tablist" className="inline-flex w-full rounded-full border border-border bg-card p-1 md:w-auto">
+            {tabs.map(({ id, label, short, icon: Icon }) => (
+              <button
+                key={id}
+                role="tab"
+                aria-selected={activeTab === id}
+                onClick={() => {
+                  playSound("click");
+                  setActiveTab(id);
+                }}
+                className={cn(
+                  "flex h-9 flex-1 items-center justify-center gap-2 rounded-full px-4 text-sm transition-colors md:flex-none",
+                  activeTab === id
+                    ? "bg-foreground font-medium text-background"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <Icon className="h-4 w-4 shrink-0" />
+                <span className="sm:hidden">{short}</span>
+                <span className="hidden sm:inline">{label}</span>
+              </button>
+            ))}
           </div>
-          <h2 className={typography.sectionTitle}>
-            Live Security Lab &amp; Simulations
-          </h2>
-          <p className={typography.sectionDescription}>
-            Test interactive security commands, execute real-time simulated AST scans, and benchmark false-positive noise reduction models.
-          </p>
-        </div>
+        }
+      />
 
-        {/* Lab Mode Switcher Tabs */}
-        <div className="flex items-center gap-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 p-1.5 shadow-sm">
-          <button
-            onClick={() => {
-              playSound("click");
-              setActiveTab("terminal");
-            }}
-            className={cn(
-              "flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-mono font-bold transition-all cursor-pointer",
-              activeTab === "terminal"
-                ? "bg-slate-950 text-white dark:bg-cyan-500 dark:text-slate-950 shadow-md"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            )}
-          >
-            <TerminalIcon className="h-3.5 w-3.5" />
-            <span>CLI Terminal</span>
-          </button>
-
-          <button
-            onClick={() => {
-              playSound("click");
-              setActiveTab("simulator");
-            }}
-            className={cn(
-              "flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-mono font-bold transition-all cursor-pointer",
-              activeTab === "simulator"
-                ? "bg-slate-950 text-white dark:bg-cyan-500 dark:text-slate-950 shadow-md"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            )}
-          >
-            <Sliders className="h-3.5 w-3.5" />
-            <span>Triage Benchmark</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Interactive Display Card */}
-      <div className="transition-all duration-300">
-        {activeTab === "terminal" ? (
-          <div className="space-y-4">
-            <SecurityTerminal />
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <TriageSimulator />
-          </div>
-        )}
-      </div>
-    </div>
+      {activeTab === "terminal" ? <SecurityTerminal /> : <TriageSimulator />}
+    </>
   );
 }

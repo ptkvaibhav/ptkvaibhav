@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -31,6 +31,15 @@ const serializedPersonStructuredData = JSON.stringify(personStructuredData).repl
   /</g,
   "\\u003c"
 );
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f7f9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0b10" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -73,16 +82,15 @@ export default async function RootLayout({
         className={cn(
           GeistSans.className,
           GeistMono.variable,
-          "min-h-screen bg-background text-foreground selection:bg-emerald-500/20 selection:text-emerald-400"
+          "min-h-screen bg-background text-foreground"
         )}
       >
         <ThemeProvider defaultTheme="dark" storageKey="ptk-theme">
           <SoundProvider>
-            <div className="relative overflow-hidden min-h-screen flex flex-col">
+            <div className="relative flex min-h-screen flex-col">
               <div aria-hidden className="ambient-layer" />
-              <div aria-hidden className="ambient-noise" />
               <SiteHeader />
-              <main className="flex-1">{children}</main>
+              <main className="relative flex-1">{children}</main>
               <SiteFooter />
               <CommandPalette />
             </div>

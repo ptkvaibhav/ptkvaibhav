@@ -289,22 +289,22 @@ export function SecurityTerminal() {
   };
 
   return (
-    <div className="w-full rounded-[24px] border border-slate-800 bg-[#070b14] text-slate-200 shadow-[0_24px_80px_rgba(0,0,0,0.55)] overflow-hidden font-mono flex flex-col">
+    <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-border bg-[#0b0d13] font-mono text-slate-200 shadow-xl dark:border-white/10">
       {/* Top Window Header */}
       <div className="flex items-center justify-between border-b border-slate-800/80 bg-slate-950/80 px-4 py-3 select-none">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5">
+        <div className="flex min-w-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1.5">
             <span className="h-3 w-3 rounded-full bg-rose-500/80 hover:opacity-100 transition-opacity" />
             <span className="h-3 w-3 rounded-full bg-amber-500/80 hover:opacity-100 transition-opacity" />
             <span className="h-3 w-3 rounded-full bg-emerald-500/80 hover:opacity-100 transition-opacity" />
           </div>
-          <span className="ml-2 text-xs font-semibold text-slate-400 flex items-center gap-1.5">
-            <TerminalIcon className="h-3.5 w-3.5 text-cyan-400" />
-            ptk@security-workstation: ~ (zsh)
+          <span className="ml-2 flex min-w-0 items-center gap-1.5 text-xs font-semibold text-slate-400">
+            <TerminalIcon className="h-3.5 w-3.5 shrink-0 text-cyan-400" />
+            <span className="truncate">ptk@security-workstation: ~</span>
           </span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-3">
           <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/40 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-400">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
             APPSEC ACTIVE
@@ -348,7 +348,7 @@ export function SecurityTerminal() {
       </div>
 
       {/* Terminal Screen Body */}
-      <div className="p-4 overflow-y-auto max-h-[360px] min-h-[220px] text-xs leading-relaxed space-y-3 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+      <div className="p-4 overflow-y-auto max-h-[360px] min-h-[260px] text-xs break-words leading-relaxed space-y-3 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
         {INITIAL_WELCOME}
 
         {history.map((item, idx) => (
@@ -388,8 +388,8 @@ export function SecurityTerminal() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="type 'help', 'scan', 'whoami', 'triage'..."
-          className="flex-1 bg-transparent text-white placeholder-slate-600 focus:outline-none text-xs font-mono"
+          placeholder="type 'help'…"
+          className="min-w-0 flex-1 bg-transparent font-mono text-base text-white placeholder-slate-600 focus:outline-none sm:text-xs"
           autoCapitalize="none"
           autoCorrect="off"
           spellCheck={false}

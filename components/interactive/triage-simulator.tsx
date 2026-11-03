@@ -100,7 +100,7 @@ export function TriageSimulator() {
   const falsePositiveCount = SAMPLE_FINDINGS.filter((f) => f.isFalsePositive).length;
 
   return (
-    <div className="w-full rounded-[30px] border border-slate-200/80 bg-white/90 p-6 md:p-8 shadow-[0_24px_70px_rgba(15,23,42,0.06)] dark:border-white/10 dark:bg-slate-900/80 dark:shadow-[0_25px_80px_rgba(0,0,0,0.5)] backdrop-blur-xl space-y-6">
+    <div className="surface w-full space-y-6 p-5 sm:p-8">
       {/* Header & Impact Summary */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-5">
         <div className="space-y-1">
@@ -108,7 +108,7 @@ export function TriageSimulator() {
             <Activity className="h-3.5 w-3.5" />
             <span>Interactive AppSec Triage Engine</span>
           </div>
-          <h3 className="text-xl md:text-2xl font-black tracking-tight text-slate-950 dark:text-white">
+          <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">
             False-Positive Reduction &amp; AST Correlation
           </h3>
           <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 max-w-xl">

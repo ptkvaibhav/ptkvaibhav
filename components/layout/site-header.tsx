@@ -1,303 +1,254 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Github, Linkedin, Menu, X, Search, Moon, Sun, Volume2, VolumeX, Shield, Sparkles } from "lucide-react";
-import gsap from "gsap";
+import { Github, Linkedin, Menu, X, Search, Moon, Sun, Volume2, VolumeX, ArrowUpRight } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/providers/theme-provider";
 import { useSound } from "@/components/providers/sound-provider";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-type SectionNavigationProps = {
-  activeSection: string;
-  linkRefs?: React.MutableRefObject<Record<string, HTMLAnchorElement | null>>;
-  onNavigate?: () => void;
-};
+const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
 
-function SectionNavigation({
-  activeSection,
-  linkRefs,
-  onNavigate,
-}: SectionNavigationProps) {
-  const { playSound } = useSound();
-
-  function isActiveRoute(href: string) {
-    return href === `#${activeSection}`;
-  }
-
-  return (
-    <>
-      {siteConfig.nav.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          ref={(element) => {
-            if (linkRefs) {
-              linkRefs.current[item.href] = element;
-            }
-          }}
-          aria-current={isActiveRoute(item.href) ? "page" : undefined}
-          className={cn(
-            "relative rounded-xl px-3 py-2 text-xs font-semibold uppercase tracking-wider transition-all md:rounded-none md:px-0 md:text-xs",
-            isActiveRoute(item.href)
-              ? "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-bold md:bg-transparent"
-              : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-          )}
-          onClick={() => {
-            playSound("click");
-            if (onNavigate) onNavigate();
-          }}
-        >
-          {item.label}
-        </Link>
-      ))}
-    </>
-  );
-}
+const iconButton =
+  "inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground";
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("about");
-  const navRef = useRef<HTMLDivElement>(null);
-  const indicatorRef = useRef<HTMLSpanElement>(null);
-  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const { resolvedTheme, toggleTheme } = useTheme();
   const { isMuted, toggleMute, playSound } = useSound();
 
-  const resumePath = "/resume/Pratik_Vaibhav_Resume.pdf";
-  const sectionIds = useMemo(
-    () => siteConfig.nav.map((item) => item.href.replace("#", "")),
-    []
-  );
+  const sectionIds = useMemo(() => siteConfig.nav.map((item) => item.href.replace("#", "")), []);
 
+  // Track the section currently in view to highlight its nav link.
   useEffect(() => {
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => Boolean(section));
-
-    if (!sections.length) {
-      return;
-    }
+    if (!sections.length) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visibleEntries = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((left, right) => right.intersectionRatio - left.intersectionRatio);
-
-        if (visibleEntries[0]) {
-          setActiveSection(visibleEntries[0].target.id);
-        }
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
       },
-      {
-        rootMargin: "-25% 0px -50% 0px",
-        threshold: [0.15, 0.35, 0.6],
-      }
+      { rootMargin: "-45% 0px -50% 0px" }
     );
-
     sections.forEach((section) => observer.observe(section));
-
-    const syncActiveSection = () => {
-      const hash = window.location.hash.replace("#", "");
-      if (hash && sectionIds.includes(hash)) {
-        setActiveSection(hash);
-      }
-    };
-
-    syncActiveSection();
-    window.addEventListener("hashchange", syncActiveSection);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("hashchange", syncActiveSection);
-    };
+    return () => observer.disconnect();
   }, [sectionIds]);
 
   useEffect(() => {
-    const updateIndicator = () => {
-      const nav = navRef.current;
-      const indicator = indicatorRef.current;
-      const activeLink = linkRefs.current[`#${activeSection}`];
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-      if (!nav || !indicator || !activeLink) {
-        return;
-      }
-
-      const navBounds = nav.getBoundingClientRect();
-      const linkBounds = activeLink.getBoundingClientRect();
-
-      gsap.to(indicator, {
-        x: linkBounds.left - navBounds.left,
-        width: linkBounds.width,
-        autoAlpha: 1,
-        duration: 0.28,
-        ease: "power2.out",
-      });
+  // Lock page scroll and close on Escape while the mobile menu is open.
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMenuOpen(false);
     };
-
-    updateIndicator();
-    window.addEventListener("resize", updateIndicator);
-
+    window.addEventListener("keydown", onKey);
     return () => {
-      window.removeEventListener("resize", updateIndicator);
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
     };
-  }, [activeSection]);
+  }, [isMenuOpen]);
 
   const openCommandPalette = () => {
     playSound("click");
     window.dispatchEvent(new CustomEvent("open-command-palette"));
   };
 
-  function closeMenu() {
-    setIsMenuOpen(false);
-  }
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/85 dark:border-white/10 dark:bg-slate-950/80 backdrop-blur-xl transition-colors duration-200">
-      <div className="container relative flex items-center justify-between gap-4 py-3">
-        {/* Brand / Logo */}
-        <div className="flex items-center gap-6">
-          <Link
-            href="#about"
-            onClick={() => {
-              playSound("click");
-              closeMenu();
-            }}
-            className="flex items-center gap-2 group cursor-pointer"
-          >
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 text-slate-950 font-black text-sm shadow-md group-hover:scale-105 transition-transform">
-              <Shield className="h-4 w-4 fill-current" />
-            </div>
-            <span className="font-mono font-bold text-base tracking-tight text-slate-900 dark:text-white">
-              pratik<span className="text-cyan-600 dark:text-cyan-400">.dev</span>
-            </span>
-          </Link>
+    <header className="sticky top-0 z-50">
+      {/* Blur lives on its own layer: backdrop-filter on <header> would trap the fixed mobile menu inside it. */}
+      <div
+        aria-hidden
+        className={cn(
+          "absolute inset-0 -z-10 border-b transition-colors duration-200",
+          isMenuOpen
+            ? "border-border bg-background"
+            : isScrolled
+              ? "border-border bg-background/85 backdrop-blur-xl"
+              : "border-transparent"
+        )}
+      />
+      <div className="container flex h-16 items-center justify-between gap-4">
+        <Link
+          href="#about"
+          onClick={() => {
+            playSound("click");
+            closeMenu();
+          }}
+          className="flex items-center gap-2.5 rounded-full"
+          aria-label="Pratik Vaibhav — back to top"
+        >
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground font-mono text-xs font-bold text-background">
+            PV
+          </span>
+          <span className="hidden text-[15px] font-semibold tracking-tight text-foreground sm:inline">
+            Pratik Vaibhav
+          </span>
+        </Link>
 
-          {/* Desktop Nav Links */}
-          <nav
-            ref={navRef}
-            aria-label="Primary navigation"
-            className="hidden md:flex md:items-center md:gap-6 relative text-sm"
-          >
-            <span
-              ref={indicatorRef}
-              className="pointer-events-none absolute bottom-0 left-0 hidden h-0.5 w-0 bg-cyan-500 dark:bg-cyan-400 opacity-0 md:block rounded-full shadow-[0_0_8px_rgba(0,210,255,0.6)]"
-            />
-            <SectionNavigation
-              activeSection={activeSection}
-              linkRefs={linkRefs}
-              onNavigate={closeMenu}
-            />
-          </nav>
-        </div>
+        <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+          {siteConfig.nav.map((item) => {
+            const isActive = item.href === `#${activeSection}`;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isActive ? "location" : undefined}
+                onClick={() => playSound("click")}
+                className={cn(
+                  "rounded-full px-3 py-1.5 text-sm transition-colors",
+                  isActive
+                    ? "bg-secondary font-medium text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
 
-        {/* Right Action Bar */}
-        <div className="flex items-center gap-2">
-          {/* Quick Search Button (Cmd+K) */}
+        <div className="flex items-center gap-1">
           <button
+            type="button"
             onClick={openCommandPalette}
-            className="hidden sm:inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100/80 px-3 py-1.5 text-xs text-slate-600 hover:border-cyan-400/50 hover:bg-slate-200/70 dark:border-white/10 dark:bg-slate-900/80 dark:text-slate-400 dark:hover:border-cyan-500/40 dark:hover:text-white transition-all cursor-pointer"
+            aria-label="Open command palette"
+            className={cn(iconButton, "md:w-auto md:gap-2 md:px-3")}
           >
-            <Search className="h-3.5 w-3.5 text-cyan-500" />
-            <span>Search &amp; Run</span>
-            <kbd className="rounded bg-white dark:bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono border border-slate-200 dark:border-slate-700 shadow-sm">
+            <Search className="h-4 w-4" />
+            <kbd className="hidden rounded border border-border bg-secondary px-1.5 font-mono text-[10px] md:inline">
               ⌘K
             </kbd>
           </button>
 
-          {/* Sound FX Toggle */}
           <button
+            type="button"
             onClick={() => {
               toggleMute();
               if (isMuted) playSound("success");
             }}
             aria-label={isMuted ? "Unmute sound effects" : "Mute sound effects"}
-            title={isMuted ? "Unmute sound effects" : "Mute sound effects"}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-white/10 dark:bg-slate-900 dark:text-slate-400 dark:hover:text-white transition-all cursor-pointer"
+            className={cn(iconButton, "hidden sm:inline-flex")}
           >
-            {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4 text-emerald-500" />}
+            {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4 text-primary" />}
           </button>
 
-          {/* Dark / Light Theme Toggle */}
           <button
+            type="button"
             onClick={() => {
               playSound("toggle");
               toggleTheme();
             }}
-            aria-label="Toggle dark/light mode"
-            title="Toggle theme mode"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-white/10 dark:bg-slate-900 dark:text-slate-400 dark:hover:text-white transition-all cursor-pointer"
+            aria-label="Toggle color theme"
+            className={iconButton}
           >
-            {resolvedTheme === "dark" ? (
-              <Sun className="h-4 w-4 text-amber-400" />
-            ) : (
-              <Moon className="h-4 w-4 text-slate-700" />
-            )}
+            {resolvedTheme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
-          {/* Resume Button */}
-          <Button asChild size="sm" variant="secondary" className="hidden lg:inline-flex">
-            <Link href={resumePath} target="_blank" rel="noopener noreferrer">
-              Resume
-            </Link>
-          </Button>
+          <Link
+            href="#contact"
+            onClick={() => playSound("click")}
+            className="ml-2 hidden h-9 items-center rounded-full bg-foreground px-4 text-[13px] font-semibold text-background transition-opacity hover:opacity-90 md:inline-flex"
+          >
+            Get in touch
+          </Link>
 
-          {/* Let's Talk Primary CTA */}
-          <Button asChild size="sm" className="hidden sm:inline-flex bg-slate-950 text-white hover:bg-cyan-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400 font-bold">
-            <Link href="#contact">Let&apos;s talk</Link>
-          </Button>
-
-          {/* Mobile Hamburger Button */}
           <button
             type="button"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300 transition hover:bg-slate-50 dark:hover:bg-slate-800 md:hidden cursor-pointer"
+            aria-controls="mobile-menu"
+            className={cn(iconButton, "lg:hidden")}
             onClick={() => {
               playSound("click");
-              setIsMenuOpen((current) => !current);
+              setIsMenuOpen((open) => !open);
             }}
           >
-            {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 px-5 py-4 shadow-xl backdrop-blur-xl space-y-3">
-          <div className="flex flex-col gap-1">
-            <SectionNavigation
-              activeSection={activeSection}
-              linkRefs={linkRefs}
-              onNavigate={closeMenu}
-            />
-          </div>
+        <div
+          id="mobile-menu"
+          className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto border-t border-border bg-background lg:hidden"
+        >
+          <nav aria-label="Mobile" className="container flex flex-col py-4">
+            {siteConfig.nav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => {
+                  playSound("click");
+                  closeMenu();
+                }}
+                className={cn(
+                  "flex items-center justify-between border-b border-border py-4 text-lg font-medium",
+                  item.href === `#${activeSection}` ? "text-primary" : "text-foreground"
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
-          <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
-            <Button asChild size="sm" variant="secondary" className="col-span-2">
-              <Link href={resumePath} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
-                Download Resume
-              </Link>
-            </Button>
-            <Button asChild size="sm" variant="ghost">
-              <Link href={siteConfig.social.github} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
+          <div className="container grid gap-3 pb-10 pt-2">
+            <Link
+              href={resumePath}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={closeMenu}
+              className="flex h-12 items-center justify-center gap-2 rounded-full bg-foreground text-sm font-semibold text-background"
+            >
+              Download resume <ArrowUpRight className="h-4 w-4" />
+            </Link>
+            <div className="grid grid-cols-2 gap-3">
+              <a
+                href={siteConfig.social.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-12 items-center justify-center gap-2 rounded-full border border-border text-sm font-medium text-foreground"
+              >
                 <Github className="h-4 w-4" /> GitHub
-              </Link>
-            </Button>
-            <Button asChild size="sm" variant="ghost">
-              <Link href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
+              </a>
+              <a
+                href={siteConfig.social.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-12 items-center justify-center gap-2 rounded-full border border-border text-sm font-medium text-foreground"
+              >
                 <Linkedin className="h-4 w-4" /> LinkedIn
-              </Link>
-            </Button>
-            <Button asChild size="sm" className="col-span-2 bg-emerald-500 text-slate-950 hover:bg-emerald-400 font-bold">
-              <Link href="#contact" onClick={closeMenu}>
-                Let&apos;s talk
-              </Link>
-            </Button>
+              </a>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                toggleMute();
+                if (isMuted) playSound("success");
+              }}
+              className="flex h-12 items-center justify-center gap-2 rounded-full text-sm text-muted-foreground sm:hidden"
+            >
+              {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+              Sound effects {isMuted ? "off" : "on"}
+            </button>
           </div>
         </div>
       )}

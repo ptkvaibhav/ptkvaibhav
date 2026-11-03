@@ -11,17 +11,31 @@ type ReadmeModalProps = {
 };
 
 export function ReadmeModal({ project, onClose }: ReadmeModalProps) {
+  React.useEffect(() => {
+    if (!project) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [project, onClose]);
+
   if (!project) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-4" role="dialog" aria-modal="true">
       <div
         className="fixed inset-0 bg-slate-950/75 backdrop-blur-md transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-[28px] border border-slate-700/80 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-[0_30px_90px_rgba(0,0,0,0.6)] p-6 md:p-8 z-10 font-sans space-y-6">
+      <div className="relative z-10 max-h-[90dvh] w-full max-w-2xl space-y-6 overflow-y-auto rounded-t-3xl border border-border bg-card p-5 pb-8 text-foreground shadow-2xl sm:max-h-[85vh] sm:rounded-3xl sm:p-8">
         {/* Header */}
         <div className="flex items-start justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
           <div className="space-y-1">
@@ -35,7 +49,7 @@ export function ReadmeModal({ project, onClose }: ReadmeModalProps) {
                 </span>
               )}
             </div>
-            <h3 className="text-2xl font-black tracking-tight text-slate-950 dark:text-white">
+            <h3 className="text-2xl font-semibold tracking-tight text-foreground">
               {project.title}
             </h3>
           </div>
